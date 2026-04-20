@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Plan de Rémunération — Destination 💎</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+:root{
+  --bg:#F3F0FA; --bg2:#EAE5F5; --bg3:#DDD6F0;
+  --sidebar:#EDE8F8; --card:#FDFBFF;
+  --text:#2A1F4A; --text2:#5A4D7A; --text3:#9080B0;
+  --violet:#6B21A8; --vl:#9333EA; --vm:#7C3AED;
+  --green:#16A34A; --red:#DC2626; --blue:#2563EB;
+  --border:#D5CDE8; --bv:rgba(107,33,168,.2);
+  --shadow:0 2px 12px rgba(107,33,168,.08);
+  --shadow2:0 4px 20px rgba(107,33,168,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;line-height:1.6;}
+
+/* PROGRESS BAR */
+#pbar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--vm),var(--vl));width:0%;z-index:1000;transition:width .4s;}
+
+/* HEADER */
+header{background:var(--card);border-bottom:2px solid var(--bv);padding:.85rem 1.75rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;box-shadow:var(--shadow);}
+.brand{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:900;color:var(--text);text-decoration:none;white-space:nowrap;}
+.brand em{color:var(--vm);font-style:italic;}
+.h-sep{width:1px;height:18px;background:var(--border);flex-shrink:0;}
+.back{font-size:.82rem;color:var(--vm);text-decoration:none;font-weight:600;white-space:nowrap;transition:opacity .2s;}
+.back:hover{opacity:.7;}
+.mod-badge{background:var(--vm);color:white;font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem;border-radius:20px;white-space:nowrap;}
+.h-title{font-family:'Playfair Display',serif;font-size:clamp(.9rem,2vw,1.1rem);font-weight:700;color:var(--text);}
+.h-title em{color:var(--vm);font-style:italic;}
+.h-search{flex:1;display:flex;align-items:center;gap:.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:.5rem .9rem;max-width:320px;transition:border-color .2s;}
+.h-search:focus-within{border-color:var(--vm);}
+.h-search input{background:none;border:none;outline:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;width:100%;}
+.h-search input::placeholder{color:var(--text3);}
+.h-search span{color:var(--text3);font-size:.85rem;flex-shrink:0;}
+.plabel{font-size:.75rem;color:var(--vm);font-weight:600;white-space:nowrap;}
+.audio-btn{width:38px;height:38px;border-radius:9px;background:var(--bg2);border:1.5px solid var(--border);color:var(--vm);font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.audio-btn:hover{background:var(--bv);border-color:var(--vm);}
+.audio-btn.reading{background:var(--vm);border-color:var(--vm);color:white;}
+.dl-btn{display:flex;align-items:center;gap:.4rem;padding:.42rem .85rem;border-radius:8px;background:var(--bg2);border:1.5px solid var(--border);color:var(--vm);font-family:'Syne',sans-serif;font-weight:700;font-size:.72rem;cursor:pointer;transition:all .2s;white-space:nowrap;text-decoration:none;}
+.dl-btn:hover{background:var(--bv);border-color:var(--vm);}
+
+/* LAYOUT */
+.layout{display:flex;min-height:calc(100vh - 62px);}
+
+/* SIDEBAR */
+aside{width:265px;min-width:265px;background:var(--sidebar);border-right:1px solid var(--border);padding:1.25rem 0;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;}
+.s-section{padding:.2rem 0 .5rem;}
+.s-section-title{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);padding:.4rem 1.2rem .35rem;}
+.s-module-btn{display:flex;align-items:center;gap:.65rem;padding:.6rem 1.2rem;cursor:pointer;transition:all .15s;border-left:3px solid transparent;text-decoration:none;color:var(--text2);}
+.s-module-btn:hover{background:var(--bg3);color:var(--text);}
+.s-module-btn.current{background:var(--bg3);border-left-color:var(--vm);color:var(--text);}
+.s-module-btn.current .s-mod-name{font-weight:700;color:var(--violet);}
+.s-mod-icon{width:28px;height:28px;border-radius:7px;background:var(--bv);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.s-mod-name{font-size:.82rem;font-weight:500;line-height:1.3;}
+.s-div{height:1px;background:var(--border);margin:.6rem 1.2rem;}
+/* Chapter nav (inside current module) */
+.s-chapter-list{padding:.1rem 0 .5rem;}
+.s-chapter-item{display:flex;align-items:center;gap:.55rem;padding:.42rem 1.2rem .42rem 2.5rem;cursor:pointer;font-size:.8rem;color:var(--text2);transition:all .15s;border-left:3px solid transparent;}
+.s-chapter-item:hover{background:var(--bg2);color:var(--violet);}
+.s-chapter-item.active{color:var(--violet);font-weight:600;background:var(--bg2);border-left-color:var(--vl);}
+.s-chapter-item::before{content:'›';color:var(--text3);font-size:.75rem;}
+.n-chk{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.55rem;flex-shrink:0;cursor:pointer;transition:all .2s;margin-left:auto;}
+.n-chk:hover{border-color:var(--vm);}
+.n-chk.done{background:var(--green);border-color:var(--green);color:white;}
+
+/* MAIN */
+main{flex:1;padding:2rem 2.25rem;max-width:920px;}
+.section{display:none;animation:fi .3s ease;}
+.section.active{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* CHAPTER HEADERS */
+.ch{display:flex;align-items:flex-start;gap:1.1rem;margin-bottom:2rem;padding:1.5rem 1.75rem;border-radius:14px;color:white;}
+.ch-emoji{font-size:2.4rem;flex-shrink:0;}
+.ch-tag{font-size:.63rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.82;margin-bottom:.35rem;}
+.ch-text h2{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,1.9rem);font-weight:900;line-height:1.15;margin-bottom:.4rem;}
+.ch-text p{font-size:.9rem;opacity:.88;line-height:1.65;max-width:520px;}
+.c-violet{background:linear-gradient(135deg,#4C1D95,#6B21A8);}
+.c-orange{background:linear-gradient(135deg,#92400E,#B45309);}
+.c-blue{background:linear-gradient(135deg,#1E3A5F,#1D4ED8);}
+.c-teal{background:linear-gradient(135deg,#134E4A,#0D9488);}
+.c-red{background:linear-gradient(135deg,#7F1D1D,#DC2626);}
+.c-indigo{background:linear-gradient(135deg,#1E1B4B,#4338CA);}
+.c-pink{background:linear-gradient(135deg,#831843,#DB2777);}
+.c-gold{background:linear-gradient(135deg,#78350F,#D97706);}
+
+/* SECTION LABEL */
+.slbl{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--violet);margin:1.75rem 0 .75rem;display:flex;align-items:center;gap:.55rem;font-style:italic;}
+.slbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* HIGHLIGHT */
+.hl{background:var(--bg2);border-left:3px solid var(--vm);border-radius:0 9px 9px 0;padding:.9rem 1.15rem;margin:1rem 0;font-size:.88rem;line-height:1.7;color:var(--text);}
+.hl strong{color:var(--violet);}
+
+/* CONCEPT GRID */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.9rem;margin-bottom:1.75rem;}
+.ccard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.15rem;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;}
+.ccard:hover{transform:translateY(-2px);box-shadow:var(--shadow2);}
+.cc-icon{font-size:1.4rem;margin-bottom:.5rem;}
+.cc-title{font-family:'Playfair Display',serif;font-size:.85rem;font-weight:700;margin-bottom:.35rem;color:var(--violet);}
+.cc-text{font-size:.83rem;line-height:1.65;color:var(--text2);}
+
+/* SCRIPT CARDS */
+.sc{background:var(--card);border:1px solid var(--border);border-radius:13px;margin-bottom:1rem;overflow:hidden;box-shadow:var(--shadow);}
+.sc-head{padding:.95rem 1.15rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:var(--bg2);gap:.9rem;user-select:none;}
+.sc-head:hover{background:var(--bg3);}
+.sc-hl{display:flex;align-items:center;gap:.7rem;}
+.sc-letter{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--violet),var(--vl));color:white;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.82rem;flex-shrink:0;}
+.sc-name{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--text);}
+.sc-meta{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;}
+.tag{font-size:.62rem;font-weight:600;letter-spacing:.04em;padding:.18rem .55rem;border-radius:20px;text-transform:uppercase;}
+.t-chaud{background:rgba(107,33,168,.12);color:var(--violet);}
+.t-froid{background:rgba(37,99,235,.12);color:var(--blue);}
+.t-direct{background:rgba(22,163,74,.12);color:#15803D;}
+.t-indirect{background:rgba(220,38,38,.12);color:var(--red);}
+.t-market{background:rgba(107,33,168,.12);color:var(--violet);}
+.t-digital{background:rgba(99,102,241,.12);color:#4338CA;}
+.chev{font-size:.65rem;color:var(--text3);transition:transform .3s;}
+.sc.open .chev{transform:rotate(180deg);}
+.sc-body{display:none;padding:1.15rem;border-top:1px solid var(--border);}
+.sc.open .sc-body{display:block;}
+
+/* BUBBLE */
+.b-lbl{font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.09em;margin-bottom:.5rem;}
+.bubble{background:linear-gradient(135deg,rgba(107,33,168,.08),rgba(147,51,234,.05));border:1px solid var(--bv);border-radius:0 14px 14px 14px;padding:1rem 1.2rem;font-size:.87rem;line-height:1.8;margin-bottom:1rem;font-style:italic;color:var(--text);position:relative;}
+.bubble::before{content:'"';position:absolute;top:-10px;left:12px;font-size:1.6rem;color:var(--vl);font-style:normal;font-family:'Playfair Display',serif;}
+
+/* TACTIC BOX */
+.tbox{background:rgba(22,163,74,.07);border:1px solid rgba(22,163,74,.2);border-radius:10px;padding:.95rem 1.15rem;}
+.tt{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#15803D;margin-bottom:.65rem;}
+.tl{list-style:none;}
+.tl li{font-size:.83rem;line-height:1.65;padding:.22rem 0 .22rem 1.1rem;position:relative;color:var(--text2);}
+.tl li::before{content:'→';position:absolute;left:0;color:#16A34A;}
+
+/* OBJECTION CARDS */
+.obj{border-radius:11px;margin-bottom:.85rem;overflow:hidden;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow);}
+.obj-trig{display:flex;align-items:center;gap:.7rem;padding:.95rem 1.15rem;cursor:pointer;background:var(--bg2);transition:background .15s;}
+.obj-trig:hover{background:var(--bg3);}
+.obj-ico{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.obj-ttl{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--text);flex:1;}
+.obj-body{display:none;padding:1.15rem;border-top:1px solid var(--border);}
+.obj.open .obj-body{display:block;}
+.obj-method{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--violet);margin-bottom:.6rem;padding:.22rem .65rem;background:rgba(107,33,168,.08);border-radius:6px;display:inline-block;}
+
+/* MAGIC BOX */
+.mbox{background:linear-gradient(135deg,rgba(107,33,168,.08),rgba(147,51,234,.04));border:1px solid var(--bv);border-radius:13px;padding:1.4rem;margin-top:1.4rem;text-align:center;}
+.mt{font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--violet);margin-bottom:.65rem;}
+.mtxt{font-size:.9rem;font-weight:500;line-height:1.8;color:var(--text);}
+.mtxt strong{color:var(--violet);font-family:'Playfair Display',serif;}
+
+/* COMPLIANCE TABLE */
+.ctbl{width:100%;border-collapse:collapse;margin-top:.85rem;font-size:.83rem;}
+.ctbl th{padding:.65rem .9rem;font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;}
+.th-no{background:rgba(220,38,38,.1);color:#991B1B;text-align:left;}
+.th-ok{background:rgba(22,163,74,.1);color:#15803D;text-align:left;}
+.ctbl td{padding:.65rem .9rem;border-bottom:1px solid var(--border);line-height:1.55;vertical-align:top;}
+.td-no{background:rgba(220,38,38,.04);color:#991B1B;}
+.td-ok{background:rgba(22,163,74,.04);color:#15803D;}
+
+/* NAV BUTTONS */
+.nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:1.35rem;border-top:1px solid var(--border);gap:.9rem;}
+.btn{display:flex;align-items:center;gap:.45rem;padding:.72rem 1.45rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:.84rem;cursor:pointer;border:none;transition:all .2s;}
+.btn-p{background:var(--bg2);color:var(--text2);border:1px solid var(--border);}
+.btn-p:hover{background:var(--bg3);color:var(--text);}
+.btn-n{background:linear-gradient(135deg,var(--violet),var(--vl));color:white;box-shadow:var(--shadow2);}
+.btn-n:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(107,33,168,.25);}
+.btn-done{background:linear-gradient(135deg,#15803D,#16A34A);color:white;}
+
+/* PROFILE CARDS */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:.7rem;margin-bottom:1.75rem;}
+.pcard{border-radius:11px;padding:1rem;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow);}
+.p-r{border-color:rgba(220,38,38,.3);background:rgba(220,38,38,.04);}
+.p-b{border-color:rgba(37,99,235,.3);background:rgba(37,99,235,.04);}
+.p-j{border-color:rgba(107,33,168,.3);background:rgba(107,33,168,.04);}
+.p-v{border-color:rgba(22,163,74,.3);background:rgba(22,163,74,.04);}
+.pt{font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;margin-bottom:.2rem;}
+.pm{font-size:.72rem;color:var(--text2);margin-bottom:.4rem;}
+.pkws{display:flex;flex-wrap:wrap;gap:.25rem;}
+.pkw{font-size:.6rem;padding:.12rem .45rem;border-radius:20px;background:var(--bg2);color:var(--text2);}
+
+/* PIPELINE */
+.pipe{display:flex;flex-direction:column;gap:0;border-radius:13px;overflow:hidden;border:1px solid var(--border);margin-bottom:1.75rem;box-shadow:var(--shadow);}
+.ps{display:flex;align-items:center;gap:.9rem;padding:.82rem 1.15rem;border-bottom:1px solid var(--border);background:var(--card);}
+.ps:last-child{border-bottom:none;}
+.pd{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;font-family:'Syne',sans-serif;}
+.pl{font-size:.84rem;font-weight:500;flex:1;color:var(--text);}
+.pdesc{font-size:.72rem;color:var(--text3);}
+
+/* VIDEO CARD */
+.vcard{display:block;text-decoration:none;border-radius:14px;overflow:hidden;border:1px solid var(--bv);background:var(--card);transition:all .22s;margin-bottom:1.75rem;box-shadow:var(--shadow);}
+.vcard:hover{border-color:var(--vm);transform:translateY(-2px);box-shadow:var(--shadow2);}
+.vthumb{position:relative;background:linear-gradient(135deg,#4C1D95,#6B21A8);aspect-ratio:16/6;display:flex;align-items:center;overflow:hidden;}
+.vthumb::before{content:'';position:absolute;inset:0;opacity:.08;background:repeating-linear-gradient(45deg,white,white 1px,transparent 1px,transparent 18px);}
+.vinfo{position:absolute;left:1.75rem;top:50%;transform:translateY(-50%);}
+.vsrc{font-family:'Syne',sans-serif;font-size:.63rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:.35rem;}
+.vtit{font-family:'Playfair Display',serif;font-size:clamp(.95rem,2.2vw,1.4rem);font-weight:700;color:white;line-height:1.2;max-width:290px;}
+.vplay{position:absolute;right:2.25rem;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,0,0,.2);font-size:1.1rem;color:var(--violet);}
+.vfoot{padding:.9rem 1.15rem;display:flex;align-items:center;justify-content:space-between;gap:.9rem;flex-wrap:wrap;}
+
+/* NOTE ZONE */
+.nzone{background:var(--bg2);border:1px solid var(--border);border-radius:13px;padding:1.15rem;margin:1.25rem 0;}
+.nzh{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem;gap:.9rem;flex-wrap:wrap;}
+.nzt{font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;color:var(--violet);}
+.nprompt{font-size:.82rem;color:var(--text2);margin-bottom:.7rem;line-height:1.6;font-style:italic;}
+.nta{width:100%;min-height:90px;background:var(--card);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;line-height:1.7;padding:.8rem 1rem;resize:vertical;outline:none;transition:border-color .2s;}
+.nta:focus{border-color:var(--vm);}
+.nta::placeholder{color:var(--text3);font-style:italic;}
+.nacts{display:flex;align-items:center;justify-content:flex-end;gap:.45rem;margin-top:.6rem;}
+.nsave{font-size:.75rem;font-weight:600;padding:.4rem .85rem;border-radius:7px;border:none;cursor:pointer;transition:all .2s;background:var(--violet);color:white;font-family:'DM Sans',sans-serif;}
+.nsave:hover{background:var(--vm);}
+.nconf{font-size:.72rem;color:var(--green);display:none;}
+
+/* VISION DOMAIN */
+.vdgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:.65rem;margin-bottom:1.4rem;}
+.vd{border-radius:11px;padding:.95rem;border:1px solid var(--border);background:var(--card);}
+.vdt{font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.45rem;color:var(--violet);display:flex;align-items:center;gap:.35rem;}
+.vi{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.82rem;padding:.45rem .7rem;outline:none;transition:border-color .2s;margin-bottom:.3rem;}
+.vi:focus{border-color:var(--vm);}
+.vi::placeholder{color:var(--text3);font-style:italic;}
+
+/* ENGAGEMENT */
+.engcard{background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(13,148,136,.07));border:1px solid var(--bv);border-radius:15px;padding:1.65rem;margin:1.4rem 0;text-align:center;}
+.engi{font-size:2.4rem;margin-bottom:.85rem;}
+.engt{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;margin-bottom:.65rem;color:var(--violet);}
+.engtx{font-size:.85rem;color:var(--text2);line-height:1.7;max-width:460px;margin:0 auto;}
+
+/* INTRO HERO */
+.ihero{text-align:center;padding:2rem 1rem 2.25rem;}
+.ibadge{display:inline-flex;align-items:center;gap:.45rem;background:rgba(107,33,168,.08);border:1px solid var(--bv);color:var(--violet);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.35rem 1rem;border-radius:20px;margin-bottom:1.35rem;}
+.ihero h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.1;margin-bottom:.85rem;color:var(--text);}
+.ihero h2 em{color:var(--vm);font-style:italic;}
+.ihero p{font-size:.95rem;color:var(--text2);max-width:500px;margin:0 auto 2.25rem;line-height:1.75;font-weight:300;}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:.65rem;margin-bottom:2.25rem;}
+.ov-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:.95rem .65rem;cursor:pointer;transition:all .22s;color:var(--text);display:block;text-align:center;box-shadow:var(--shadow);}
+.ov-card:hover{background:var(--bg2);border-color:var(--vm);transform:translateY(-2px);box-shadow:var(--shadow2);}
+.ov-e{font-size:1.5rem;margin-bottom:.35rem;}
+.ov-n{font-size:.58rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--violet);margin-bottom:.18rem;}
+.ov-nm{font-family:'Playfair Display',serif;font-size:.77rem;font-weight:700;line-height:1.3;color:var(--text);}
+.btn-start{display:inline-flex;align-items:center;gap:.55rem;background:linear-gradient(135deg,var(--violet),var(--vl));color:white;padding:.9rem 1.9rem;border-radius:11px;font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;border:none;box-shadow:var(--shadow2);transition:all .2s;}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(107,33,168,.25);}
+
+/* QUOTE */
+.qbox{background:var(--bg2);border-left:3px solid var(--vm);border-radius:0 11px 11px 0;padding:1rem 1.15rem;margin:1rem 0;font-style:italic;font-size:.88rem;line-height:1.7;color:var(--text);}
+.qa{font-size:.72rem;color:var(--text3);margin-top:.45rem;font-style:normal;}
+
+/* MINDSET CARD */
+.mc{border-radius:11px;padding:1rem 1.15rem;margin-bottom:.7rem;border:1px solid var(--border);display:flex;align-items:flex-start;gap:.8rem;background:var(--card);box-shadow:var(--shadow);}
+.mc-i{font-size:1.3rem;flex-shrink:0;margin-top:.08rem;}
+.mc-t{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;margin-bottom:.25rem;color:var(--violet);}
+.mc-tx{font-size:.83rem;line-height:1.65;color:var(--text2);}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:grid;gap:.4rem;}
+.checklist li{display:flex;align-items:flex-start;gap:.7rem;font-size:.86rem;line-height:1.6;padding:.6rem .85rem;border-radius:9px;background:var(--card);border:1px solid var(--border);cursor:pointer;transition:all .2s;color:var(--text);}
+.checklist li:hover{background:var(--bg2);border-color:var(--vm);}
+.checklist li.checked{background:rgba(22,163,74,.06);border-color:rgba(22,163,74,.3);text-decoration:line-through;color:var(--text3);}
+.cl-box{width:19px;height:19px;border-radius:5px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.65rem;transition:all .2s;margin-top:.1rem;}
+.checklist li.checked .cl-box{background:var(--green);border-color:var(--green);color:white;}
+
+/* SEARCH OVERLAY */
+#srch-ov{display:none;position:fixed;inset:0;background:rgba(42,31,74,.45);z-index:200;padding:4rem 1.5rem 2rem;backdrop-filter:blur(4px);}
+.srch-box{background:var(--card);border:1px solid var(--bv);border-radius:14px;max-width:540px;margin:0 auto;max-height:65vh;overflow-y:auto;padding:.9rem;box-shadow:var(--shadow2);}
+.sr-item{padding:.78rem .9rem;border-radius:9px;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--text);}
+.sr-item:hover{background:var(--bg2);}
+.sr-e{font-size:1.1rem;flex-shrink:0;}
+.sr-t{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--violet);}
+.sr-s{font-size:.7rem;color:var(--text3);margin-top:.08rem;}
+.sr-empty{text-align:center;padding:2rem;color:var(--text3);font-size:.85rem;}
+
+/* DOCUMENT LINKS */
+.doc-card{border-radius:11px;padding:.88rem 1rem;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--text);transition:all .2s;box-shadow:var(--shadow);}
+.doc-card:hover{background:var(--bg2);border-color:var(--vm);}
+.doc-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.83rem;color:var(--violet);}
+.doc-sub{font-size:.68rem;color:var(--text3);}
+
+/* VIDEO LINK */
+.vlink{display:flex;align-items:center;gap:.75rem;padding:.75rem .9rem;border-radius:10px;background:var(--card);border:1px solid var(--border);text-decoration:none;color:var(--text);transition:all .2s;box-shadow:var(--shadow);}
+.vlink:hover{background:var(--bg2);border-color:var(--vm);}
+.vlink-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--violet),var(--vl));display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;color:white;}
+.vlink-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.83rem;color:var(--violet);}
+.vlink-sub{font-size:.68rem;color:var(--text3);}
+
+/* STEP GRID */
+.step-grid{display:grid;gap:0;border-radius:13px;overflow:hidden;border:1px solid var(--border);margin-bottom:1.5rem;box-shadow:var(--shadow);}
+.step{display:flex;align-items:flex-start;gap:.85rem;padding:.9rem 1.1rem;border-bottom:1px solid var(--border);background:var(--card);}
+.step:last-child{border-bottom:none;}
+.step-num{min-width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.72rem;flex-shrink:0;color:white;}
+.step-t{font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;margin-bottom:.22rem;color:var(--violet);}
+.step-tx{font-size:.82rem;line-height:1.65;color:var(--text2);}
+
+/* RANG GRID */
+.rang-row{display:flex;align-items:center;gap:1rem;padding:.9rem 1.15rem;border-bottom:1px solid var(--border);background:var(--card);transition:background .15s;}
+.rang-row:last-child{border-bottom:none;}
+.rang-row:hover{background:var(--bg2);}
+.rang-emoji-big{font-size:1.6rem;flex-shrink:0;width:42px;text-align:center;}
+.rang-name-big{font-family:'Playfair Display',serif;font-weight:700;font-size:.92rem;margin-bottom:.15rem;}
+.rang-cond{font-size:.78rem;color:var(--text2);line-height:1.5;}
+.rang-badge{font-size:.62rem;font-weight:700;padding:.22rem .55rem;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+
+/* GLOSSARY */
+.gloss-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.65rem;margin-bottom:1.75rem;}
+.gloss-card{border-radius:11px;padding:1rem 1.1rem;background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);}
+.gloss-term{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--violet);margin-bottom:.3rem;display:flex;align-items:center;gap:.5rem;}
+.gloss-def{font-size:.83rem;line-height:1.65;color:var(--text2);}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:.65rem;margin-bottom:1.75rem;}
+.kpi-card{border-radius:11px;padding:1rem;background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);}
+.kpi-label{font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--violet);margin-bottom:.6rem;}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;}
+.kpi-box{background:var(--bg2);border-radius:7px;padding:.5rem .65rem;text-align:center;}
+.kpi-period{font-size:.62rem;color:var(--text3);margin-bottom:.2rem;}
+.kpi-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:var(--violet);}
+
+/* BOOK LIST */
+.book-item{font-size:.84rem;line-height:1.5;padding:.5rem .8rem;background:var(--card);border-radius:9px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:.6rem;margin-bottom:.35rem;cursor:pointer;transition:all .2s;}
+.book-item:hover{background:var(--bg2);border-color:var(--vm);}
+.book-item.read{background:rgba(22,163,74,.06);border-color:rgba(22,163,74,.25);}
+.book-check{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.65rem;transition:all .2s;margin-top:.1rem;}
+.book-item.read .book-check{background:var(--green);border-color:var(--green);color:white;}
+.book-author{font-size:.7rem;color:var(--text3);white-space:nowrap;margin-top:.1rem;}
+
+/* FAST START TIMELINE */
+.fs-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.15rem;border-radius:11px;border:1px solid var(--border);background:var(--card);margin-bottom:.65rem;box-shadow:var(--shadow);}
+.fs-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:.85rem;flex-shrink:0;color:white;}
+.fs-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.92rem;margin-bottom:.22rem;color:var(--violet);}
+.fs-desc{font-size:.83rem;line-height:1.65;color:var(--text2);}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  aside{display:none;}
+  main{padding:1.15rem;}
+  header{padding:.8rem 1rem;}
+  .h-search{max-width:100%;}
+}
+</style>
+</head>
+<body>
+<div id="pbar"></div>
+<div id="srch-ov" onclick="closeSrch(event)"><div class="srch-box" id="srch-box"><div id="sr"></div></div></div>
+<header>
+  <a class="brand" href="index.html">Destination <em>💎</em></a>
+  <div class="h-sep"></div>
+  <span class="mod-badge">Module 05</span>
+  <span class="h-title">Plan de <em>Rémunération</em></span>
+  <div class="h-search"><span>🔍</span><input type="text" placeholder="Rechercher dans la formation…" oninput="doSearch(this.value)" onfocus="if(this.value.trim())openSrch()"></div>
+  
+  <button class="audio-btn" id="ab" onclick="toggleAudio()" title="Lire ce chapitre">🔊</button>
+  <span class="plabel" id="plbl">0 / ? chapitres</span>
+</header>
+<div class="layout">
+<aside>
+  <div class="s-section">
+    <div class="s-section-title">Modules</div>
+    <a class="s-module-btn" href="index.html"><div class="s-mod-icon">🏠</div><div class="s-mod-name">Accueil</div></a>
+    <a class="s-module-btn" href="module-reves-engagement.html"><div class="s-mod-icon">🌟</div><div class="s-mod-name">Rêves & Engagement</div></a>
+    <a class="s-module-btn" href="module-liste-contacts.html"><div class="s-mod-icon">📋</div><div class="s-mod-name">Liste de Contacts</div></a>
+    <a class="s-module-btn" href="module-invitation-zinzino.html"><div class="s-mod-icon">✉️</div><div class="s-mod-name">L'Art de l'Invitation</div></a>
+    <a class="s-module-btn" href="module-demarrage.html"><div class="s-mod-icon">🚀</div><div class="s-mod-name">Mon Démarrage</div></a>
+    <a class="s-module-btn current" href="module-remuneration.html"><div class="s-mod-icon">💰</div><div class="s-mod-name">Plan de Rémunération</div></a>
+    <div class="s-chapter-list">
+      <div class="s-chapter-item active" id="ci0" onclick="goTo(0)"><span>🏠</span> Introduction <div class="n-chk" id="chk0" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci1" onclick="goTo(1)"><span>📖</span> Glossaire Zinzino <div class="n-chk" id="chk1" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci2" onclick="goTo(2)"><span>🏆</span> Fast Start <div class="n-chk" id="chk2" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci3" onclick="goTo(3)"><span>💎</span> Les Rangs <div class="n-chk" id="chk3" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci4" onclick="goTo(4)"><span>💡</span> Comprendre ses revenus <div class="n-chk" id="chk4" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+    </div>
+    <a class="s-module-btn" href="module-outils.html"><div class="s-mod-icon">🛠️</div><div class="s-mod-name">Mes Outils</div></a>
+  </div>
+</aside>
+
+<main>
+
+<!-- S0 INTRO -->
+<div class="section active" id="s0">
+  <div class="ihero">
+    <div class="ibadge">💰 Module 05 · Rémunération</div>
+    <h2>Plan de<br><em>Rémunération</em></h2>
+    <p>Comprendre comment fonctionnent les crédits, les rangs et les commissions — pour savoir où vous en êtes et tracer votre chemin vers la liberté financière.</p>
+    <div class="ov-grid">
+      <div class="ov-card" onclick="goTo(1)"><div class="ov-e">📖</div><div class="ov-n">Chap.1</div><div class="ov-nm">Glossaire</div></div>
+      <div class="ov-card" onclick="goTo(2)"><div class="ov-e">🏆</div><div class="ov-n">Chap.2</div><div class="ov-nm">Fast Start</div></div>
+      <div class="ov-card" onclick="goTo(3)"><div class="ov-e">💎</div><div class="ov-n">Chap.3</div><div class="ov-nm">Les Rangs</div></div>
+      <div class="ov-card" onclick="goTo(4)"><div class="ov-e">💡</div><div class="ov-n">Chap.4</div><div class="ov-nm">Mes revenus</div></div>
+    </div>
+    <button class="btn-start" onclick="goTo(1)">Commencer →</button>
+  </div>
+  <div class="hl"><strong>Règle d'or :</strong> Les montants exacts et pourcentages de commission évoluent. Ce module explique les <em>principes</em> et la <em>logique</em> du plan. Pour les chiffres actualisés, consultez toujours votre Back Office → File Library → Compensation Plan.</div>
+  <div class="slbl">Ce que vous allez apprendre</div>
+  <div class="cgrid">
+    <div class="ccard"><div class="cc-icon">📖</div><div class="cc-title">Le glossaire complet</div><div class="cc-text">PCP, crédit, upline, downline, rang, Z4F, ECB… tous les termes Zinzino expliqués clairement, sans jargon.</div></div>
+    <div class="ccard"><div class="cc-icon">🏆</div><div class="cc-title">Le Fast Start</div><div class="cc-text">Les étapes concrètes de progression — ce qu'il faut faire, dans quel ordre, pour construire rapidement des bases solides.</div></div>
+    <div class="ccard"><div class="cc-icon">💎</div><div class="cc-title">Les rangs</div><div class="cc-text">De Partenaire à Diamant — les conditions de chaque rang et ce que ça change pour vos commissions.</div></div>
+    <div class="ccard"><div class="cc-icon">💡</div><div class="cc-title">Comment ça se calcule</div><div class="cc-text">La logique des revenus récurrents — pourquoi les abonnements clients sont la clé d'un revenu stable et croissant.</div></div>
+  </div>
+  <div class="nav-btns"><div></div><button class="btn btn-n" onclick="goTo(1)">Chapitre 1 : Le Glossaire →</button></div>
+</div>
+
+<!-- S1 GLOSSAIRE -->
+<div class="section" id="s1">
+  <div class="ch c-orange">
+    <div class="ch-emoji">📖</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 1 — Vocabulaire</div><h2>Glossaire<br><em>Zinzino</em></h2><p>Tous les termes que vous entendrez dans les réunions, les zooms et les formations — expliqués simplement.</p></div>
+  </div>
+  <div class="gloss-grid">
+    <div class="gloss-card"><div class="gloss-term">💰 PCP</div><div class="gloss-def"><strong>Personal Customer Points.</strong> Les points générés par vos propres ventes à des clients. Chaque produit vendu en abonnement génère un certain nombre de PCP par mois. C'est votre volume personnel.</div></div>
+    <div class="gloss-card"><div class="gloss-term">⭐ Crédit</div><div class="gloss-def"><strong>Unité de volume.</strong> Les crédits sont générés par les PCP de votre équipe entière (vous + vos partenaires + leurs équipes). Plus votre réseau génère de PCP, plus vous accumulez de crédits — et plus vos commissions sont élevées.</div></div>
+    <div class="gloss-card"><div class="gloss-term">🔄 Z4F — Zinzino 4 Free</div><div class="gloss-def"><strong>Votre abonnement automatique mensuel.</strong> En ayant 4 clients abonnés actifs, vos produits personnels deviennent gratuits. Z4F = "Zinzino For Free". C'est aussi ce qui génère vos PCP récurrents chaque mois.</div></div>
+    <div class="gloss-card"><div class="gloss-term">📦 ECB — Extra Customer Bonus</div><div class="gloss-def"><strong>Bonus supplémentaire</strong> accordé lorsque vous achetez un Partner Kit. L'ECB génère des crédits additionnels en démarrage pour accélérer votre qualification aux premiers rangs.</div></div>
+    <div class="gloss-card"><div class="gloss-term">⬆️ Upline</div><div class="gloss-def"><strong>Vos parrains/marraines</strong> — les partenaires qui vous ont recruté et ceux au-dessus d'eux dans l'organisation. Votre upline touche une commission sur votre activité. C'est aussi votre réseau de soutien principal.</div></div>
+    <div class="gloss-card"><div class="gloss-term">⬇️ Downline</div><div class="gloss-def"><strong>Votre équipe</strong> — les partenaires que vous avez recrutés et tous ceux qu'ils ont recrutés à leur tour. Votre downline génère des crédits qui s'ajoutent aux vôtres pour déterminer votre rang et vos commissions.</div></div>
+    <div class="gloss-card"><div class="gloss-term">🏷️ Rang</div><div class="gloss-def"><strong>Votre niveau dans l'organisation.</strong> Le rang détermine le pourcentage de commission que vous percevez sur le volume de votre équipe. Il progresse au fur et à mesure que vous atteignez des paliers de PCP et de crédits.</div></div>
+    <div class="gloss-card"><div class="gloss-term">🏆 Fast Start</div><div class="gloss-def"><strong>Programme de démarrage accéléré.</strong> Un ensemble de paliers à atteindre rapidement (idéalement dans les 30 à 90 premiers jours) pour générer des bonus supplémentaires et construire des fondations solides.</div></div>
+    <div class="gloss-card"><div class="gloss-term">🔁 Revenu récurrent</div><div class="gloss-def"><strong>Revenus qui se renouvellent chaque mois automatiquement</strong> grâce aux abonnements actifs de vos clients. C'est la clé du modèle Zinzino — chaque nouveau client abonné augmente votre revenu mensuel de façon durable.</div></div>
+    <div class="gloss-card"><div class="gloss-term">📊 Back Office (BO)</div><div class="gloss-def"><strong>Votre espace de gestion en ligne.</strong> Deux back-offices distincts : le BO Partenaire (suivi activité, équipe, commissions) et le BO Client (commandes, abonnements). Voir Module 04 — Mon Démarrage pour le détail.</div></div>
+    <div class="gloss-card"><div class="gloss-term">🧪 BalanceTest</div><div class="gloss-def"><strong>Test sanguin à domicile.</strong> Mesure le ratio Oméga-6/Oméga-3 dans les globules rouges. Analysé par le laboratoire indépendant Vitas (Norvège). Résultat en 10-15 jours. C'est le point de départ et la preuve de l'efficacité du protocole à 120 jours.</div></div>
+    <div class="gloss-card"><div class="gloss-term">🌐 Duplication</div><div class="gloss-def"><strong>Le principe fondateur du marketing de réseau.</strong> Vous ne travaillez pas seul — vous formez des partenaires qui font la même chose que vous. Leur activité génère des revenus supplémentaires pour vous. La duplication transforme votre temps en levier.</div></div>
+  </div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(0)">← Introduction</button><button class="btn btn-n" onclick="goTo(2)">Chapitre 2 : Fast Start →</button></div>
+</div>
+
+<!-- S2 FAST START -->
+<div class="section" id="s2">
+  <div class="ch c-teal">
+    <div class="ch-emoji">🏆</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 2 — Progression</div><h2>Fast Start :<br><em>Les étapes concrètes</em></h2><p>Ce que vous devez faire, dans quel ordre, pour construire des fondations solides — idéalement dans vos 30 à 90 premiers jours.</p></div>
+  </div>
+  <div class="hl"><strong>Pourquoi c'est important :</strong> Le Fast Start n'est pas juste un programme de bonus. C'est le chemin qui crée les bonnes habitudes, les premiers résultats et la confiance dont vous avez besoin pour continuer.</div>
+  <div class="slbl">Les 5 étapes du Fast Start</div>
+  <div class="fs-timeline">
+    <div class="fs-item" style="border-color:rgba(196,181,253,.3);background:rgba(196,181,253,.05)">
+      <div class="fs-circle" style="background:linear-gradient(135deg,var(--violet),var(--vl));color:var(--text)">①</div>
+      <div class="fs-content">
+        <div class="fs-title" style="color:var(--vm)">Atteindre 4 PCP — via votre compte distributeur</div>
+        <div class="fs-desc">4 clients abonnés actifs. C'est aussi le palier du Z4F (vos produits personnels deviennent gratuits). C'est votre première victoire concrète.</div>
+        <span class="fs-tip" style="background:rgba(196,181,253,.12);color:var(--vm)">+ 20 crédits si achat d'un kit ECB</span>
+      </div>
+    </div>
+    <div class="fs-item" style="border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.05)">
+      <div class="fs-circle" style="background:linear-gradient(135deg,#1E40AF,var(--blue));color:var(--text)">②</div>
+      <div class="fs-content">
+        <div class="fs-title" style="color:#93C5FD">Enregistrer 2 partenaires</div>
+        <div class="fs-desc">Vos deux premiers membres d'équipe. Choisissez des personnes motivées, disponibles et formables. La qualité prime sur la quantité à cette étape.</div>
+        <span class="fs-tip" style="background:rgba(59,130,246,.1);color:#93C5FD">La duplication commence ici</span>
+      </div>
+    </div>
+    <div class="fs-item" style="border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.05)">
+      <div class="fs-circle" style="background:linear-gradient(135deg,#065F46,var(--green));color:var(--text)">③</div>
+      <div class="fs-content">
+        <div class="fs-title" style="color:#6EE7B7">Aider chacun de vos 2 partenaires à faire 2 partenaires</div>
+        <div class="fs-desc">C'est ici que commence vraiment le marketing de réseau. Vous ne construisez plus seul — votre équipe construit avec vous. 2 × 2 = 4 partenaires actifs dans votre downline.</div>
+        <span class="fs-tip" style="background:rgba(16,185,129,.1);color:#6EE7B7">L'effet de levier s'active</span>
+      </div>
+    </div>
+    <div class="fs-item" style="border-color:rgba(249,115,22,.3);background:rgba(249,115,22,.05)">
+      <div class="fs-circle" style="background:linear-gradient(135deg,#92400E,#D97706);color:var(--text)">④</div>
+      <div class="fs-content">
+        <div class="fs-title" style="color:#FDba74">Atteindre 10 PCP — et 50 crédits</div>
+        <div class="fs-desc">10 abonnements clients actifs au total dans votre organisation. Ce palier génère environ 40 crédits mensuels récurrents — une base de revenu stable.</div>
+        <span class="fs-tip" style="background:rgba(249,115,22,.1);color:#FDba74">Revenu récurrent activé</span>
+      </div>
+    </div>
+    <div class="fs-item" style="border-color:rgba(147,51,234,.4);background:rgba(147,51,234,.08)">
+      <div class="fs-circle" style="background:linear-gradient(135deg,var(--violet),var(--vl));color:var(--text)">⑤</div>
+      <div class="fs-content">
+        <div class="fs-title" style="color:var(--vm)">Atteindre 25 PCP — et 125 crédits → Rang Leader</div>
+        <div class="fs-desc">L'objectif de référence du Fast Start. À ce palier, vous avez une équipe fonctionnelle, un revenu récurrent significatif et accès aux commissions d'équipe les plus avantageuses.</div>
+        <span class="fs-tip" style="background:rgba(147,51,234,.15);color:var(--vm)">🎯 Objectif Leader — rang de référence</span>
+      </div>
+    </div>
+  </div>
+  <div class="mbox"><div class="mt">⚡ La règle des 15 jours</div><div class="mtxt">Les partenaires qui atteignent les 3 premières étapes dans leurs 15 premiers jours ont 3× plus de chances de rester actifs à 6 mois. <strong>L'élan du démarrage est irremplaçable.</strong></div></div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(1)">← Glossaire</button><button class="btn btn-n" onclick="goTo(3)">Chapitre 3 : Les Rangs →</button></div>
+</div>
+
+<!-- S3 LES RANGS -->
+<div class="section" id="s3">
+  <div class="ch c-violet">
+    <div class="ch-emoji">💎</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 3 — Progression</div><h2>Les rangs<br>de <em>progression</em></h2><p>Chaque rang ouvre de nouvelles possibilités de commissions. Voici le chemin de Partenaire à Diamant.</p></div>
+  </div>
+  <div class="hl"><strong>Important :</strong> Les pourcentages exacts varient et sont mis à jour par Zinzino. Ce module présente la logique et les paliers — consultez votre Back Office pour les chiffres actualisés.</div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:13px;overflow:hidden;margin-bottom:1.75rem">
+    <div class="rang-row"><div class="rang-emoji-big">🤝</div><div class="rang-info"><div class="rang-name-big" style="color:var(--vm)">Partenaire</div><div class="rang-cond">Point de départ · Premiers PCP · Premiers abonnements clients</div></div><div class="rang-badge" style="background:rgba(196,181,253,.12);color:var(--vm);border:1px solid rgba(196,181,253,.22)">Démarrage</div></div>
+    <div class="rang-row"><div class="rang-emoji-big">🌱</div><div class="rang-info"><div class="rang-name-big" style="color:#86EFAC">Active Partner</div><div class="rang-cond">Premiers clients actifs · Activité personnelle établie</div></div><div class="rang-badge" style="background:rgba(34,197,94,.1);color:#86EFAC;border:1px solid rgba(34,197,94,.2)">Actif</div></div>
+    <div class="rang-row"><div class="rang-emoji-big">⭐</div><div class="rang-info"><div class="rang-name-big" style="color:#FCD34D">Leader</div><div class="rang-cond">25 PCP minimum · 125 crédits/mois · Équipe fonctionnelle</div></div><div class="rang-badge" style="background:rgba(234,179,8,.12);color:#FCD34D;border:1px solid rgba(234,179,8,.22)">🎯 Objectif Fast Start</div></div>
+    <div class="rang-row"><div class="rang-emoji-big">🏆</div><div class="rang-info"><div class="rang-name-big" style="color:#E2E8F0">Silver Leader</div><div class="rang-cond">Volume équipe croissant · Plusieurs leaders dans votre downline</div></div><div class="rang-badge" style="background:rgba(226,232,240,.08);color:#E2E8F0;border:1px solid rgba(226,232,240,.18)">Avancé</div></div>
+    <div class="rang-row"><div class="rang-emoji-big">👑</div><div class="rang-info"><div class="rang-name-big" style="color:#FBBF24">Gold Leader</div><div class="rang-cond">Grande équipe structurée · Plusieurs Silver Leaders en downline</div></div><div class="rang-badge" style="background:rgba(251,191,36,.1);color:#FBBF24;border:1px solid rgba(251,191,36,.22)">Senior</div></div>
+    <div class="rang-row"><div class="rang-emoji-big">💠</div><div class="rang-info"><div class="rang-name-big" style="color:#93C5FD">Platinum Leader</div><div class="rang-cond">Organisation profonde · Revenus d'équipe significatifs</div></div><div class="rang-badge" style="background:rgba(59,130,246,.1);color:#93C5FD;border:1px solid rgba(59,130,246,.2)">Élite</div></div>
+    <div class="rang-row" style="background:rgba(147,51,234,.07)"><div class="rang-emoji-big">💎</div><div class="rang-info"><div class="rang-name-big" style="color:var(--vm)">Diamant</div><div class="rang-cond">Rang suprême · Liberté financière · Plusieurs Gold/Platinum en downline</div></div><div class="rang-badge" style="background:rgba(147,51,234,.2);color:var(--vm);border:1px solid rgba(147,51,234,.35)">💎 Sommet</div></div>
+  </div>
+  <div class="qbox">« Le rang ne se décrète pas — il se construit client par client, partenaire par partenaire. Chaque abonnement que vous créez aujourd'hui génère un revenu récurrent pour les mois et années à venir. »<div class="qa">— Principe du marketing de réseau à abonnements récurrents</div></div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(2)">← Fast Start</button><button class="btn btn-n" onclick="goTo(4)">Chapitre 4 →</button></div>
+</div>
+
+<!-- S4 COMPRENDRE SES REVENUS -->
+<div class="section" id="s4">
+  <div class="ch c-blue">
+    <div class="ch-emoji">💡</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 4 — Revenus</div><h2>Comprendre<br><em>ses revenus</em></h2><p>La logique du revenu récurrent — pourquoi ce modèle est différent d'un emploi traditionnel et comment il fonctionne dans la durée.</p></div>
+  </div>
+  <div class="slbl">Revenu traditionnel vs revenu récurrent</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.75rem">
+    <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(239,68,68,.2)">
+      <div style="background:rgba(239,68,68,.1);padding:.7rem 1rem;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;color:#FCA5A5">💼 Emploi traditionnel</div>
+      <div style="padding:.9rem 1rem;display:grid;gap:.35rem">
+        <div style="font-size:.79rem;opacity:.85;padding-left:.9rem;position:relative">→ <span>Vous échangez votre temps contre de l'argent</span></div>
+        <div style="font-size:.79rem;opacity:.85;padding-left:.9rem">→ <span>Si vous ne travaillez pas, vous ne gagnez pas</span></div>
+        <div style="font-size:.79rem;opacity:.85;padding-left:.9rem">→ <span>Revenu plafonné par votre temps disponible</span></div>
+        <div style="font-size:.79rem;opacity:.85;padding-left:.9rem">→ <span>Tout recommence à zéro chaque mois</span></div>
+      </div>
+    </div>
+    <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(16,185,129,.22)">
+      <div style="background:rgba(16,185,129,.1);padding:.7rem 1rem;font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;color:#6EE7B7">🔄 Revenu récurrent Zinzino</div>
+      <div style="padding:.9rem 1rem;display:grid;gap:.35rem">
+        <div style="font-size:.79rem;opacity:.85;padding-left:.9rem">→ <span>Chaque abonnement client = revenu mensuel automatique</span></div>
+        <div style="font-size:.79rem;opacity:.85;padding-left:.9rem">→ <span>Vous dormez, vos abonnements continuent</span></div>
+        <div style="font-size:.79rem;opacity:.85;padding-left:.9rem">→ <span>Plus vous construisez, plus ça croît</span></div>
+        <div style="font-size:.79rem;opacity:.85;padding-left:.9rem">→ <span>Chaque mois s'ajoute au précédent</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="slbl">La logique des 3 sources de revenus</div>
+  <div class="mc"><div class="mc-i">1️⃣</div><div><div class="mc-t">Commissions sur vos ventes personnelles</div><div class="mc-tx">Chaque fois qu'un client que vous avez recruté renouvelle son abonnement, vous touchez une commission. Sans aucune action de votre part ce mois-là.</div></div></div>
+  <div class="mc"><div class="mc-i">2️⃣</div><div><div class="mc-t">Commissions sur les ventes de votre équipe</div><div class="mc-tx">Quand vos partenaires recrutent des clients, vous touchez également un pourcentage. C'est l'effet de levier — leur travail contribue à vos revenus.</div></div></div>
+  <div class="mc"><div class="mc-i">3️⃣</div><div><div class="mc-t">Bonus de rang et Fast Start</div><div class="mc-tx">Des bonus supplémentaires quand vous atteignez des paliers ou aidez vos partenaires à atteindre leurs premiers rangs. Ces bonus accélèrent le démarrage.</div></div></div>
+  <div class="slbl">Ce que ça change concrètement</div>
+  <div class="cgrid">
+    <div class="ccard"><div class="cc-icon">📈</div><div class="cc-title">Mois 1 → Mois 6</div><div class="cc-text">Chaque client abonné que vous avez créé au mois 1 vous rapporte encore au mois 6 — sans effort supplémentaire. Votre travail passé travaille pour vous.</div></div>
+    <div class="ccard"><div class="cc-icon">🎯</div><div class="cc-title">L'objectif : 4 clients/mois</div><div class="cc-text">En recrutant 4 clients abonnés par mois régulièrement, votre revenu croît de façon prévisible. La constance bat l'intensité ponctuelle.</div></div>
+    <div class="ccard"><div class="cc-icon">🔑</div><div class="cc-title">La clé : l'abonnement</div><div class="cc-text">Un client qui commande une seule fois ne génère qu'une commission unique. Un client en abonnement génère une commission chaque mois, indéfiniment tant qu'il est abonné.</div></div>
+    <div class="ccard"><div class="cc-icon">📊</div><div class="cc-title">Suivez dans votre BO</div><div class="cc-text">Votre Back Office affiche en temps réel vos PCP, crédits, rang actuel et historique de commissions. Consultez-le chaque semaine pour piloter votre activité.</div></div>
+  </div>
+  <a href="https://www.zinzinoplay.com/fr/watch/472" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(147,51,234,.1);border:1px solid rgba(147,51,234,.25);color:var(--vm);padding:.65rem 1.1rem;border-radius:9px;font-size:.79rem;font-weight:600;text-decoration:none;margin-bottom:1rem">▶ Vidéo officielle — Plan de Rémunération ↗</a>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(3)">← Les Rangs</button><button class="btn btn-done" onclick="goTo(0)">✓ Terminé</button></div>
+</div>
+
+</main>
+</div>
+<script>
+
+const _SD=[];
+function initSearch(d){d.forEach(x=>_SD.push(x));}
+function doSearch(v){if(!v.trim()){closeSrch();return;}openSrch();const q=v.toLowerCase();const r=_SD.filter(d=>d.t.toLowerCase().includes(q)||d.s.toLowerCase().includes(q)||(d.kw||[]).some(k=>k.includes(q)));document.getElementById('sr').innerHTML=r.length?r.map(x=>`<a class="sr-item" href="${x.href}"><span class="sr-e">${x.e}</span><div><div class="sr-t">${x.t}</div><div class="sr-s">${x.s}</div></div></a>`).join(''):`<div class="sr-empty">Aucun résultat pour « ${v} »</div>`;}
+function openSrch(){document.getElementById('srch-ov').style.display='block';}
+function closeSrch(e){if(!e||!document.getElementById('srch-box').contains(e.target))document.getElementById('srch-ov').style.display='none';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSrch();});
+function goTo(i){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('s'+i).classList.add('active');document.querySelectorAll('.s-chapter-item').forEach(n=>n.classList.remove('active'));const ni=document.getElementById('ci'+i);if(ni)ni.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});updatePbar();}
+function toggleChk(el){el.classList.toggle('done');el.textContent=el.classList.contains('done')?'✓':'';updatePbar();}
+function updatePbar(){const done=document.querySelectorAll('.n-chk.done').length,total=document.querySelectorAll('.n-chk').length;if(!total)return;document.getElementById('pbar').style.width=(done/total*100)+'%';const pl=document.getElementById('plbl');if(pl)pl.textContent=done+' / '+total+' chapitres';}
+function toggleSc(id){document.getElementById(id).classList.toggle('open');}
+function toggleObj(id){document.getElementById(id).classList.toggle('open');}
+
+
+initSearch([
+  {t:'Glossaire Zinzino',s:'PCP · Crédit · Z4F · Upline · Downline',e:'📖',href:'#',kw:['pcp','crédit','z4f','upline','glossaire']},
+  {t:'Fast Start — Les étapes',s:'4 PCP · 2 partenaires · Leader',e:'🏆',href:'#',kw:['fast start','pcp','partenaires']},
+  {t:'Les rangs de progression',s:'Leader · Gold · Diamant',e:'💎',href:'#',kw:['rangs','leader','diamant']},
+  {t:'Comprendre ses revenus',s:'Récurrent · Commissions · Abonnement',e:'💡',href:'#',kw:['revenus','récurrent','commissions']}
+]);
+
+
+let _synth=window.speechSynthesis,_utt=null,_reading=false;
+function _getText(){const s=document.querySelector('.section.active');if(!s)return'';const tags='h2,p,.bubble,.mc-tx,.cc-text,.hl,.tl li,.obj-ttl,.slbl,.qbox,.mtxt,.step-tx,.fs-desc,.gloss-def,.ch-text p';let t='';s.querySelectorAll(tags).forEach(e=>{const v=e.textContent.trim();if(v&&v.length>3)t+=v+'. ';});return t||s.textContent.replace(/\s+/g,' ').trim();}
+function toggleAudio(){const b=document.getElementById('ab');if(_reading){_synth.cancel();_reading=false;b.innerHTML='🔊';b.className='audio-btn';return;}const t=_getText();if(!t)return;_utt=new SpeechSynthesisUtterance(t);_utt.lang='fr-FR';_utt.rate=0.95;const v=_synth.getVoices().find(v=>v.lang.startsWith('fr'));if(v)_utt.voice=v;_utt.onstart=()=>{_reading=true;b.innerHTML='⏹';b.className='audio-btn reading';};_utt.onend=_utt.onerror=()=>{_reading=false;b.innerHTML='🔊';b.className='audio-btn';};_synth.speak(_utt);}
+const _g=goTo;goTo=function(i){if(_reading){_synth.cancel();_reading=false;const b=document.getElementById('ab');if(b){b.innerHTML='🔊';b.className='audio-btn';}}_g(i);};
+
+</script>
+</body>
+</html>
