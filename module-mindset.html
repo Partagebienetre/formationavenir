@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mindset & Croissance — Destination 💎</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+:root{--bg:#F3F0FA;--bg2:#EAE5F5;--bg3:#DDD6F0;--sidebar:#EDE8F8;--card:#FDFBFF;--text:#2A1F4A;--text2:#5A4D7A;--text3:#9080B0;--violet:#6B21A8;--vl:#9333EA;--vm:#7C3AED;--green:#16A34A;--red:#DC2626;--blue:#2563EB;--border:#D5CDE8;--bv:rgba(107,33,168,.2);--shadow:0 2px 12px rgba(107,33,168,.08);--shadow2:0 4px 20px rgba(107,33,168,.14);--orange:#D97706;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;line-height:1.6;}
+#pbar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#D97706,#F59E0B);width:0%;z-index:1000;transition:width .4s;}
+header{background:var(--card);border-bottom:2px solid var(--bv);padding:.85rem 1.5rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;box-shadow:var(--shadow);}
+.brand{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:900;color:var(--text);text-decoration:none;white-space:nowrap;}
+.brand em{color:var(--vm);font-style:italic;}
+.back{font-size:.82rem;color:var(--vm);text-decoration:none;font-weight:600;}
+.back:hover{opacity:.7;}
+.mod-badge{background:var(--orange);color:white;font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem;border-radius:20px;}
+.h-sep{width:1px;height:18px;background:var(--border);flex-shrink:0;}
+.audio-btn{width:38px;height:38px;border-radius:9px;background:var(--bg2);border:1.5px solid var(--border);color:var(--vm);font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.audio-btn:hover{background:var(--bv);}
+.audio-btn.reading{background:var(--vm);color:white;}
+.layout{display:flex;min-height:calc(100vh - 62px);}
+aside{width:255px;min-width:255px;background:var(--sidebar);border-right:1px solid var(--border);padding:1.25rem 0;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;}
+.s-section-title{font-family:'Syne',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);padding:.4rem 1.15rem .3rem;}
+.s-chapter-item{display:flex;align-items:center;gap:.55rem;padding:.45rem 1.15rem .45rem 2.3rem;cursor:pointer;font-size:.8rem;color:var(--text2);transition:all .15s;border-left:3px solid transparent;}
+.s-chapter-item:hover{background:var(--bg2);color:var(--violet);}
+.s-chapter-item.active{color:var(--violet);font-weight:600;background:var(--bg2);border-left-color:var(--orange);}
+.s-chapter-item::before{content:'›';color:var(--text3);font-size:.75rem;}
+.n-chk{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.55rem;flex-shrink:0;cursor:pointer;transition:all .2s;margin-left:auto;}
+.n-chk.done{background:var(--green);border-color:var(--green);color:white;}
+.back-to-idx{display:flex;align-items:center;gap:.5rem;padding:.75rem 1.15rem;font-size:.78rem;color:var(--text3);text-decoration:none;transition:color .15s;}
+.back-to-idx:hover{color:var(--violet);}
+main{flex:1;padding:2rem 2.25rem;max-width:900px;}
+.section{display:none;animation:fi .3s ease;}
+.section.active{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ch{display:flex;align-items:flex-start;gap:1.1rem;margin-bottom:2rem;padding:1.5rem 1.75rem;border-radius:14px;color:white;}
+.ch-emoji{font-size:2.4rem;flex-shrink:0;}
+.ch-tag{font-size:.63rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.82;margin-bottom:.35rem;}
+.ch-text h2{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,1.9rem);font-weight:900;line-height:1.15;margin-bottom:.4rem;}
+.ch-text p{font-size:.9rem;opacity:.88;line-height:1.65;max-width:520px;}
+.c-orange{background:linear-gradient(135deg,#78350F,#D97706);}
+.c-indigo{background:linear-gradient(135deg,#1E1B4B,#4338CA);}
+.c-teal{background:linear-gradient(135deg,#134E4A,#0D9488);}
+.c-violet{background:linear-gradient(135deg,#4C1D95,#6B21A8);}
+.c-green{background:linear-gradient(135deg,#14532D,#16A34A);}
+.slbl{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--violet);margin:1.75rem 0 .75rem;display:flex;align-items:center;gap:.55rem;font-style:italic;}
+.slbl::after{content:'';flex:1;height:1px;background:var(--border);}
+.hl{background:var(--bg2);border-left:3px solid var(--orange);border-radius:0 9px 9px 0;padding:.9rem 1.15rem;margin:1rem 0;font-size:.88rem;line-height:1.7;color:var(--text);}
+.hl strong{color:#92400E;}
+.qbox{background:var(--bg2);border-left:3px solid var(--vm);border-radius:0 11px 11px 0;padding:1rem 1.15rem;margin:1rem 0;font-style:italic;font-size:.88rem;line-height:1.7;color:var(--text);}
+.qa{font-size:.72rem;color:var(--text3);margin-top:.35rem;font-style:normal;}
+/* PENNY TABLE */
+.penny-table{background:var(--card);border:1px solid var(--border);border-radius:13px;overflow:hidden;margin:1.25rem 0;box-shadow:var(--shadow);}
+.pt-head{display:grid;grid-template-columns:1fr 1fr 1fr;background:linear-gradient(135deg,#78350F,#D97706);color:white;padding:.75rem 1rem;}
+.pt-head div{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.pt-row{display:grid;grid-template-columns:1fr 1fr 1fr;padding:.6rem 1rem;border-bottom:1px solid var(--border);font-size:.83rem;transition:background .15s;}
+.pt-row:last-child{border-bottom:none;}
+.pt-row:hover{background:var(--bg2);}
+.pt-day{color:var(--text3);}
+.pt-small{color:var(--text2);}
+.pt-big{color:#15803D;font-weight:700;font-family:'Syne',sans-serif;}
+/* HABIT CARDS */
+.mc{border-radius:11px;padding:1rem 1.15rem;margin-bottom:.7rem;border:1px solid var(--border);display:flex;align-items:flex-start;gap:.8rem;background:var(--card);box-shadow:var(--shadow);}
+.mc-i{font-size:1.3rem;flex-shrink:0;margin-top:.08rem;}
+.mc-t{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;margin-bottom:.25rem;color:var(--orange);}
+.mc-tx{font-size:.83rem;line-height:1.65;color:var(--text2);}
+/* PARADIGM STEPS */
+.par-step{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:.75rem;display:flex;gap:.85rem;box-shadow:var(--shadow);}
+.par-num{min-width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#1E1B4B,#4338CA);color:white;font-family:'Syne',sans-serif;font-weight:800;font-size:.82rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.par-t{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--violet);margin-bottom:.3rem;}
+.par-tx{font-size:.83rem;line-height:1.65;color:var(--text2);}
+.par-example{margin-top:.5rem;background:rgba(67,56,202,.07);border-radius:8px;padding:.6rem .85rem;font-size:.81rem;font-style:italic;color:var(--text);border-left:2px solid #4338CA;}
+/* INSIGHT CARDS - Spartacus */
+.insight-card{border-radius:13px;margin-bottom:.85rem;background:var(--card);border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow);}
+.insight-head{display:flex;align-items:center;gap:.75rem;padding:.9rem 1.1rem;cursor:pointer;background:var(--bg2);transition:background .15s;}
+.insight-head:hover{background:var(--bg3);}
+.insight-theme{font-family:'Syne',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.1rem;}
+.insight-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--text);}
+.insight-ico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0;background:rgba(215,119,6,.12);}
+.insight-body{display:none;padding:1.1rem;}
+.insight-card.open .insight-body{display:block;}
+.insight-chev{font-size:.65rem;color:var(--text3);transition:transform .3s;margin-left:auto;}
+.insight-card.open .insight-chev{transform:rotate(180deg);}
+/* KEYS GRID */
+.keys-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.75rem;margin:1.25rem 0;}
+.key-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:1rem;box-shadow:var(--shadow);}
+.key-ico{font-size:1.4rem;margin-bottom:.4rem;}
+.key-t{font-family:'Playfair Display',serif;font-weight:700;font-size:.83rem;color:var(--violet);margin-bottom:.3rem;}
+.key-tx{font-size:.78rem;line-height:1.6;color:var(--text2);}
+/* NAV */
+.nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:1.35rem;border-top:1px solid var(--border);gap:.9rem;}
+.btn{display:flex;align-items:center;gap:.45rem;padding:.72rem 1.45rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:.84rem;cursor:pointer;border:none;transition:all .2s;}
+.btn-p{background:var(--bg2);color:var(--text2);border:1px solid var(--border);}
+.btn-p:hover{background:var(--bg3);}
+.btn-n{background:linear-gradient(135deg,#78350F,var(--orange));color:white;box-shadow:var(--shadow2);}
+.btn-n:hover{transform:translateY(-1px);}
+.btn-done{background:linear-gradient(135deg,#15803D,#16A34A);color:white;}
+@media(max-width:768px){aside{display:none;}main{padding:1.25rem 1rem;}}
+</style>
+</head>
+<body>
+<div id="pbar"></div>
+<header>
+  <a href="index.html" class="brand">Destination <em>💎</em></a>
+  <div class="h-sep"></div>
+  <a href="index.html" class="back">← Accueil</a>
+  <div class="h-sep"></div>
+  <span class="mod-badge">MODULE 09</span>
+  <button class="audio-btn" id="ab" onclick="toggleAudio()" title="Lire">🔊</button>
+</header>
+
+<div class="layout">
+<aside>
+  <a href="index.html" class="back-to-idx">← Retour aux modules</a>
+  <div class="s-section-title">Mindset & Croissance</div>
+  <div class="s-chapter-item active" onclick="goTo(0)">📈 L'Effet Cumulé<div class="n-chk" id="chk0" onclick="toggleDone(event,0)"></div></div>
+  <div class="s-chapter-item" onclick="goTo(1)">🧬 Changer ses Paradigmes<div class="n-chk" id="chk1" onclick="toggleDone(event,1)"></div></div>
+  <div class="s-chapter-item" onclick="goTo(2)">⚡ Énergie & Compétences Leader<div class="n-chk" id="chk2" onclick="toggleDone(event,2)"></div></div>
+  <div class="s-chapter-item" onclick="goTo(3)">💪 Résilience & Persévérance<div class="n-chk" id="chk3" onclick="toggleDone(event,3)"></div></div>
+  <div class="s-chapter-item" onclick="goTo(4)">🏗️ Construire un Business Solide<div class="n-chk" id="chk4" onclick="toggleDone(event,4)"></div></div>
+</aside>
+
+<main>
+
+<!-- SECTION 0 - L'Effet Cumulé -->
+<div class="section active" id="s0">
+  <div class="ch c-orange">
+    <div class="ch-emoji">📈</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 09 · Mindset & Croissance</div>
+      <h2>L'Effet Cumulé</h2>
+      <p>Le principe le plus puissant du succès : de petites actions répétées chaque jour produisent des résultats extraordinaires.</p>
+    </div>
+  </div>
+
+  <div class="hl"><strong>Le principe :</strong> Ce n'est pas ce que vous faites de temps en temps qui définit votre vie — c'est ce que vous faites <em>chaque jour</em>. Les petites décisions prises au quotidien mènent soit là où vous voulez aller, soit tout droit au désastre.</div>
+
+  <div class="slbl">L'expérience du penny</div>
+  <p style="font-size:.85rem;color:var(--text2);margin-bottom:1rem;line-height:1.7;">Imaginez un penny qui double de valeur chaque jour. Après 5 jours, vous avez 16 centimes. Après 20 jours, 5 243 €. Après 31 jours ? Plus de 10 millions d'euros. C'est le pouvoir de la régularité dans le temps.</p>
+
+  <div class="penny-table">
+    <div class="pt-head"><div>Jour</div><div>Sans régularité</div><div>Avec régularité (×2)</div></div>
+    <div class="pt-row"><div class="pt-day">Jour 1</div><div class="pt-small">0,01 €</div><div class="pt-big">0,01 €</div></div>
+    <div class="pt-row"><div class="pt-day">Jour 5</div><div class="pt-small">0,05 €</div><div class="pt-big">0,16 €</div></div>
+    <div class="pt-row"><div class="pt-day">Jour 10</div><div class="pt-small">0,10 €</div><div class="pt-big">5,12 €</div></div>
+    <div class="pt-row"><div class="pt-day">Jour 20</div><div class="pt-small">0,20 €</div><div class="pt-big">5 243 €</div></div>
+    <div class="pt-row"><div class="pt-day">Jour 31</div><div class="pt-small">0,31 €</div><div class="pt-big">10 737 418 €</div></div>
+  </div>
+
+  <div class="slbl">Appliquer l'effet cumulé au marketing relationnel</div>
+
+  <div class="mc"><div class="mc-i">📞</div><div><div class="mc-t">Contacter 2 personnes par jour</div><div class="mc-tx">2 contacts par jour = 14 par semaine = 60 par mois = 730 par an. Si seulement 10% deviennent partenaires, vous avez 73 partenaires après un an de travail régulier.</div></div></div>
+  <div class="mc"><div class="mc-i">📚</div><div><div class="mc-t">Lire 10 pages par jour</div><div class="mc-tx">10 pages par jour = 3 650 pages par an = environ 12 livres de développement personnel. En 3 ans, vous aurez accumulé une expertise que peu de gens possèdent.</div></div></div>
+  <div class="mc"><div class="mc-i">🎥</div><div><div class="mc-t">Se former 20 minutes par jour</div><div class="mc-tx">20 minutes par jour = 120 heures par an de formation. Les zooms du samedi, ZinzinoPlay, les replays — chaque petite session compte.</div></div></div>
+
+  <div class="qbox">
+    « Les petites décisions prises au quotidien mènent soit là où vous voulez aller, soit tout droit au désastre. Ce qui semble être une décision infime peut se transformer en une erreur monumentale — ou en une réussite extraordinaire. »
+    <div class="qa">— Darren Hardy, L'Effet Cumulé</div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-p" disabled>← Précédent</button>
+    <button class="btn btn-n" onclick="goTo(1)">Suivant : Paradigmes →</button>
+  </div>
+</div>
+
+<!-- SECTION 1 - Changer ses Paradigmes -->
+<div class="section" id="s1">
+  <div class="ch c-indigo">
+    <div class="ch-emoji">🧬</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 09 · Mindset & Croissance</div>
+      <h2>Changer ses Paradigmes</h2>
+      <p>Vos croyances limitantes vous empêchent d'avancer. Voici comment les reprogrammer.</p>
+    </div>
+  </div>
+
+  <div class="hl"><strong>Un paradigme, c'est une croyance.</strong> Ces croyances se forment principalement dans l'enfance. Elles façonnent notre personnalité et influencent directement notre capacité à évoluer et à attirer ce que nous désirons.</div>
+
+  <div class="slbl">Comment changer ses paradigmes ?</div>
+
+  <div class="par-step">
+    <div class="par-num">1</div>
+    <div>
+      <div class="par-t">Les affirmations positives</div>
+      <div class="par-tx">Répéter constamment des phrases pour reprogrammer le subconscient. Le subconscient ne distingue pas le vrai du faux — il intègre ce qu'il entend le plus souvent.</div>
+      <div class="par-example">« Je suis actuellement si heureux et si reconnaissant que j'attire à moi les personnes et les situations qui me font prospérer. »</div>
+    </div>
+  </div>
+  <div class="par-step">
+    <div class="par-num">2</div>
+    <div>
+      <div class="par-t">La méditation quotidienne</div>
+      <div class="par-tx">La méditation permet de baisser le rythme cérébral et d'atteindre un état de réceptivité optimale. Même 10 minutes par jour produisent des effets mesurables sur le niveau de stress et la clarté mentale.</div>
+      <div class="par-example">Commencez par 5 minutes le matin, avant de regarder votre téléphone. Respirez profondément, visualisez votre journée idéale.</div>
+    </div>
+  </div>
+  <div class="par-step">
+    <div class="par-num">3</div>
+    <div>
+      <div class="par-t">Changer d'habitudes — 21 jours minimum</div>
+      <div class="par-tx">Changer une habitude nécessite un minimum de 21 jours de pratique consciente. Après 21 jours, le nouveau comportement commence à devenir automatique. Après 90 jours, il est ancré.</div>
+      <div class="par-example">Identifiez une habitude limitante (procrastination, évitement des appels, réseaux sociaux excessifs) et remplacez-la par une habitude positive pendant 21 jours consécutifs.</div>
+    </div>
+  </div>
+  <div class="par-step">
+    <div class="par-num">4</div>
+    <div>
+      <div class="par-t">Votre entourage détermine votre niveau</div>
+      <div class="par-tx">Vous êtes la moyenne des 5 personnes que vous fréquentez le plus. Entourez-vous de personnes qui ont déjà atteint ce que vous visez — participez aux zooms, aux conventions, aux événements Zinzino.</div>
+      <div class="par-example">L'objectif : être la personne la moins avancée dans la pièce. Quand tout le monde autour de vous pense grand, vous pensez grand aussi.</div>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-p" onclick="goTo(0)">← Précédent</button>
+    <button class="btn btn-n" onclick="goTo(2)">Suivant : Énergie & Leadership →</button>
+  </div>
+</div>
+
+<!-- SECTION 2 - Énergie & Compétences Leader -->
+<div class="section" id="s2">
+  <div class="ch c-teal">
+    <div class="ch-emoji">⚡</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 09 · Convention Zinzino Oslo — Octobre 2025</div>
+      <h2>Énergie & Compétences Leader</h2>
+      <p>Les enseignements des co-fondateurs et leaders Zinzino lors de la Convention Annuelle d'Oslo, octobre 2025.</p>
+    </div>
+  </div>
+
+  <div class="hl">Ces enseignements sont issus des interventions des leaders Zinzino lors de la Convention Annuelle d'Oslo, du 9 au 12 octobre 2025.</div>
+
+  <div class="slbl">Orjan Saele — Co-fondateur Zinzino</div>
+  <p style="font-size:.84rem;color:var(--text2);margin-bottom:1rem;line-height:1.7;"><em>Vision de Croissance et Courage pour 20 ans · Découvrir le Héros en Soi</em></p>
+
+  <div class="insight-card" id="ins0">
+    <div class="insight-head" onclick="toggleInsight(0)">
+      <div class="insight-ico">🔭</div>
+      <div><div class="insight-theme">Orjan Saele · Vision long terme</div><div class="insight-title">Penser à 20 ans, pas à 1 an</div></div>
+      <span class="insight-chev">▼</span>
+    </div>
+    <div class="insight-body">
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">Orjan Saele explique que nous surestimos ce que nous pouvons faire en 1 an, sous-estimons ce qui est possible en 10 ans, et <em>négligeons grandement</em> ce qui est possible en 20 ans. La plupart des gens passent "zéro temps" à imaginer leur avenir à 20 ans — c'est précisément là que se trouve la croissance la plus transformatrice.</p>
+      <div class="qbox">« Je savais que je devais transformer ma peur en vision. Je me suis levé et j'ai décidé de me rendre à mon rêve. »<div class="qa">— Orjan Saele, Convention Oslo, 9 octobre 2025</div></div>
+      <p style="font-size:.84rem;line-height:1.7;margin-top:.75rem;">Il raconte qu'en 2016, son idée de cibler le marché allemand avait été jugée "idiote". Aujourd'hui, l'Allemagne est le marché numéro un de Zinzino — dix fois plus que le marché d'origine. Une vision audacieuse, même incomprise, est une boussole.</p>
+    </div>
+  </div>
+
+  <div class="insight-card" id="ins1">
+    <div class="insight-head" onclick="toggleInsight(1)">
+      <div class="insight-ico">🦁</div>
+      <div><div class="insight-theme">Orjan Saele · Courage & Limites</div><div class="insight-title">Abattre ses propres murs</div></div>
+      <span class="insight-chev">▼</span>
+    </div>
+    <div class="insight-body">
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">Face à la peur et aux critiques, nous construisons des "frontières" qui nous étouffent. Le courage n'est pas l'absence de peur — c'est la capacité à agir malgré elle. Ce n'est pas l'économie, le genre ou l'origine qui nous limitent réellement. C'est nous-mêmes.</p>
+      <div class="qbox">« C'est vous qui vous limitez. »<div class="qa">— Orjan Saele, Convention Oslo, 9 octobre 2025</div></div>
+      <div class="mc" style="margin-top:.75rem;"><div class="mc-i">🔑</div><div><div class="mc-t" style="color:var(--orange);">Le sacrifice comme fondation</div><div class="mc-tx">Orjan rappelle que les premières années de Zinzino ont été bâties sur des sacrifices intenses : dormir chez des particuliers, voyager avec un billet de 19€, réinvestir chaque euro gagné. Ces habitudes d'austérité ont forgé la résilience de l'entreprise.</div></div></div>
+    </div>
+  </div>
+
+  <div class="slbl">Hilde Saele — Co-fondatrice Zinzino</div>
+  <p style="font-size:.84rem;color:var(--text2);margin-bottom:1rem;line-height:1.7;"><em>Discours de clôture · Zoom Super Saturday du 18 octobre 2025</em></p>
+
+  <div class="insight-card" id="ins2">
+    <div class="insight-head" onclick="toggleInsight(2)">
+      <div class="insight-ico">🌟</div>
+      <div><div class="insight-theme">Hilde Saele · Vision & Conviction</div><div class="insight-title">Les 3 pouvoirs du leader</div></div>
+      <span class="insight-chev">▼</span>
+    </div>
+    <div class="insight-body">
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">Hilde Saele partage sa pépite d'apprentissage la plus profonde après toutes ces années : le pouvoir de la vision, le pouvoir de la conviction, et le pouvoir du leadership.</p>
+      <div class="qbox">« Quand je me tenais sur cette scène et que je regardais l'auditoire — il y avait peut-être 20, 30 personnes. Mais dans mon esprit, j'ai choisi de voir des milliers. Je voyais des arènes pleines. Je voyais des leaders se lever. Je voyais un mouvement naître. »<div class="qa">— Hilde Saele, Convention Oslo, 12 octobre 2025</div></div>
+      <div class="mc" style="margin-top:.75rem;"><div class="mc-i">💡</div><div><div class="mc-t" style="color:var(--orange);">La vision comme soutien dans les bas</div><div class="mc-tx">La plupart des gens ne croyaient pas en leur rêve au départ. Mais c'est cette image mentale — celle des chiffres futurs, pas des chiffres actuels — qui les a portés quand la réalité était difficile.</div></div></div>
+      <div class="qbox" style="margin-top:.75rem;">« La vision ne consiste pas à décrire ce qui est. Il s'agit toujours de déclarer ce qui sera. »<div class="qa">— Hilde Saele</div></div>
+    </div>
+  </div>
+
+  <div class="slbl">Cris Brady & Terry Brady — Experts en leadership</div>
+  <p style="font-size:.84rem;color:var(--text2);margin-bottom:1rem;line-height:1.7;"><em>Journée des Leaders · Convention Oslo, 9 octobre 2025</em></p>
+
+  <div class="insight-card" id="ins3">
+    <div class="insight-head" onclick="toggleInsight(3)">
+      <div class="insight-ico">🚗</div>
+      <div><div class="insight-theme">Cris Brady · Leadership</div><div class="insight-title">Le moteur et la transmission</div></div>
+      <span class="insight-chev">▼</span>
+    </div>
+    <div class="insight-body">
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">Cris Brady utilise l'analogie de sa Porsche 911 GT3 : le moteur représente votre performance individuelle — maîtrise des produits, ventes, construction de clientèle. Mais sans la transmission, le moteur seul ne dépasse pas 40 km/h.</p>
+      <div class="qbox">« Votre capacité personnelle à performer est le moteur. Et la transmission est votre capacité de leadership à construire et à élever les autres. »<div class="qa">— Cris Brady, Convention Oslo, 9 octobre 2025</div></div>
+      <p style="font-size:.84rem;line-height:1.7;margin-top:.75rem;">Le vrai tournant du leadership n'est pas de diriger, mais de <em>développer des leaders qui développent d'autres leaders</em>. Le succès durable se mesure à l'épanouissement des personnes que vous guidez, pas à vos propres performances.</p>
+      <div class="qbox" style="margin-top:.75rem;">« Ce n'était que rarement la personne la plus douée qui devenait un grand leader — c'était toujours, sans faute, sans exception, la personne la plus affamée. »<div class="qa">— Cris Brady</div></div>
+    </div>
+  </div>
+
+  <div class="insight-card" id="ins4">
+    <div class="insight-head" onclick="toggleInsight(4)">
+      <div class="insight-ico">🦋</div>
+      <div><div class="insight-theme">Terry Brady · Profils de leadership</div><div class="insight-title">Le buffle et le papillon</div></div>
+      <span class="insight-chev">▼</span>
+    </div>
+    <div class="insight-body">
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">Terry Brady identifie deux grands archétypes de leaders, chacun avec ses forces et ses angles morts :</p>
+      <div class="keys-grid">
+        <div class="key-card"><div class="key-ico">🦬</div><div class="key-t">Le Buffle</div><div class="key-tx">Force : porte une charge immense, peau dure face aux critiques, orienté action. Faiblesse : peut casser des choses sans s'en rendre compte — dommages relationnels.</div></div>
+        <div class="key-card"><div class="key-ico">🦋</div><div class="key-t">Le Papillon</div><div class="key-tx">Force : inspire et apporte de la joie, pollinise en connectant les gens, répand une énergie positive. Faiblesse : peut manquer de constance dans l'action.</div></div>
+      </div>
+      <div class="qbox" style="margin-top:.75rem;">« Arrêtez de vous rabaisser. Vous avez été créé pour avoir un impact unique sur ce monde. Regardez-vous. »<div class="qa">— Terry Brady, Convention Oslo, 9 octobre 2025</div></div>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-p" onclick="goTo(1)">← Précédent</button>
+    <button class="btn btn-n" onclick="goTo(3)">Suivant : Résilience →</button>
+  </div>
+</div>
+
+<!-- SECTION 3 - Résilience & Persévérance -->
+<div class="section" id="s3">
+  <div class="ch c-violet">
+    <div class="ch-emoji">💪</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 09 · Mindset & Croissance</div>
+      <h2>Résilience & Persévérance</h2>
+      <p>Le marketing de réseau est un marathon, pas un sprint. Voici comment tenir sur la durée.</p>
+    </div>
+  </div>
+
+  <div class="hl"><strong>La vérité :</strong> La plupart des gens abandonnent juste avant le moment où les choses allaient décoller. La persévérance, c'est continuer quand c'est difficile — et c'est précisément ce qui vous différencie.</div>
+
+  <div class="slbl">Les obstacles sont normaux — et nécessaires</div>
+
+  <div class="mc"><div class="mc-i">🪨</div><div><div class="mc-t">Chaque "non" vous rapproche du "oui"</div><div class="mc-tx">Statistiquement, si vous avez besoin de 10 "non" pour obtenir un "oui", chaque refus vaut sa fraction de succès. Les leaders qui comptent leurs "non" restent motivés là où les autres se découragent.</div></div></div>
+  <div class="mc"><div class="mc-i">📊</div><div><div class="mc-t">La loi des grands nombres</div><div class="mc-tx">Plus vous contactez de personnes, plus vos résultats deviennent prévisibles. Le problème de la plupart des partenaires n'est pas le manque de talent — c'est le manque de volume d'actions.</div></div></div>
+  <div class="mc"><div class="mc-i">🌊</div><div><div class="mc-t">Le momentum se construit lentement, puis d'un coup</div><div class="mc-tx">L'eau bout à 100°C — pas à 99°C. Vos efforts peuvent sembler sans résultat pendant des semaines, puis tout s'accélère. C'est l'effet cumulé en action.</div></div></div>
+
+  <div class="slbl">La mission comme ancre</div>
+  <p style="font-size:.85rem;color:var(--text2);margin-bottom:1rem;line-height:1.7;">Les leaders qui tiennent sur la durée ont un "pourquoi" plus fort que leurs obstacles. Votre mission doit être plus grande que vos peurs, plus forte que vos doutes, plus solide que les critiques de votre entourage.</p>
+
+  <div class="qbox">
+    « Si tu ne fais pas de sacrifices pour tes objectifs, ce sont tes objectifs qui seront sacrifiés. »
+    <div class="qa">— Spartacus 2025</div>
+  </div>
+
+  <div class="mc"><div class="mc-i">✍️</div><div><div class="mc-t">La lettre à soi-même</div><div class="mc-tx">Écrivez une lettre à vous-même dans 5 ans, depuis la personne que vous serez devenu. Décrivez votre vie, vos accomplissements, les obstacles que vous avez surmontés. Relisez cette lettre quand vous doutez.</div></div></div>
+
+  <div class="nav-btns">
+    <button class="btn btn-p" onclick="goTo(2)">← Précédent</button>
+    <button class="btn btn-n" onclick="goTo(4)">Suivant : Business Solide →</button>
+  </div>
+</div>
+
+<!-- SECTION 4 - Construire un Business Solide -->
+<div class="section" id="s4">
+  <div class="ch c-green">
+    <div class="ch-emoji">🏗️</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 09 · Mindset & Croissance</div>
+      <h2>Construire un Business Solide</h2>
+      <p>Les fondations d'un business durable en marketing relationnel — méthode et plan d'action.</p>
+    </div>
+  </div>
+
+  <div class="slbl">Les racines avant les branches</div>
+  <div class="mc"><div class="mc-i">🌳</div><div><div class="mc-t">Construire en profondeur, pas en surface</div><div class="mc-tx">Un arbre dont les racines sont profondes résiste à toutes les tempêtes. En marketing relationnel, les racines c'est votre connaissance des produits, vos compétences de communication, vos valeurs. Les branches, ce sont vos résultats visibles. Investissez dans les racines.</div></div></div>
+
+  <div class="slbl">Le plan d'action 100 jours</div>
+
+  <div class="keys-grid">
+    <div class="key-card"><div class="key-ico">🚀</div><div class="key-t">Jours 1-30 : Démarrage</div><div class="key-tx">Inscriptions, formation Back Office, premiers clients, liste de contacts. Poser les bases solides.</div></div>
+    <div class="key-card"><div class="key-ico">⚡</div><div class="key-t">Jours 31-60 : Accélération</div><div class="key-tx">Recruter les 2-3 premiers partenaires, les accompagner dans leur démarrage, dupliquer les bons comportements.</div></div>
+    <div class="key-card"><div class="key-ico">🏆</div><div class="key-t">Jours 61-100 : Consolidation</div><div class="key-tx">Stabiliser les revenus récurrents, former l'équipe, participer aux événements, viser le rang suivant.</div></div>
+  </div>
+
+  <div class="slbl">Principes fondamentaux</div>
+
+  <div class="mc"><div class="mc-i">🔄</div><div><div class="mc-t">La duplication est la clé</div><div class="mc-tx">Votre business ne peut pas croître plus vite que ce que vous pouvez dupliquer. Faites des choses simples que tout le monde peut reproduire — pas des performances individuelles que personne ne peut imiter.</div></div></div>
+  <div class="mc"><div class="mc-i">📅</div><div><div class="mc-t">La régularité bat l'intensité</div><div class="mc-tx">10 heures de travail régulier chaque semaine pendant un an valent beaucoup plus que 100 heures intensives sur une semaine puis rien. Le marketing de réseau récompense la régularité.</div></div></div>
+  <div class="mc"><div class="mc-i">🎓</div><div><div class="mc-t">Ne cessez jamais d'apprendre</div><div class="mc-tx">Les leaders de Zinzino qui ont le plus de succès sont ceux qui se forment le plus. Conventions, zooms, livres, podcasts — chaque investissement en formation se multiplie dans vos résultats.</div></div></div>
+
+  <div class="qbox">
+    « Il n'y a pas de nouveaux principes fondamentaux. Il y a seulement les mêmes principes fondamentaux, appliqués avec plus ou moins de rigueur. »
+    <div class="qa">— Jim Rohn</div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-p" onclick="goTo(3)">← Précédent</button>
+    <button class="btn btn-done" onclick="markModuleDone()">✓ Module terminé — retour accueil</button>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+let cur=0;const N=5;
+function goTo(i){document.querySelectorAll('.section').forEach((s,j)=>s.classList.toggle('active',j===i));document.querySelectorAll('.s-chapter-item').forEach((s,j)=>s.classList.toggle('active',j===i));cur=i;updatePbar();window.scrollTo({top:0,behavior:'smooth'});}
+function updatePbar(){const done=Array.from({length:N},(_,i)=>localStorage.getItem('ms_done_'+i)==='1').filter(Boolean).length;const pct=Math.round(Math.max(((cur+1)/N),(done/N))*100);document.getElementById('pbar').style.width=pct+'%';}
+function toggleDone(e,i){e.stopPropagation();const k='ms_done_'+i;const d=localStorage.getItem(k)==='1';localStorage.setItem(k,d?'0':'1');renderChks();updatePbar();}
+function renderChks(){for(let i=0;i<N;i++){const el=document.getElementById('chk'+i);if(!el)return;const d=localStorage.getItem('ms_done_'+i)==='1';el.className='n-chk'+(d?' done':'');el.textContent=d?'✓':'';}}
+function markModuleDone(){for(let i=0;i<N;i++)localStorage.setItem('ms_done_'+i,'1');localStorage.setItem('mod_done_9','1');renderChks();updatePbar();window.location.href='index.html';}
+function toggleInsight(i){document.getElementById('ins'+i).classList.toggle('open');}
+renderChks();updatePbar();
+let _synth=window.speechSynthesis,_utt=null,_reading=false;
+function _getText(){const s=document.querySelector('.section.active');if(!s)return'';let t='';s.querySelectorAll('h2,p,.hl,.mc-t,.mc-tx,.qbox,.key-tx,.par-tx').forEach(e=>{const v=e.textContent.trim();if(v&&v.length>3)t+=v+'. ';});return t;}
+function toggleAudio(){const b=document.getElementById('ab');if(_reading){_synth.cancel();_reading=false;b.innerHTML='🔊';b.className='audio-btn';return;}const t=_getText();if(!t)return;_utt=new SpeechSynthesisUtterance(t);_utt.lang='fr-FR';_utt.rate=0.95;const v=_synth.getVoices().find(v=>v.lang.startsWith('fr'));if(v)_utt.voice=v;_utt.onstart=()=>{_reading=true;b.innerHTML='⏹';b.className='audio-btn reading';};_utt.onend=_utt.onerror=()=>{_reading=false;b.innerHTML='🔊';b.className='audio-btn';};_synth.speak(_utt);}
+</script>
+</body>
+</html>

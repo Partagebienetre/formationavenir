@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Traiter les Objections — Destination 💎</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+:root{--bg:#F3F0FA;--bg2:#EAE5F5;--bg3:#DDD6F0;--sidebar:#EDE8F8;--card:#FDFBFF;--text:#2A1F4A;--text2:#5A4D7A;--text3:#9080B0;--violet:#6B21A8;--vl:#9333EA;--vm:#7C3AED;--green:#16A34A;--red:#DC2626;--blue:#2563EB;--border:#D5CDE8;--bv:rgba(107,33,168,.2);--shadow:0 2px 12px rgba(107,33,168,.08);--shadow2:0 4px 20px rgba(107,33,168,.14);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;line-height:1.6;}
+#pbar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#DC2626,#F87171);width:0%;z-index:1000;transition:width .4s;}
+header{background:var(--card);border-bottom:2px solid var(--bv);padding:.85rem 1.5rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;box-shadow:var(--shadow);}
+.brand{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:900;color:var(--text);text-decoration:none;white-space:nowrap;}
+.brand em{color:var(--vm);font-style:italic;}
+.back{font-size:.82rem;color:var(--vm);text-decoration:none;font-weight:600;white-space:nowrap;}
+.back:hover{opacity:.7;}
+.mod-badge{background:#DC2626;color:white;font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem;border-radius:20px;}
+.h-sep{width:1px;height:18px;background:var(--border);flex-shrink:0;}
+.audio-btn{width:38px;height:38px;border-radius:9px;background:var(--bg2);border:1.5px solid var(--border);color:var(--vm);font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.audio-btn:hover{background:var(--bv);}
+.audio-btn.reading{background:var(--vm);color:white;}
+.layout{display:flex;min-height:calc(100vh - 62px);}
+aside{width:255px;min-width:255px;background:var(--sidebar);border-right:1px solid var(--border);padding:1.25rem 0;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;}
+.s-section-title{font-family:'Syne',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);padding:.4rem 1.15rem .3rem;}
+.s-chapter-item{display:flex;align-items:center;gap:.55rem;padding:.45rem 1.15rem .45rem 2.3rem;cursor:pointer;font-size:.8rem;color:var(--text2);transition:all .15s;border-left:3px solid transparent;}
+.s-chapter-item:hover{background:var(--bg2);color:var(--violet);}
+.s-chapter-item.active{color:var(--violet);font-weight:600;background:var(--bg2);border-left-color:#DC2626;}
+.s-chapter-item::before{content:'›';color:var(--text3);font-size:.75rem;}
+.n-chk{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.55rem;flex-shrink:0;cursor:pointer;transition:all .2s;margin-left:auto;}
+.n-chk.done{background:var(--green);border-color:var(--green);color:white;}
+.back-to-idx{display:flex;align-items:center;gap:.5rem;padding:.75rem 1.15rem;font-size:.78rem;color:var(--text3);text-decoration:none;transition:color .15s;}
+.back-to-idx:hover{color:var(--violet);}
+main{flex:1;padding:2rem 2.25rem;max-width:900px;}
+.section{display:none;animation:fi .3s ease;}
+.section.active{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ch{display:flex;align-items:flex-start;gap:1.1rem;margin-bottom:2rem;padding:1.5rem 1.75rem;border-radius:14px;color:white;}
+.ch-emoji{font-size:2.4rem;flex-shrink:0;}
+.ch-tag{font-size:.63rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.82;margin-bottom:.35rem;}
+.ch-text h2{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,1.9rem);font-weight:900;line-height:1.15;margin-bottom:.4rem;}
+.ch-text p{font-size:.9rem;opacity:.88;line-height:1.65;max-width:520px;}
+.c-red{background:linear-gradient(135deg,#7F1D1D,#DC2626);}
+.slbl{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--violet);margin:1.75rem 0 .75rem;display:flex;align-items:center;gap:.55rem;font-style:italic;}
+.slbl::after{content:'';flex:1;height:1px;background:var(--border);}
+.hl{background:var(--bg2);border-left:3px solid #DC2626;border-radius:0 9px 9px 0;padding:.9rem 1.15rem;margin:1rem 0;font-size:.88rem;line-height:1.7;color:var(--text);}
+.hl strong{color:#991B1B;}
+.qbox{background:var(--bg2);border-left:3px solid var(--vm);border-radius:0 11px 11px 0;padding:1rem 1.15rem;margin:1rem 0;font-style:italic;font-size:.88rem;line-height:1.7;color:var(--text);}
+/* 4 STEPS */
+.steps4{display:grid;gap:.85rem;margin:1.25rem 0;}
+.step4{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:1.15rem 1.25rem;display:flex;gap:1rem;align-items:flex-start;box-shadow:var(--shadow);}
+.step4-num{min-width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,#7F1D1D,#DC2626);color:white;font-family:'Syne',sans-serif;font-weight:800;font-size:.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step4-t{font-family:'Playfair Display',serif;font-weight:700;font-size:.93rem;color:var(--violet);margin-bottom:.35rem;}
+.step4-tx{font-size:.83rem;line-height:1.65;color:var(--text2);}
+.step4-phrase{margin-top:.55rem;background:rgba(107,33,168,.06);border-radius:8px;padding:.65rem .85rem;font-size:.83rem;font-style:italic;color:var(--text);border-left:2px solid var(--vl);}
+/* OBJECTION CARDS */
+.obj{border-radius:12px;margin-bottom:.8rem;overflow:hidden;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow);}
+.obj-trig{display:flex;align-items:center;gap:.75rem;padding:.95rem 1.15rem;cursor:pointer;background:var(--bg2);transition:background .15s;}
+.obj-trig:hover{background:var(--bg3);}
+.obj-ico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;background:rgba(220,38,38,.1);}
+.obj-ttl{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--text);flex:1;}
+.obj-chev{font-size:.65rem;color:var(--text3);transition:transform .3s;}
+.obj.open .obj-chev{transform:rotate(180deg);}
+.obj-body{display:none;padding:1.15rem;border-top:1px solid var(--border);}
+.obj.open .obj-body{display:block;}
+.obj-step{font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--violet);margin:.7rem 0 .35rem;padding:.2rem .6rem;background:rgba(107,33,168,.08);border-radius:6px;display:inline-block;}
+/* TEXTOS */
+.texto-card{background:var(--card);border:1px solid var(--border);border-radius:13px;margin-bottom:1rem;overflow:hidden;box-shadow:var(--shadow);}
+.texto-head{padding:.9rem 1.1rem;background:var(--bg2);display:flex;align-items:center;gap:.75rem;cursor:pointer;transition:background .15s;}
+.texto-head:hover{background:var(--bg3);}
+.texto-num{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#7F1D1D,#DC2626);color:white;font-family:'Syne',sans-serif;font-weight:800;font-size:.78rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.texto-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;color:var(--text);}
+.texto-tag{font-size:.6rem;font-weight:700;padding:.15rem .5rem;border-radius:20px;margin-left:auto;}
+.t-chaud{background:rgba(220,38,38,.1);color:#991B1B;}
+.t-froid{background:rgba(37,99,235,.1);color:#1D4ED8;}
+.texto-body{display:none;padding:1.1rem;}
+.texto-card.open .texto-body{display:block;}
+.chat-bubble{border-radius:12px;padding:.75rem 1rem;margin-bottom:.5rem;font-size:.85rem;line-height:1.6;max-width:88%;}
+.cb-me{background:linear-gradient(135deg,rgba(107,33,168,.12),rgba(147,51,234,.08));border:1px solid var(--bv);color:var(--text);margin-left:auto;border-radius:12px 2px 12px 12px;}
+.cb-them{background:var(--bg2);border:1px solid var(--border);color:var(--text2);border-radius:2px 12px 12px 12px;}
+.cb-label{font-size:.65rem;color:var(--text3);margin-bottom:.3rem;font-weight:600;}
+.texto-tip{background:rgba(22,163,74,.06);border:1px solid rgba(22,163,74,.2);border-radius:9px;padding:.8rem 1rem;margin-top:.75rem;font-size:.8rem;line-height:1.6;color:#15803D;}
+.texto-tip strong{font-weight:700;}
+/* NAV */
+.nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:1.35rem;border-top:1px solid var(--border);gap:.9rem;}
+.btn{display:flex;align-items:center;gap:.45rem;padding:.72rem 1.45rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:.84rem;cursor:pointer;border:none;transition:all .2s;}
+.btn-p{background:var(--bg2);color:var(--text2);border:1px solid var(--border);}
+.btn-p:hover{background:var(--bg3);}
+.btn-n{background:linear-gradient(135deg,#7F1D1D,#DC2626);color:white;box-shadow:var(--shadow2);}
+.btn-n:hover{transform:translateY(-1px);}
+.btn-done{background:linear-gradient(135deg,#15803D,#16A34A);color:white;}
+@media(max-width:768px){aside{display:none;}main{padding:1.25rem 1rem;}}
+</style>
+</head>
+<body>
+<div id="pbar"></div>
+<header>
+  <a href="index.html" class="brand">Destination <em>💎</em></a>
+  <div class="h-sep"></div>
+  <a href="index.html" class="back">← Accueil</a>
+  <div class="h-sep"></div>
+  <span class="mod-badge">MODULE 08</span>
+  <button class="audio-btn" id="ab" onclick="toggleAudio()" title="Lire">🔊</button>
+</header>
+
+<div class="layout">
+<aside>
+  <a href="index.html" class="back-to-idx">← Retour aux modules</a>
+  <div class="s-section-title">Traiter les Objections</div>
+  <div class="s-chapter-item active" onclick="goTo(0)">🎓 Qu'est-ce qu'une Objection ?<div class="n-chk" id="chk0" onclick="toggleDone(event,0)"></div></div>
+  <div class="s-chapter-item" onclick="goTo(1)">🔄 La Méthode en 4 Étapes<div class="n-chk" id="chk1" onclick="toggleDone(event,1)"></div></div>
+  <div class="s-chapter-item" onclick="goTo(2)">📋 7 Objections Classiques<div class="n-chk" id="chk2" onclick="toggleDone(event,2)"></div></div>
+  <div class="s-chapter-item" onclick="goTo(3)">📚 Bibliothèque complète<div class="n-chk" id="chk3" onclick="toggleDone(event,3)"></div></div>
+</aside>
+
+<main>
+
+<!-- SECTION 0 -->
+<div class="section active" id="s0">
+  <div class="ch c-red">
+    <div class="ch-emoji">🛡️</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 08 · Traiter les Objections</div>
+      <h2>Qu'est-ce qu'une Objection ?</h2>
+      <p>Une objection est avant tout une marque d'intérêt. Apprenez à les accueillir avec plaisir.</p>
+    </div>
+  </div>
+
+  <div class="hl"><strong>La bonne nouvelle :</strong> Soyez heureux d'avoir des objections ! Si votre prospect n'en a aucune, c'est rarement parce qu'il a adhéré à 100% — c'est plus probablement parce qu'il ne s'est pas senti concerné.</div>
+
+  <div class="slbl">Ce que cache une objection</div>
+  <p style="font-size:.85rem;color:var(--text2);margin-bottom:1rem;line-height:1.7;">Une objection révèle que votre prospect est en train de réfléchir sérieusement à votre proposition. Il cherche des réponses, pas des raisons de dire non. Votre rôle est de l'aider à trouver ces réponses.</p>
+
+  <div class="qbox">« Ne cherchez pas à convaincre à tout prix les personnes qui n'ont pas envie de rentrer dans notre affaire. Nous recherchons seulement les personnes motivées à nous rejoindre. »</div>
+
+  <div class="slbl">Les 3 types d'objections</div>
+  <div class="steps4">
+    <div class="step4">
+      <div class="step4-num">1</div>
+      <div><div class="step4-t">Objection vraie</div><div class="step4-tx">Un frein réel — manque de temps, de budget, d'expérience. Elle se traite avec la méthode en 4 étapes et un script adapté.</div></div>
+    </div>
+    <div class="step4">
+      <div class="step4-num">2</div>
+      <div><div class="step4-t">Objection prétexte</div><div class="step4-tx">Le prospect cherche une porte de sortie polie. Souvent révélé par "j'en parle à ma femme / j'y réfléchis". Creusez doucement pour trouver la vraie raison.</div></div>
+    </div>
+    <div class="step4">
+      <div class="step4-num">3</div>
+      <div><div class="step4-t">Demande d'information</div><div class="step4-tx">"C'est quoi exactement ?" n'est pas une objection mais une question. Répondez simplement et précisément.</div></div>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-p" disabled>← Précédent</button>
+    <button class="btn btn-n" onclick="goTo(1)">Suivant : La Méthode →</button>
+  </div>
+</div>
+
+<!-- SECTION 1 -->
+<div class="section" id="s1">
+  <div class="ch c-red">
+    <div class="ch-emoji">🔄</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 08 · Traiter les Objections</div>
+      <h2>La Méthode en 4 Étapes</h2>
+      <p>Un processus universel pour traiter n'importe quelle objection avec élégance et efficacité.</p>
+    </div>
+  </div>
+
+  <div class="hl">Ces 4 étapes fonctionnent pour <strong>toutes les objections</strong>, dans tous les contextes. Mémorisez-les et appliquez-les systématiquement.</div>
+
+  <div class="steps4">
+    <div class="step4">
+      <div class="step4-num">1</div>
+      <div>
+        <div class="step4-t">L'écoute attentive</div>
+        <div class="step4-tx">Même si vous connaissez déjà l'objection par cœur, laissez votre interlocuteur s'exprimer complètement. Écoutez comme si c'était la toute première fois que vous l'entendez. C'est une marque de respect qui construit la relation.</div>
+        <div class="step4-phrase">⚠️ Ne coupez jamais la parole. Le silence vous est favorable — ne le brisez pas prématurément.</div>
+      </div>
+    </div>
+    <div class="step4">
+      <div class="step4-num">2</div>
+      <div>
+        <div class="step4-t">La reformulation</div>
+        <div class="step4-tx">Assurez-vous d'avoir parfaitement compris ce que votre interlocuteur exprime. Cela évite de répondre à côté et montre que vous prenez son objection au sérieux.</div>
+        <div class="step4-phrase">« Si j'ai bien compris, vous voulez savoir si… » · « Vous pensez donc que… » · « Est-ce que je vous ai bien compris ? »</div>
+      </div>
+    </div>
+    <div class="step4">
+      <div class="step4-num">3</div>
+      <div>
+        <div class="step4-t">La phase d'empathie</div>
+        <div class="step4-tx">C'est l'étape la plus importante. Elle évite tout conflit et crée un pont émotionnel. Vous montrez que vous êtes passé par là vous-même. C'est à ce moment précis — avant même d'avoir répondu — que vous gagnez la partie.</div>
+        <div class="step4-phrase">« Je comprends ce que vous ressentez, car moi aussi je ressentais la même chose au tout début… »</div>
+      </div>
+    </div>
+    <div class="step4">
+      <div class="step4-num">4</div>
+      <div>
+        <div class="step4-t">La réponse</div>
+        <div class="step4-tx">Puis apportez votre réponse avec des faits, des chiffres ou votre expérience personnelle. Terminez toujours par une validation.</div>
+        <div class="step4-phrase">« … Puis je me suis renseigné, comme vous êtes en train de le faire, et je me suis aperçu que… » · « Est-ce que tout vous paraît plus clair maintenant ? »</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-p" onclick="goTo(0)">← Précédent</button>
+    <button class="btn btn-n" onclick="goTo(2)">Suivant : 7 Objections →</button>
+  </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section" id="s2">
+  <div class="ch c-red">
+    <div class="ch-emoji">📋</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 08 · Traiter les Objections</div>
+      <h2>7 Objections Classiques</h2>
+      <p>Les scripts complets pour les 7 objections que vous entendrez le plus souvent.</p>
+    </div>
+  </div>
+  <p style="font-size:.84rem;color:var(--text2);margin-bottom:1.25rem;">Cliquez sur chaque objection pour voir le script complet. Mémorisez-les et adaptez-les à votre style naturel.</p>
+
+  <div class="obj" id="obj0">
+    <div class="obj-trig" onclick="toggleObj(0)"><div class="obj-ico">⏱️</div><div class="obj-ttl">« Je n'ai pas le temps »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-step">Empathie</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.7rem;">Je comprends ce que vous me dites, car moi aussi, lorsqu'on m'a proposé cette opportunité j'étais déjà très occupé !</p>
+      <div class="obj-step">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;">Puis je me suis renseigné sur le fonctionnement exact et je me suis aperçu que justement, l'effet de levier offert par le marketing relationnel répondait à mon problème. Avec très peu de mon temps, additionné du travail de mon sponsor et de ma lignée de soutien, j'ai réussi à me constituer un revenu additionnel. Je vous propose justement un moyen de démultiplier votre temps !</p>
+    </div>
+  </div>
+
+  <div class="obj" id="obj1">
+    <div class="obj-trig" onclick="toggleObj(1)"><div class="obj-ico">👥</div><div class="obj-ttl">« Je ne connais personne »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-step">Empathie</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.7rem;">Je vous comprends, car moi aussi lorsque j'ai découvert cette opportunité j'avais cette crainte.</p>
+      <div class="obj-step">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;">Puis je me suis aperçu qu'il suffit de deux personnes pour démarrer mon équipe, et que ces personnes n'ont pas besoin d'être des amis proches. Ce qui est important, c'est le travail en équipe et les contacts de mes propres partenaires. Lorsque j'ai compris cela, je me suis décidé et aujourd'hui j'en suis enchanté !</p>
+    </div>
+  </div>
+
+  <div class="obj" id="obj2">
+    <div class="obj-trig" onclick="toggleObj(2)"><div class="obj-ico">🔺</div><div class="obj-ttl">« C'est pyramidal »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-step">Empathie</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.7rem;">Je comprends ce que vous ressentez, car moi aussi, c'est ce que j'ai pensé à première vue.</p>
+      <div class="obj-step">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;">Puis je me suis renseigné et j'ai compris que toute organisation humaine a une forme pyramidale : une famille, une entreprise, l'État. Le système pyramidal <em>illégal</em> tire ses revenus uniquement des droits d'inscription élevés, sans produit réel à vendre. Chez Zinzino, la seule source de revenus découle de la consommation et la distribution de produits. Le statut VDI est légiféré depuis 1993. Je suis donc parfaitement rassuré.</p>
+    </div>
+  </div>
+
+  <div class="obj" id="obj3">
+    <div class="obj-trig" onclick="toggleObj(3)"><div class="obj-ico">🚫</div><div class="obj-ttl">« Je n'aime pas vendre »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-step">Empathie</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.7rem;">Je comprends parfaitement ce que vous ressentez, parce que moi non plus je n'aime pas la vente !</p>
+      <div class="obj-step">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;">On m'a expliqué que les vendeurs ont en général peu de succès dans cette affaire, car les gens n'aiment pas avoir l'impression qu'on leur vend quelque chose. Notre but est de recommander, de faire connaître des produits que nous aimons et consommons. Je me contente de faire ce que j'ai toujours fait : recommander ce que j'aime. Les gens adorent acheter dès qu'ils sont persuadés qu'un produit peut leur être utile.</p>
+    </div>
+  </div>
+
+  <div class="obj" id="obj4">
+    <div class="obj-trig" onclick="toggleObj(4)"><div class="obj-ico">📚</div><div class="obj-ttl">« Je n'ai pas les compétences »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-step">Empathie</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.7rem;">Je comprends ce que vous pensez, car moi aussi j'avais cette inquiétude lorsqu'on m'a proposé cette opportunité !</p>
+      <div class="obj-step">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;">Puis je me suis renseigné et j'ai constaté que Zinzino offre un excellent système de formation pour ceux qui ont soif de s'améliorer. Au fil du temps j'ai le sentiment d'avoir vraiment appris un nouveau métier passionnant, puisqu'il s'agit d'obtenir mon indépendance financière en aidant les gens à améliorer leur vie. De très réservé au départ, je suis devenu réellement passionné !</p>
+    </div>
+  </div>
+
+  <div class="obj" id="obj5">
+    <div class="obj-trig" onclick="toggleObj(5)"><div class="obj-ico">💸</div><div class="obj-ttl">« Les produits sont chers »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-step">Empathie</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.7rem;">Je comprends ce que vous ressentez, parce que moi aussi, au tout début, je pensais la même chose.</p>
+      <div class="obj-step">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;">On m'a simplement posé cette question : « c'est trop cher par rapport à quoi ? » Cela m'a amené à réfléchir. Quand je prends le prix et le divise sur le mois, ça me revient à quoi ?… Au prix d'un café, de quelques cigarettes. Et c'est bien meilleur pour la santé. Vous pouvez également auto-financer les produits en devenant distributeur ou les acquérir gratuitement en les recommandant autour de vous.</p>
+    </div>
+  </div>
+
+  <div class="obj" id="obj6">
+    <div class="obj-trig" onclick="toggleObj(6)"><div class="obj-ico">💰</div><div class="obj-ttl">« Combien gagnez-vous ? »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-step">Note</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.7rem;color:var(--text2);font-style:italic;">Ce n'est pas une objection à proprement parler — c'est une question légitime. Préparez-y une réponse honnête.</p>
+      <div class="obj-step">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;">Je comprends très bien que vous me posiez cette question. Je débute et la réponse que je vais vous donner n'est donc pas significative. Je peux juste vous dire que tout ce qu'on m'a dit se réalise, et que contrairement à la plupart des personnes qui démarrent une entreprise classique, mes gains ont dépassé mes dépenses au bout de 4 mois. Nous sommes dans un système à croissance exponentielle — au moment même où vous me posez cette question, mon équipe se développe.</p>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-p" onclick="goTo(1)">← Précédent</button>
+    <button class="btn btn-n" onclick="goTo(3)">Suivant : Bibliothèque complète →</button>
+  </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section" id="s3">
+  <div class="ch c-red">
+    <div class="ch-emoji">📚</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 08 · Traiter les Objections</div>
+      <h2>Bibliothèque complète des objections</h2>
+      <p>Toutes les objections que vous entendrez — avec des exemples de réponses à adapter à votre propre vécu.</p>
+    </div>
+  </div>
+
+  <div class="hl"><strong>Rappel :</strong> Pour chaque objection, appliquez toujours la méthode en 4 étapes — écoute · reformulation · empathie · réponse. Les scripts ci-dessous sont des modèles à s'approprier, pas à réciter mot pour mot.</div>
+
+  <div class="slbl">Objections sur le temps</div>
+
+  <div class="obj" id="ob3_0">
+    <div class="obj-trig" onclick="toggleObjExt('ob3_0')"><div class="obj-ico" style="background:rgba(220,38,38,.1)">⏱️</div><div class="obj-ttl">« Je dois y réfléchir »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-method">Ce que ça cache souvent</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;color:var(--text2);">Ce n'est pas une objection vraie — c'est une porte de sortie polie. Cherchez ce qui bloque réellement.</p>
+      <div class="obj-method">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">« Je comprends tout à fait — c'est une décision qui mérite réflexion. Pour vous aider à réfléchir dans la bonne direction, qu'est-ce qui vous ferait pencher du côté du oui ? Et qu'est-ce qui vous retient pour l'instant ? »</p>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.6rem;">Puis taisez-vous et laissez-le parler. La vraie objection va sortir.</p>
+      <div class="obj-method">Alternative directe</div>
+      <p style="font-size:.84rem;line-height:1.7;">« Bien sûr. Quand est-ce qu'on se reparle — mardi ou jeudi ? » Proposez deux créneaux précis plutôt que de laisser sans date.</p>
+    </div>
+  </div>
+
+  <div class="obj" id="ob3_1">
+    <div class="obj-trig" onclick="toggleObjExt('ob3_1')"><div class="obj-ico" style="background:rgba(220,38,38,.1)">📅</div><div class="obj-ttl">« Ce n'est pas le bon moment »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-method">Empathie</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">« Je comprends — je ne vous propose pas de tout changer du jour au lendemain. Justement, ce que j'aimerais, c'est qu'on explore ensemble si ça pourrait s'adapter à votre situation actuelle. »</p>
+      <div class="obj-method">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;">« Le bon moment n'existe jamais vraiment — il se crée. Ceux qui ont démarré avec moi dans des situations compliquées sont aujourd'hui ceux qui avancent le mieux, parce qu'ils avaient une vraie raison de réussir. Quel serait le bon moment pour vous ? Dans 6 mois ? Dans 1 an ? Voyons si on peut construire quelque chose d'ici là. »</p>
+    </div>
+  </div>
+
+  <div class="slbl">Objections sur la confiance et la légitimité</div>
+
+  <div class="obj" id="ob3_2">
+    <div class="obj-trig" onclick="toggleObjExt('ob3_2')"><div class="obj-ico" style="background:rgba(220,38,38,.1)">👨‍👩‍👧</div><div class="obj-ttl">« J'en parle à mon conjoint / ma famille »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-method">Ce que ça cache</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;color:var(--text2);">Souvent une objection cachée derrière une excuse acceptable. Cherchez à impliquer le conjoint dans la conversation plutôt que de le laisser décider seul.</p>
+      <div class="obj-method">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">« C'est tout à fait normal et je respecte ça — les grandes décisions se prennent en famille. Je vous propose même qu'on organise une rencontre avec votre conjoint, pour qu'il ou elle puisse entendre les informations directement plutôt que de seconde main. Ça évitera des malentendus. »</p>
+      <div class="obj-method">Question pour aller plus loin</div>
+      <p style="font-size:.84rem;line-height:1.7;">« Et vous personnellement — si votre conjoint vous dit oui, vous êtes partant(e) ? » Cette question permet de savoir si c'est vraiment une question de conjoint, ou une autre objection cachée.</p>
+    </div>
+  </div>
+
+  <div class="obj" id="ob3_3">
+    <div class="obj-trig" onclick="toggleObjExt('ob3_3')"><div class="obj-ico" style="background:rgba(220,38,38,.1)">😤</div><div class="obj-ttl">« Ça ne marche jamais ces trucs »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-method">Empathie</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">« Je comprends complètement — il y a beaucoup de propositions dans ce secteur qui ne tiennent pas leurs promesses. Et j'aurais exactement le même réflexe que vous si quelqu'un me présentait quelque chose que je ne connaissais pas. »</p>
+      <div class="obj-method">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;">« Ce qui m'a convaincu(e) avec Zinzino, c'est que le produit se vend tout seul — on commence par un test sanguin qui prouve objectivement si le produit est utile ou non. On ne demande pas aux gens de nous croire sur parole : on leur montre les résultats avant et après. C'est ça qui est différent. Est-ce que vous seriez prêt(e) à regarder les chiffres avant de décider ? »</p>
+    </div>
+  </div>
+
+  <div class="obj" id="ob3_4">
+    <div class="obj-trig" onclick="toggleObjExt('ob3_4')"><div class="obj-ico" style="background:rgba(220,38,38,.1)">💔</div><div class="obj-ttl">« J'ai déjà essayé et ça n'a pas marché »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-method">Empathie</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">« Je suis vraiment désolé(e) d'entendre ça — c'est une expérience qui marque. Vous avez investi du temps, de l'énergie, peut-être de l'argent. C'est normal d'être méfiant(e) maintenant. »</p>
+      <div class="obj-method">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">« J'aimerais comprendre ce qui n'a pas fonctionné. Est-ce que c'était le produit ? L'accompagnement ? Le marché ? Parce que l'une des grandes différences ici, c'est que vous n'êtes pas seul(e) — j'ai un rôle actif à jouer dans votre démarrage. Et le produit a quelque chose d'unique : il se prouve par un test. »</p>
+      <div class="obj-method">Point clé</div>
+      <p style="font-size:.84rem;line-height:1.7;">Quelqu'un qui a déjà essayé connaît les réalités du terrain — c'est souvent un avantage. La question est : avec quelles différences pourrait-il réussir cette fois ?</p>
+    </div>
+  </div>
+
+  <div class="slbl">Objections sur le business</div>
+
+  <div class="obj" id="ob3_5">
+    <div class="obj-trig" onclick="toggleObjExt('ob3_5')"><div class="obj-ico" style="background:rgba(220,38,38,.1)">🚫</div><div class="obj-ttl">« Je ne suis pas intéressé(e) »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-method">Ne pas insister — creuser</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">Ne défendez pas votre proposition. Posez une question simple : « Je comprends tout à fait. Puis-je juste vous demander ce qui vous fait dire ça ? »</p>
+      <div class="obj-method">Selon la réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">Si la raison est concrète (temps, argent, expérience) → traitez l'objection réelle. Si la raison est floue → c'est probablement une objection cachée. Rangez vos affaires et dites : « Je vois que ce n'est peut-être pas le bon moment. Est-ce qu'il y a quelque chose que je n'aurais pas mentionné et qui vous aurait intéressé(e) ? »</p>
+      <div class="obj-method">En dernier recours</div>
+      <p style="font-size:.84rem;line-height:1.7;">« Aucun problème — je respecte votre décision. Est-ce que vous connaissez quelqu'un dans votre entourage qui pourrait être ouvert à ce type de projet ? » Transformez un non en recommandation.</p>
+    </div>
+  </div>
+
+  <div class="obj" id="ob3_6">
+    <div class="obj-trig" onclick="toggleObjExt('ob3_6')"><div class="obj-ico" style="background:rgba(220,38,38,.1)">🤔</div><div class="obj-ttl">« Je n'ai pas d'argent pour démarrer »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-method">Empathie</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">« Je comprends ce que vous dites — et je ne vous demanderai pas d'investir ce que vous n'avez pas. »</p>
+      <div class="obj-method">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">« La bonne question n'est pas "ai-je l'argent ?" mais "combien de temps avant que l'activité finance elle-même mon démarrage ?" Avec le Fast Start, les premiers revenus arrivent dès les premières semaines si vous bougez. Et les kits Basic existent justement pour démarrer avec un investissement minimal. »</p>
+      <div class="obj-method">Important</div>
+      <p style="font-size:.84rem;line-height:1.7;">Si le manque d'argent est réel, soyez honnête et n'insistez pas. Proposez de revenir dans quelques semaines. Quelqu'un qui démarre sans moyens dans une situation de détresse financière n'est pas prêt pour construire sur le long terme.</p>
+    </div>
+  </div>
+
+  <div class="obj" id="ob3_7">
+    <div class="obj-trig" onclick="toggleObjExt('ob3_7')"><div class="obj-ico" style="background:rgba(220,38,38,.1)">😰</div><div class="obj-ttl">« J'ai peur d'échouer / de décevoir »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-method">Empathie — valider la peur</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">« Cette peur, je l'ai ressentie moi aussi. Et c'est une bonne nouvelle : elle montre que vous prenez les choses au sérieux. Les gens qui n'ont pas peur sont souvent ceux qui ne s'investissent pas vraiment. »</p>
+      <div class="obj-method">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;">« La question n'est pas "est-ce que je vais réussir du premier coup ?" mais "est-ce que j'ai un soutien solide pour progresser ?" Je serai là à chaque étape. Les erreurs font partie du chemin — et dans ce business, elles ne coûtent que du temps, pas des années de vie. »</p>
+    </div>
+  </div>
+
+  <div class="obj" id="ob3_8">
+    <div class="obj-trig" onclick="toggleObjExt('ob3_8')"><div class="obj-ico" style="background:rgba(220,38,38,.1)">🌍</div><div class="obj-ttl">« Le marché est saturé »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-method">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">« Je comprends ce que vous pensez. Mais regardons les chiffres : en France, moins de 3% de la population utilise des compléments alimentaires de qualité testés scientifiquement. 97% du marché est encore à construire. »</p>
+      <p style="font-size:.84rem;line-height:1.7;">« Zinzino vise 100 millions de clients dans le monde — et nous en avons aujourd'hui environ 1 million. La croissance est devant nous, pas derrière. L'Allemagne, qui n'existait pas dans leur réseau il y a 8 ans, est aujourd'hui leur premier marché. »</p>
+    </div>
+  </div>
+
+  <div class="slbl">Objections sur les produits</div>
+
+  <div class="obj" id="ob3_9">
+    <div class="obj-trig" onclick="toggleObjExt('ob3_9')"><div class="obj-ico" style="background:rgba(220,38,38,.1)">💊</div><div class="obj-ttl">« Je prends déjà des compléments alimentaires »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-method">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">« C'est super — et c'est justement là où Zinzino est unique. La plupart des compléments se prennent sans savoir si le corps en a vraiment besoin. Avec Zinzino, on commence par un test sanguin qui mesure votre équilibre réel au niveau cellulaire. Résultat : vous saurez si ce que vous prenez aujourd'hui est efficace, trop peu, ou pas adapté. »</p>
+      <p style="font-size:.84rem;line-height:1.7;">« Est-ce que vous avez déjà fait vérifier votre ratio Oméga-6/Oméga-3 ? »</p>
+    </div>
+  </div>
+
+  <div class="obj" id="ob3_10">
+    <div class="obj-trig" onclick="toggleObjExt('ob3_10')"><div class="obj-ico" style="background:rgba(220,38,38,.1)">🏥</div><div class="obj-ttl">« Mon médecin dit que les compléments ne servent à rien »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-method">Réponse — sans rentrer en conflit</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">« Je respecte totalement l'avis de votre médecin — et je ne suis pas là pour le contredire. Ce que je peux vous dire, c'est que l'étude Zinzino a été publiée dans des revues scientifiques et que les résultats sur l'équilibre Oméga-3 sont documentés sur des milliers de personnes. »</p>
+      <p style="font-size:.84rem;line-height:1.7;">« Ce n'est pas une question de croyance — c'est mesurable avant et après. Si votre médecin voyait vos résultats de test, il aurait des éléments concrets pour évaluer. »</p>
+    </div>
+  </div>
+
+  <div class="obj" id="ob3_11">
+    <div class="obj-trig" onclick="toggleObjExt('ob3_11')"><div class="obj-ico" style="background:rgba(220,38,38,.1)">🏪</div><div class="obj-ttl">« Je trouve ça moins cher en pharmacie »</div><span class="obj-chev">▼</span></div>
+    <div class="obj-body">
+      <div class="obj-method">Réponse</div>
+      <p style="font-size:.84rem;line-height:1.7;margin-bottom:.75rem;">« C'est vrai que le prix affiché peut sembler plus élevé. Mais comparez ce qui est comparable : la plupart des oméga-3 en pharmacie ont une concentration faible et ne sont pas accompagnés d'un test pour vérifier leur effet. »</p>
+      <p style="font-size:.84rem;line-height:1.7;">« Avec Zinzino, vous payez aussi le test sanguin, le suivi des résultats, et un produit dont la concentration est vérifiée scientifiquement. Ramené au résultat réel sur votre santé — la question est : combien vaut un résultat prouvé ? »</p>
+    </div>
+  </div>
+
+  <div class="qbox" style="margin-top:1.5rem;">
+    « Ne cherchez pas à convaincre à tout prix. Votre rôle est d'apporter de la clarté — pas de forcer une décision. La bonne personne se reconnaîtra dans vos réponses. »
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-p" onclick="goTo(2)">← Précédent</button>
+    <button class="btn btn-done" onclick="markModuleDone()">✓ Module terminé — retour accueil</button>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+let cur=0;const N=4;
+function goTo(i){document.querySelectorAll('.section').forEach((s,j)=>s.classList.toggle('active',j===i));document.querySelectorAll('.s-chapter-item').forEach((s,j)=>s.classList.toggle('active',j===i));cur=i;updatePbar();window.scrollTo({top:0,behavior:'smooth'});}
+function updatePbar(){const done=Array.from({length:N},(_,i)=>localStorage.getItem('ob_done_'+i)==='1').filter(Boolean).length;const pct=Math.round(Math.max(((cur+1)/N),(done/N))*100);document.getElementById('pbar').style.width=pct+'%';}
+function toggleDone(e,i){e.stopPropagation();const k='ob_done_'+i;const d=localStorage.getItem(k)==='1';localStorage.setItem(k,d?'0':'1');renderChks();updatePbar();}
+function renderChks(){for(let i=0;i<N;i++){const el=document.getElementById('chk'+i);if(!el)return;const d=localStorage.getItem('ob_done_'+i)==='1';el.className='n-chk'+(d?' done':'');el.textContent=d?'✓':'';}}
+function markModuleDone(){for(let i=0;i<N;i++)localStorage.setItem('ob_done_'+i,'1');localStorage.setItem('mod_done_8','1');renderChks();updatePbar();window.location.href='index.html';}
+function toggleObj(i){const el=document.getElementById('obj'+i);if(el)el.classList.toggle('open');}
+function toggleObjExt(id){const el=document.getElementById(id);el.classList.toggle('open');}
+function toggleTexto(i){const el=document.getElementById('txt'+i);el.classList.toggle('open');}
+renderChks();updatePbar();
+let _synth=window.speechSynthesis,_utt=null,_reading=false;
+function _getText(){const s=document.querySelector('.section.active');if(!s)return'';let t='';s.querySelectorAll('h2,p,.hl,.step4-t,.step4-tx,.obj-ttl,.chat-bubble,.texto-tip').forEach(e=>{const v=e.textContent.trim();if(v&&v.length>3)t+=v+'. ';});return t;}
+function toggleAudio(){const b=document.getElementById('ab');if(_reading){_synth.cancel();_reading=false;b.innerHTML='🔊';b.className='audio-btn';return;}const t=_getText();if(!t)return;_utt=new SpeechSynthesisUtterance(t);_utt.lang='fr-FR';_utt.rate=0.95;const v=_synth.getVoices().find(v=>v.lang.startsWith('fr'));if(v)_utt.voice=v;_utt.onstart=()=>{_reading=true;b.innerHTML='⏹';b.className='audio-btn reading';};_utt.onend=_utt.onerror=()=>{_reading=false;b.innerHTML='🔊';b.className='audio-btn';};_synth.speak(_utt);}
+</script>
+</body>
+</html>

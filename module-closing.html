@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Le Closing — Destination 💎</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+:root{--bg:#F3F0FA;--bg2:#EAE5F5;--bg3:#DDD6F0;--sidebar:#EDE8F8;--card:#FDFBFF;--text:#2A1F4A;--text2:#5A4D7A;--text3:#9080B0;--violet:#6B21A8;--vl:#9333EA;--vm:#7C3AED;--green:#16A34A;--red:#DC2626;--blue:#2563EB;--border:#D5CDE8;--bv:rgba(107,33,168,.2);--shadow:0 2px 12px rgba(107,33,168,.08);--shadow2:0 4px 20px rgba(107,33,168,.14);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;line-height:1.6;}
+#pbar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#16A34A,#4ADE80);width:0%;z-index:1000;transition:width .4s;}
+header{background:var(--card);border-bottom:2px solid var(--bv);padding:.85rem 1.5rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;box-shadow:var(--shadow);}
+.brand{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:900;color:var(--text);text-decoration:none;white-space:nowrap;}
+.brand em{color:var(--vm);font-style:italic;}
+.back{font-size:.82rem;color:var(--vm);text-decoration:none;font-weight:600;white-space:nowrap;}
+.back:hover{opacity:.7;}
+.mod-badge{background:#16A34A;color:white;font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem;border-radius:20px;}
+.h-sep{width:1px;height:18px;background:var(--border);flex-shrink:0;}
+.audio-btn{width:38px;height:38px;border-radius:9px;background:var(--bg2);border:1.5px solid var(--border);color:var(--vm);font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.audio-btn:hover{background:var(--bv);border-color:var(--vm);}
+.audio-btn.reading{background:var(--vm);border-color:var(--vm);color:white;}
+.layout{display:flex;min-height:calc(100vh - 62px);}
+aside{width:255px;min-width:255px;background:var(--sidebar);border-right:1px solid var(--border);padding:1.25rem 0;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;}
+.s-section-title{font-family:'Syne',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);padding:.4rem 1.15rem .3rem;}
+.s-chapter-item{display:flex;align-items:center;gap:.55rem;padding:.45rem 1.15rem .45rem 2.3rem;cursor:pointer;font-size:.8rem;color:var(--text2);transition:all .15s;border-left:3px solid transparent;}
+.s-chapter-item:hover{background:var(--bg2);color:var(--violet);}
+.s-chapter-item.active{color:var(--violet);font-weight:600;background:var(--bg2);border-left-color:#16A34A;}
+.s-chapter-item::before{content:'›';color:var(--text3);font-size:.75rem;}
+.n-chk{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.55rem;flex-shrink:0;cursor:pointer;transition:all .2s;margin-left:auto;}
+.n-chk:hover{border-color:#16A34A;}
+.n-chk.done{background:var(--green);border-color:var(--green);color:white;}
+.back-to-idx{display:flex;align-items:center;gap:.5rem;padding:.75rem 1.15rem;font-size:.78rem;color:var(--text3);text-decoration:none;transition:color .15s;}
+.back-to-idx:hover{color:var(--violet);}
+main{flex:1;padding:2rem 2.25rem;max-width:900px;}
+.section{display:none;animation:fi .3s ease;}
+.section.active{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* CHAPTER HEADER */
+.ch{display:flex;align-items:flex-start;gap:1.1rem;margin-bottom:2rem;padding:1.5rem 1.75rem;border-radius:14px;color:white;}
+.ch-emoji{font-size:2.4rem;flex-shrink:0;}
+.ch-tag{font-size:.63rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.82;margin-bottom:.35rem;}
+.ch-text h2{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,1.9rem);font-weight:900;line-height:1.15;margin-bottom:.4rem;}
+.ch-text p{font-size:.9rem;opacity:.88;line-height:1.65;max-width:520px;}
+.c-green{background:linear-gradient(135deg,#14532D,#16A34A);}
+/* TEXT */
+.slbl{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--violet);margin:1.75rem 0 .75rem;display:flex;align-items:center;gap:.55rem;font-style:italic;}
+.slbl::after{content:'';flex:1;height:1px;background:var(--border);}
+.hl{background:var(--bg2);border-left:3px solid #16A34A;border-radius:0 9px 9px 0;padding:.9rem 1.15rem;margin:1rem 0;font-size:.88rem;line-height:1.7;color:var(--text);}
+.hl strong{color:#15803D;}
+.qbox{background:var(--bg2);border-left:3px solid var(--vm);border-radius:0 11px 11px 0;padding:1rem 1.15rem;margin:1rem 0;font-style:italic;font-size:.88rem;line-height:1.7;color:var(--text);}
+/* CLOSING STEPS */
+.closing-flow{display:grid;gap:.7rem;margin:1.25rem 0;}
+.cf-step{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem;display:flex;align-items:flex-start;gap:.9rem;box-shadow:var(--shadow);}
+.cf-num{min-width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#14532D,#16A34A);color:white;font-family:'Syne',sans-serif;font-weight:800;font-size:.82rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cf-q{font-family:'Playfair Display',serif;font-size:.88rem;font-weight:700;color:var(--violet);margin-bottom:.3rem;}
+.cf-hint{font-size:.78rem;color:var(--text2);line-height:1.55;font-style:italic;}
+/* FILL TEMPLATE */
+.fill-box{background:linear-gradient(135deg,rgba(22,163,74,.07),rgba(20,83,45,.04));border:1px solid rgba(22,163,74,.25);border-radius:13px;padding:1.4rem;margin:1.25rem 0;}
+.fill-title{font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#15803D;margin-bottom:1rem;}
+.fill-phrase{font-family:'Playfair Display',serif;font-size:.97rem;font-weight:700;color:var(--text);line-height:1.7;margin-bottom:.65rem;}
+.fill-gap{display:inline-block;border-bottom:2px solid #16A34A;min-width:60px;color:#16A34A;font-weight:700;padding:0 .2rem;}
+/* WARNING */
+.warn{background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.2);border-radius:10px;padding:.9rem 1.1rem;margin:1rem 0;}
+.warn-t{font-family:'Syne',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem;}
+/* MC card */
+.mc{border-radius:11px;padding:1rem 1.15rem;margin-bottom:.7rem;border:1px solid var(--border);display:flex;align-items:flex-start;gap:.8rem;background:var(--card);box-shadow:var(--shadow);}
+.mc-i{font-size:1.3rem;flex-shrink:0;margin-top:.08rem;}
+.mc-t{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;margin-bottom:.25rem;color:#15803D;}
+.mc-tx{font-size:.83rem;line-height:1.65;color:var(--text2);}
+/* NAV */
+.nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:1.35rem;border-top:1px solid var(--border);gap:.9rem;}
+.btn{display:flex;align-items:center;gap:.45rem;padding:.72rem 1.45rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:.84rem;cursor:pointer;border:none;transition:all .2s;}
+.btn-p{background:var(--bg2);color:var(--text2);border:1px solid var(--border);}
+.btn-p:hover{background:var(--bg3);color:var(--text);}
+.btn-n{background:linear-gradient(135deg,#14532D,#16A34A);color:white;box-shadow:var(--shadow2);}
+.btn-n:hover{transform:translateY(-1px);}
+.btn-done{background:linear-gradient(135deg,#15803D,#16A34A);color:white;}
+@media(max-width:768px){aside{display:none;}main{padding:1.25rem 1rem;}}
+</style>
+</head>
+<body>
+<div id="pbar"></div>
+<header>
+  <a href="index.html" class="brand">Destination <em>💎</em></a>
+  <div class="h-sep"></div>
+  <a href="index.html" class="back">← Accueil</a>
+  <div class="h-sep"></div>
+  <span class="mod-badge">MODULE 07</span>
+  <button class="audio-btn" id="ab" onclick="toggleAudio()" title="Lire à haute voix">🔊</button>
+</header>
+
+<div class="layout">
+<aside>
+  <a href="index.html" class="back-to-idx">← Retour aux modules</a>
+  <div class="s-section-title">Le Closing — Chapitres</div>
+  <div class="s-chapter-item active" onclick="goTo(0)">💡 Comprendre le Closing<div class="n-chk" id="chk0" onclick="toggleDone(event,0)"></div></div>
+  <div class="s-chapter-item" onclick="goTo(1)">❓ Les Questions de Closing<div class="n-chk" id="chk1" onclick="toggleDone(event,1)"></div></div>
+  <div class="s-chapter-item" onclick="goTo(2)">⚡ Créer l'Urgence<div class="n-chk" id="chk2" onclick="toggleDone(event,2)"></div></div>
+  <div class="s-chapter-item" onclick="goTo(3)">🏋️ S'Entraîner au Closing<div class="n-chk" id="chk3" onclick="toggleDone(event,3)"></div></div>
+</aside>
+
+<main>
+
+<!-- SECTION 0 -->
+<div class="section active" id="s0">
+  <div class="ch c-green">
+    <div class="ch-emoji">🤝</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 07 · Le Closing</div>
+      <h2>Comprendre le Closing</h2>
+      <p>Le closing n'est pas une technique de vente agressive — c'est la conclusion naturelle d'une conversation bien menée.</p>
+    </div>
+  </div>
+
+  <div class="hl"><strong>Définition :</strong> Le closing est le moment où vous aidez votre prospect à prendre une décision — qu'il s'agisse de rejoindre l'équipe en tant que partenaire ou de commander les produits en tant que client.</div>
+
+  <div class="slbl">Pourquoi le closing est-il essentiel ?</div>
+
+  <div class="mc"><div class="mc-i">🎯</div><div><div class="mc-t">Sans closing, pas de conversion</div><div class="mc-tx">Vous pouvez avoir la meilleure présentation du monde — si vous ne concluez pas, votre prospect repart sans décision. Le closing transforme l'intérêt en action.</div></div></div>
+  <div class="mc"><div class="mc-i">💬</div><div><div class="mc-t">C'est une aide, pas une pression</div><div class="mc-tx">Un bon closing aide votre prospect à clarifier ce qu'il veut vraiment. Vous posez des questions, vous écoutez, vous facilitez la décision — vous ne forcez rien.</div></div></div>
+  <div class="mc"><div class="mc-i">⏱️</div><div><div class="mc-t">Le moment est clé</div><div class="mc-tx">Le closing se fait à la fin de la présentation, quand le prospect a eu toutes les informations dont il a besoin. Ni trop tôt, ni trop tard.</div></div></div>
+
+  <div class="slbl">La bonne posture pour closer</div>
+  <div class="qbox">
+    « La théorie c'est bien, la pratique c'est mieux. Apprenez le closing par cœur et entraînez-vous régulièrement avec votre équipe. »
+  </div>
+
+  <div class="warn">
+    <div class="warn-t">⚠️ À éviter absolument</div>
+    Closer avant la fin de la présentation, avoir l'air pressé ou désespéré, parler trop vite ou ne pas laisser de silence après la question de closing.
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-p" onclick="goTo(0)" disabled>← Précédent</button>
+    <button class="btn btn-n" onclick="goTo(1)">Suivant : Les Questions →</button>
+  </div>
+</div>
+
+<!-- SECTION 1 -->
+<div class="section" id="s1">
+  <div class="ch c-green">
+    <div class="ch-emoji">❓</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 07 · Le Closing</div>
+      <h2>Les Questions de Closing</h2>
+      <p>Le processus complet en 9 questions pour guider votre prospect vers une décision éclairée et sincère.</p>
+    </div>
+  </div>
+
+  <div class="hl">Ces questions se posent dans l'ordre, après votre présentation. Elles permettent de comprendre les motivations réelles de votre prospect et d'adapter votre accompagnement.</div>
+
+  <div class="slbl">Le processus en 9 questions</div>
+
+  <div class="closing-flow">
+    <div class="cf-step">
+      <div class="cf-num">1</div>
+      <div>
+        <div class="cf-q">« Qu'est-ce qui te plaît le plus dans le business ? »</div>
+        <div class="cf-hint">Laissez-le s'exprimer. Les réponses typiques : le temps libre, l'argent, les produits, ou le concept d'affaire. Écoutez attentivement — c'est sa motivation réelle.</div>
+      </div>
+    </div>
+    <div class="cf-step">
+      <div class="cf-num">2</div>
+      <div>
+        <div class="cf-q">« De 1 à 10, tu te situes où dans ce Business ? Sachant que 10 c'est le top. »</div>
+        <div class="cf-hint">S'il répond 6 ou plus, vous avez un prospect chaud. S'il dit 4-5, demandez ce qui lui manque pour aller à 7. S'il dit moins de 4, cherchez à comprendre son frein principal.</div>
+      </div>
+    </div>
+    <div class="cf-step">
+      <div class="cf-num">3</div>
+      <div>
+        <div class="cf-q">« En travaillant ensemble à temps partiel ou choisi, combien tu aimerais gagner par mois ? »</div>
+        <div class="cf-hint">Ne suggérez pas de montant — laissez-le chiffrer son objectif. C'est son rêve, pas le vôtre. Notez le chiffre.</div>
+      </div>
+    </div>
+    <div class="cf-step">
+      <div class="cf-num">4</div>
+      <div>
+        <div class="cf-q">« Combien de temps peux-tu y consacrer par semaine à temps partiel ou choisi ? »</div>
+        <div class="cf-hint">La plupart répondent entre 5 et 15 heures. Notez le nombre d'heures — vous allez l'utiliser dans la phrase de closing.</div>
+      </div>
+    </div>
+    <div class="cf-step">
+      <div class="cf-num">5</div>
+      <div>
+        <div class="cf-q">« En combien de temps souhaites-tu atteindre cet objectif ? »</div>
+        <div class="cf-hint">6 mois ? 1 an ? 2 ans ? Chaque réponse permet d'adapter votre plan d'accompagnement.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slbl">La phrase de closing — 3 formulations</div>
+  <p style="font-size:.85rem;color:var(--text2);margin-bottom:1rem;">Choisissez celle qui correspond le mieux à la situation. Remplacez les blancs par les chiffres que votre prospect a donnés.</p>
+
+  <div class="fill-box">
+    <div class="fill-title">Formulation A — directe</div>
+    <div class="fill-phrase">« Si je te montre comment gagner <span class="fill-gap">…€</span> par mois en consacrant <span class="fill-gap">…h</span> par semaine, en <span class="fill-gap">…mois</span>, serais-tu prêt à rentrer dans cette compagnie ? »</div>
+  </div>
+
+  <div class="fill-box">
+    <div class="fill-title">Formulation B — engagement</div>
+    <div class="fill-phrase">« Si je te montre comment gagner <span class="fill-gap">…€</span> par mois en consacrant <span class="fill-gap">…h</span> par semaine en <span class="fill-gap">…mois</span>, on est bien d'accord que tu démarres avec moi ? »</div>
+  </div>
+
+  <div class="fill-box">
+    <div class="fill-title">Formulation C — confirmation</div>
+    <div class="fill-phrase">« Bon, si j'ai bien compris, on est bien d'accord que tu démarres avec moi ? »</div>
+    <div class="cf-hint" style="margin-top:.5rem;">Utilisez la C après la A ou la B pour obtenir une confirmation claire. Puis regardez-le droit dans les yeux, serrez-lui la main et dites : <strong>« Bienvenue dans l'équipe ! »</strong></div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-p" onclick="goTo(0)">← Précédent</button>
+    <button class="btn btn-n" onclick="goTo(2)">Suivant : Créer l'Urgence →</button>
+  </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section" id="s2">
+  <div class="ch c-green">
+    <div class="ch-emoji">⚡</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 07 · Le Closing</div>
+      <h2>Créer l'Urgence</h2>
+      <p>Une décision reportée est souvent une décision perdue. Voici comment créer un momentum naturel et respectueux.</p>
+    </div>
+  </div>
+
+  <div class="slbl">Pourquoi agir maintenant ?</div>
+
+  <div class="mc"><div class="mc-i">🕐</div><div><div class="mc-t">Le temps joue contre la décision</div><div class="mc-tx">Lorsque votre prospect rentre chez lui sans avoir pris de décision, les doutes s'installent, l'entourage influence, et l'enthousiasme retombe. "Je vais y réfléchir" signifie souvent "je vais oublier".</div></div></div>
+  <div class="mc"><div class="mc-i">💡</div><div><div class="mc-t">L'urgence vient du prospect, pas de vous</div><div class="mc-tx">La meilleure urgence est celle que votre prospect identifie lui-même grâce à vos questions. S'il a dit qu'il veut 500€/mois dans 6 mois, chaque jour sans décision le rapproche de l'échec de son objectif.</div></div></div>
+  <div class="mc"><div class="mc-i">📅</div><div><div class="mc-t">Le Fast Start a une date</div><div class="mc-tx">Le programme Fast Start démarre à la date d'inscription. Chaque semaine de retard est une semaine de bonus perdue. C'est un argument concret et honnête.</div></div></div>
+
+  <div class="slbl">Les phrases pour l'inscription immédiate</div>
+
+  <div class="closing-flow">
+    <div class="cf-step">
+      <div class="cf-num">1</div>
+      <div>
+        <div class="cf-q">« Maintenant, je vais te montrer comment t'enregistrer. »</div>
+        <div class="cf-hint">Dites cette phrase avec calme et naturel, comme si c'était la suite logique — parce que ça l'est. Ouvrez le Back Office ou le formulaire d'inscription.</div>
+      </div>
+    </div>
+    <div class="cf-step">
+      <div class="cf-num">2</div>
+      <div>
+        <div class="cf-q">Guidez l'inscription en direct</div>
+        <div class="cf-hint">Ne laissez pas votre prospect repartir "pour faire ça plus tard". Restez avec lui, aidez-le étape par étape. L'inscription prend 10 minutes — faites-la ensemble.</div>
+      </div>
+    </div>
+    <div class="cf-step">
+      <div class="cf-num">3</div>
+      <div>
+        <div class="cf-q">Confirmez et planifiez la prochaine étape</div>
+        <div class="cf-hint">Une fois inscrit : « Super ! Maintenant planifions ta première semaine. Quel jour es-tu disponible pour qu'on fasse ton Fast Start ensemble ? »</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn">
+    <div class="warn-t">⚠️ Si votre prospect dit "je vais réfléchir"</div>
+    Ne paniquez pas. Répondez calmement : « Je comprends, c'est une décision importante. Qu'est-ce qui te manque pour décider ? » Puis traitez l'objection avec la méthode en 4 étapes (Module 08).
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-p" onclick="goTo(1)">← Précédent</button>
+    <button class="btn btn-n" onclick="goTo(3)">Suivant : S'Entraîner →</button>
+  </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section" id="s3">
+  <div class="ch c-green">
+    <div class="ch-emoji">🏋️</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 07 · Le Closing</div>
+      <h2>S'Entraîner au Closing</h2>
+      <p>Le closing s'apprend par la pratique. Plus vous vous entraînez, plus il devient naturel et efficace.</p>
+    </div>
+  </div>
+
+  <div class="hl"><strong>Règle d'or :</strong> Apprendre le closing par cœur et s'entraîner régulièrement avec son équipe, en faisant des ateliers closing. La théorie c'est bien, la pratique c'est mieux.</div>
+
+  <div class="slbl">Plan d'entraînement</div>
+
+  <div class="mc"><div class="mc-i">📖</div><div><div class="mc-t">Étape 1 — Mémoriser</div><div class="mc-tx">Lisez les 9 questions et les 3 formulations à voix haute chaque jour pendant une semaine. Jusqu'à ce qu'elles sortent naturellement, sans hésitation.</div></div></div>
+  <div class="mc"><div class="mc-i">🤝</div><div><div class="mc-t">Étape 2 — Jeux de rôle</div><div class="mc-tx">Entraînez-vous avec votre partenaire ou votre upline. L'un joue le prospect, l'autre close. Enregistrez-vous pour vous écouter. Recommencez jusqu'à vous sentir à l'aise.</div></div></div>
+  <div class="mc"><div class="mc-i">📊</div><div><div class="mc-t">Étape 3 — Analyser vos vrais closings</div><div class="mc-tx">Après chaque vraie conversation, notez ce qui a bien fonctionné et ce qui peut être amélioré. Partagez vos expériences avec votre upline lors des zooms du samedi.</div></div></div>
+  <div class="mc"><div class="mc-i">🔄</div><div><div class="mc-t">Étape 4 — Ateliers équipe</div><div class="mc-tx">Organisez des ateliers closing avec votre équipe. Créez des scénarios variés : prospect enthousiasmé, prospect hésitant, prospect avec objections. La diversité des situations vous rendra agile.</div></div></div>
+
+  <div class="slbl">Le mindset du closer</div>
+  <div class="qbox">
+    « Le closing n'est pas une manipulation — c'est un service. Votre prospect hésitant a besoin de quelqu'un qui croit assez en lui pour l'aider à franchir le pas. »
+  </div>
+
+  <div class="mc"><div class="mc-i">💪</div><div><div class="mc-t">Célébrez chaque "non"</div><div class="mc-tx">Chaque refus vous rapproche du prochain "oui". Analysez le refus, apprenez-en quelque chose, passez au suivant. Les meilleurs closers ont tous essuyé des centaines de refus.</div></div></div>
+
+  <div class="nav-btns">
+    <button class="btn btn-p" onclick="goTo(2)">← Précédent</button>
+    <button class="btn btn-done" onclick="markModuleDone()">✓ Module terminé — retour accueil</button>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+let cur=0;
+const N=4;
+function goTo(i){
+  document.querySelectorAll('.section').forEach((s,j)=>{s.classList.toggle('active',j===i);});
+  document.querySelectorAll('.s-chapter-item').forEach((s,j)=>{s.classList.toggle('active',j===i);});
+  cur=i;
+  updatePbar();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function updatePbar(){
+  const done=Array.from({length:N},(_,i)=>localStorage.getItem('cl_done_'+i)==='1').filter(Boolean).length;
+  const pct=Math.round(Math.max(((cur+1)/N),(done/N))*100);
+  document.getElementById('pbar').style.width=pct+'%';
+}
+function toggleDone(e,i){
+  e.stopPropagation();
+  const key='cl_done_'+i;
+  const isDone=localStorage.getItem(key)==='1';
+  localStorage.setItem(key,isDone?'0':'1');
+  renderChks();updatePbar();
+}
+function renderChks(){
+  for(let i=0;i<N;i++){
+    const el=document.getElementById('chk'+i);
+    if(!el)return;
+    const d=localStorage.getItem('cl_done_'+i)==='1';
+    el.className='n-chk'+(d?' done':'');
+    el.textContent=d?'✓':'';
+  }
+}
+function markModuleDone(){
+  for(let i=0;i<N;i++)localStorage.setItem('cl_done_'+i,'1');
+  localStorage.setItem('mod_done_7','1');
+  renderChks();updatePbar();
+  window.location.href='index.html';
+}
+renderChks();updatePbar();
+
+let _synth=window.speechSynthesis,_utt=null,_reading=false;
+function _getText(){const s=document.querySelector('.section.active');if(!s)return'';let t='';s.querySelectorAll('h2,p,.hl,.cf-q,.cf-hint,.mc-t,.mc-tx,.qbox,.fill-phrase').forEach(e=>{const v=e.textContent.trim();if(v&&v.length>3)t+=v+'. ';});return t;}
+function toggleAudio(){const b=document.getElementById('ab');if(_reading){_synth.cancel();_reading=false;b.innerHTML='🔊';b.className='audio-btn';return;}const t=_getText();if(!t)return;_utt=new SpeechSynthesisUtterance(t);_utt.lang='fr-FR';_utt.rate=0.95;const v=_synth.getVoices().find(v=>v.lang.startsWith('fr'));if(v)_utt.voice=v;_utt.onstart=()=>{_reading=true;b.innerHTML='⏹';b.className='audio-btn reading';};_utt.onend=_utt.onerror=()=>{_reading=false;b.innerHTML='🔊';b.className='audio-btn';};_synth.speak(_utt);}
+</script>
+</body>
+</html>
