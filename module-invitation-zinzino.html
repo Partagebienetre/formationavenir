@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>L'Art de l'Invitation — Destination 💎</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+:root{
+  --bg:#F3F0FA; --bg2:#EAE5F5; --bg3:#DDD6F0;
+  --sidebar:#EDE8F8; --card:#FDFBFF;
+  --text:#2A1F4A; --text2:#5A4D7A; --text3:#9080B0;
+  --violet:#6B21A8; --vl:#9333EA; --vm:#7C3AED;
+  --green:#16A34A; --red:#DC2626; --blue:#2563EB;
+  --border:#D5CDE8; --bv:rgba(107,33,168,.2);
+  --shadow:0 2px 12px rgba(107,33,168,.08);
+  --shadow2:0 4px 20px rgba(107,33,168,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;line-height:1.6;}
+
+/* PROGRESS BAR */
+#pbar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--vm),var(--vl));width:0%;z-index:1000;transition:width .4s;}
+
+/* HEADER */
+header{background:var(--card);border-bottom:2px solid var(--bv);padding:.85rem 1.75rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;box-shadow:var(--shadow);}
+.brand{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:900;color:var(--text);text-decoration:none;white-space:nowrap;}
+.brand em{color:var(--vm);font-style:italic;}
+.h-sep{width:1px;height:18px;background:var(--border);flex-shrink:0;}
+.back{font-size:.82rem;color:var(--vm);text-decoration:none;font-weight:600;white-space:nowrap;transition:opacity .2s;}
+.back:hover{opacity:.7;}
+.mod-badge{background:var(--vm);color:white;font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem;border-radius:20px;white-space:nowrap;}
+.h-title{font-family:'Playfair Display',serif;font-size:clamp(.9rem,2vw,1.1rem);font-weight:700;color:var(--text);}
+.h-title em{color:var(--vm);font-style:italic;}
+.h-search{flex:1;display:flex;align-items:center;gap:.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:.5rem .9rem;max-width:320px;transition:border-color .2s;}
+.h-search:focus-within{border-color:var(--vm);}
+.h-search input{background:none;border:none;outline:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;width:100%;}
+.h-search input::placeholder{color:var(--text3);}
+.h-search span{color:var(--text3);font-size:.85rem;flex-shrink:0;}
+.plabel{font-size:.75rem;color:var(--vm);font-weight:600;white-space:nowrap;}
+.audio-btn{width:38px;height:38px;border-radius:9px;background:var(--bg2);border:1.5px solid var(--border);color:var(--vm);font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.audio-btn:hover{background:var(--bv);border-color:var(--vm);}
+.audio-btn.reading{background:var(--vm);border-color:var(--vm);color:white;}
+.dl-btn{display:flex;align-items:center;gap:.4rem;padding:.42rem .85rem;border-radius:8px;background:var(--bg2);border:1.5px solid var(--border);color:var(--vm);font-family:'Syne',sans-serif;font-weight:700;font-size:.72rem;cursor:pointer;transition:all .2s;white-space:nowrap;text-decoration:none;}
+.dl-btn:hover{background:var(--bv);border-color:var(--vm);}
+
+/* LAYOUT */
+.layout{display:flex;min-height:calc(100vh - 62px);}
+
+/* SIDEBAR */
+aside{width:265px;min-width:265px;background:var(--sidebar);border-right:1px solid var(--border);padding:1.25rem 0;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;}
+.s-section{padding:.2rem 0 .5rem;}
+.s-section-title{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);padding:.4rem 1.2rem .35rem;}
+.s-module-btn{display:flex;align-items:center;gap:.65rem;padding:.6rem 1.2rem;cursor:pointer;transition:all .15s;border-left:3px solid transparent;text-decoration:none;color:var(--text2);}
+.s-module-btn:hover{background:var(--bg3);color:var(--text);}
+.s-module-btn.current{background:var(--bg3);border-left-color:var(--vm);color:var(--text);}
+.s-module-btn.current .s-mod-name{font-weight:700;color:var(--violet);}
+.s-mod-icon{width:28px;height:28px;border-radius:7px;background:var(--bv);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.s-mod-name{font-size:.82rem;font-weight:500;line-height:1.3;}
+.s-div{height:1px;background:var(--border);margin:.6rem 1.2rem;}
+/* Chapter nav (inside current module) */
+.s-chapter-list{padding:.1rem 0 .5rem;}
+.s-chapter-item{display:flex;align-items:center;gap:.55rem;padding:.42rem 1.2rem .42rem 2.5rem;cursor:pointer;font-size:.8rem;color:var(--text2);transition:all .15s;border-left:3px solid transparent;}
+.s-chapter-item:hover{background:var(--bg2);color:var(--violet);}
+.s-chapter-item.active{color:var(--violet);font-weight:600;background:var(--bg2);border-left-color:var(--vl);}
+.s-chapter-item::before{content:'›';color:var(--text3);font-size:.75rem;}
+.n-chk{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.55rem;flex-shrink:0;cursor:pointer;transition:all .2s;margin-left:auto;}
+.n-chk:hover{border-color:var(--vm);}
+.n-chk.done{background:var(--green);border-color:var(--green);color:white;}
+
+/* MAIN */
+main{flex:1;padding:2rem 2.25rem;max-width:920px;}
+.section{display:none;animation:fi .3s ease;}
+.section.active{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* CHAPTER HEADERS */
+.ch{display:flex;align-items:flex-start;gap:1.1rem;margin-bottom:2rem;padding:1.5rem 1.75rem;border-radius:14px;color:white;}
+.ch-emoji{font-size:2.4rem;flex-shrink:0;}
+.ch-tag{font-size:.63rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.82;margin-bottom:.35rem;}
+.ch-text h2{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,1.9rem);font-weight:900;line-height:1.15;margin-bottom:.4rem;}
+.ch-text p{font-size:.9rem;opacity:.88;line-height:1.65;max-width:520px;}
+.c-violet{background:linear-gradient(135deg,#4C1D95,#6B21A8);}
+.c-orange{background:linear-gradient(135deg,#92400E,#B45309);}
+.c-blue{background:linear-gradient(135deg,#1E3A5F,#1D4ED8);}
+.c-teal{background:linear-gradient(135deg,#134E4A,#0D9488);}
+.c-red{background:linear-gradient(135deg,#7F1D1D,#DC2626);}
+.c-indigo{background:linear-gradient(135deg,#1E1B4B,#4338CA);}
+.c-pink{background:linear-gradient(135deg,#831843,#DB2777);}
+.c-gold{background:linear-gradient(135deg,#78350F,#D97706);}
+
+/* SECTION LABEL */
+.slbl{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--violet);margin:1.75rem 0 .75rem;display:flex;align-items:center;gap:.55rem;font-style:italic;}
+.slbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* HIGHLIGHT */
+.hl{background:var(--bg2);border-left:3px solid var(--vm);border-radius:0 9px 9px 0;padding:.9rem 1.15rem;margin:1rem 0;font-size:.88rem;line-height:1.7;color:var(--text);}
+.hl strong{color:var(--violet);}
+
+/* CONCEPT GRID */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.9rem;margin-bottom:1.75rem;}
+.ccard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.15rem;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;}
+.ccard:hover{transform:translateY(-2px);box-shadow:var(--shadow2);}
+.cc-icon{font-size:1.4rem;margin-bottom:.5rem;}
+.cc-title{font-family:'Playfair Display',serif;font-size:.85rem;font-weight:700;margin-bottom:.35rem;color:var(--violet);}
+.cc-text{font-size:.83rem;line-height:1.65;color:var(--text2);}
+
+/* SCRIPT CARDS */
+.sc{background:var(--card);border:1px solid var(--border);border-radius:13px;margin-bottom:1rem;overflow:hidden;box-shadow:var(--shadow);}
+.sc-head{padding:.95rem 1.15rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:var(--bg2);gap:.9rem;user-select:none;}
+.sc-head:hover{background:var(--bg3);}
+.sc-hl{display:flex;align-items:center;gap:.7rem;}
+.sc-letter{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--violet),var(--vl));color:white;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.82rem;flex-shrink:0;}
+.sc-name{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--text);}
+.sc-meta{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;}
+.tag{font-size:.62rem;font-weight:600;letter-spacing:.04em;padding:.18rem .55rem;border-radius:20px;text-transform:uppercase;}
+.t-chaud{background:rgba(107,33,168,.12);color:var(--violet);}
+.t-froid{background:rgba(37,99,235,.12);color:var(--blue);}
+.t-direct{background:rgba(22,163,74,.12);color:#15803D;}
+.t-indirect{background:rgba(220,38,38,.12);color:var(--red);}
+.t-market{background:rgba(107,33,168,.12);color:var(--violet);}
+.t-digital{background:rgba(99,102,241,.12);color:#4338CA;}
+.chev{font-size:.65rem;color:var(--text3);transition:transform .3s;}
+.sc.open .chev{transform:rotate(180deg);}
+.sc-body{display:none;padding:1.15rem;border-top:1px solid var(--border);}
+.sc.open .sc-body{display:block;}
+
+/* BUBBLE */
+.b-lbl{font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.09em;margin-bottom:.5rem;}
+.bubble{background:linear-gradient(135deg,rgba(107,33,168,.08),rgba(147,51,234,.05));border:1px solid var(--bv);border-radius:0 14px 14px 14px;padding:1rem 1.2rem;font-size:.87rem;line-height:1.8;margin-bottom:1rem;font-style:italic;color:var(--text);position:relative;}
+.bubble::before{content:'"';position:absolute;top:-10px;left:12px;font-size:1.6rem;color:var(--vl);font-style:normal;font-family:'Playfair Display',serif;}
+
+/* TACTIC BOX */
+.tbox{background:rgba(22,163,74,.07);border:1px solid rgba(22,163,74,.2);border-radius:10px;padding:.95rem 1.15rem;}
+.tt{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#15803D;margin-bottom:.65rem;}
+.tl{list-style:none;}
+.tl li{font-size:.83rem;line-height:1.65;padding:.22rem 0 .22rem 1.1rem;position:relative;color:var(--text2);}
+.tl li::before{content:'→';position:absolute;left:0;color:#16A34A;}
+
+/* OBJECTION CARDS */
+.obj{border-radius:11px;margin-bottom:.85rem;overflow:hidden;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow);}
+.obj-trig{display:flex;align-items:center;gap:.7rem;padding:.95rem 1.15rem;cursor:pointer;background:var(--bg2);transition:background .15s;}
+.obj-trig:hover{background:var(--bg3);}
+.obj-ico{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.obj-ttl{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--text);flex:1;}
+.obj-body{display:none;padding:1.15rem;border-top:1px solid var(--border);}
+.obj.open .obj-body{display:block;}
+.obj-method{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--violet);margin-bottom:.6rem;padding:.22rem .65rem;background:rgba(107,33,168,.08);border-radius:6px;display:inline-block;}
+
+/* MAGIC BOX */
+.mbox{background:linear-gradient(135deg,rgba(107,33,168,.08),rgba(147,51,234,.04));border:1px solid var(--bv);border-radius:13px;padding:1.4rem;margin-top:1.4rem;text-align:center;}
+.mt{font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--violet);margin-bottom:.65rem;}
+.mtxt{font-size:.9rem;font-weight:500;line-height:1.8;color:var(--text);}
+.mtxt strong{color:var(--violet);font-family:'Playfair Display',serif;}
+
+/* COMPLIANCE TABLE */
+.ctbl{width:100%;border-collapse:collapse;margin-top:.85rem;font-size:.83rem;}
+.ctbl th{padding:.65rem .9rem;font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;}
+.th-no{background:rgba(220,38,38,.1);color:#991B1B;text-align:left;}
+.th-ok{background:rgba(22,163,74,.1);color:#15803D;text-align:left;}
+.ctbl td{padding:.65rem .9rem;border-bottom:1px solid var(--border);line-height:1.55;vertical-align:top;}
+.td-no{background:rgba(220,38,38,.04);color:#991B1B;}
+.td-ok{background:rgba(22,163,74,.04);color:#15803D;}
+
+/* NAV BUTTONS */
+.nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:1.35rem;border-top:1px solid var(--border);gap:.9rem;}
+.btn{display:flex;align-items:center;gap:.45rem;padding:.72rem 1.45rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:.84rem;cursor:pointer;border:none;transition:all .2s;}
+.btn-p{background:var(--bg2);color:var(--text2);border:1px solid var(--border);}
+.btn-p:hover{background:var(--bg3);color:var(--text);}
+.btn-n{background:linear-gradient(135deg,var(--violet),var(--vl));color:white;box-shadow:var(--shadow2);}
+.btn-n:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(107,33,168,.25);}
+.btn-done{background:linear-gradient(135deg,#15803D,#16A34A);color:white;}
+
+/* PROFILE CARDS */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:.7rem;margin-bottom:1.75rem;}
+.pcard{border-radius:11px;padding:1rem;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow);}
+.p-r{border-color:rgba(220,38,38,.3);background:rgba(220,38,38,.04);}
+.p-b{border-color:rgba(37,99,235,.3);background:rgba(37,99,235,.04);}
+.p-j{border-color:rgba(107,33,168,.3);background:rgba(107,33,168,.04);}
+.p-v{border-color:rgba(22,163,74,.3);background:rgba(22,163,74,.04);}
+.pt{font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;margin-bottom:.2rem;}
+.pm{font-size:.72rem;color:var(--text2);margin-bottom:.4rem;}
+.pkws{display:flex;flex-wrap:wrap;gap:.25rem;}
+.pkw{font-size:.6rem;padding:.12rem .45rem;border-radius:20px;background:var(--bg2);color:var(--text2);}
+
+/* PIPELINE */
+.pipe{display:flex;flex-direction:column;gap:0;border-radius:13px;overflow:hidden;border:1px solid var(--border);margin-bottom:1.75rem;box-shadow:var(--shadow);}
+.ps{display:flex;align-items:center;gap:.9rem;padding:.82rem 1.15rem;border-bottom:1px solid var(--border);background:var(--card);}
+.ps:last-child{border-bottom:none;}
+.pd{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;font-family:'Syne',sans-serif;}
+.pl{font-size:.84rem;font-weight:500;flex:1;color:var(--text);}
+.pdesc{font-size:.72rem;color:var(--text3);}
+
+/* VIDEO CARD */
+.vcard{display:block;text-decoration:none;border-radius:14px;overflow:hidden;border:1px solid var(--bv);background:var(--card);transition:all .22s;margin-bottom:1.75rem;box-shadow:var(--shadow);}
+.vcard:hover{border-color:var(--vm);transform:translateY(-2px);box-shadow:var(--shadow2);}
+.vthumb{position:relative;background:linear-gradient(135deg,#4C1D95,#6B21A8);aspect-ratio:16/6;display:flex;align-items:center;overflow:hidden;}
+.vthumb::before{content:'';position:absolute;inset:0;opacity:.08;background:repeating-linear-gradient(45deg,white,white 1px,transparent 1px,transparent 18px);}
+.vinfo{position:absolute;left:1.75rem;top:50%;transform:translateY(-50%);}
+.vsrc{font-family:'Syne',sans-serif;font-size:.63rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:.35rem;}
+.vtit{font-family:'Playfair Display',serif;font-size:clamp(.95rem,2.2vw,1.4rem);font-weight:700;color:white;line-height:1.2;max-width:290px;}
+.vplay{position:absolute;right:2.25rem;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,0,0,.2);font-size:1.1rem;color:var(--violet);}
+.vfoot{padding:.9rem 1.15rem;display:flex;align-items:center;justify-content:space-between;gap:.9rem;flex-wrap:wrap;}
+
+/* NOTE ZONE */
+.nzone{background:var(--bg2);border:1px solid var(--border);border-radius:13px;padding:1.15rem;margin:1.25rem 0;}
+.nzh{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem;gap:.9rem;flex-wrap:wrap;}
+.nzt{font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;color:var(--violet);}
+.nprompt{font-size:.82rem;color:var(--text2);margin-bottom:.7rem;line-height:1.6;font-style:italic;}
+.nta{width:100%;min-height:90px;background:var(--card);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;line-height:1.7;padding:.8rem 1rem;resize:vertical;outline:none;transition:border-color .2s;}
+.nta:focus{border-color:var(--vm);}
+.nta::placeholder{color:var(--text3);font-style:italic;}
+.nacts{display:flex;align-items:center;justify-content:flex-end;gap:.45rem;margin-top:.6rem;}
+.nsave{font-size:.75rem;font-weight:600;padding:.4rem .85rem;border-radius:7px;border:none;cursor:pointer;transition:all .2s;background:var(--violet);color:white;font-family:'DM Sans',sans-serif;}
+.nsave:hover{background:var(--vm);}
+.nconf{font-size:.72rem;color:var(--green);display:none;}
+
+/* VISION DOMAIN */
+.vdgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:.65rem;margin-bottom:1.4rem;}
+.vd{border-radius:11px;padding:.95rem;border:1px solid var(--border);background:var(--card);}
+.vdt{font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.45rem;color:var(--violet);display:flex;align-items:center;gap:.35rem;}
+.vi{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.82rem;padding:.45rem .7rem;outline:none;transition:border-color .2s;margin-bottom:.3rem;}
+.vi:focus{border-color:var(--vm);}
+.vi::placeholder{color:var(--text3);font-style:italic;}
+
+/* ENGAGEMENT */
+.engcard{background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(13,148,136,.07));border:1px solid var(--bv);border-radius:15px;padding:1.65rem;margin:1.4rem 0;text-align:center;}
+.engi{font-size:2.4rem;margin-bottom:.85rem;}
+.engt{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;margin-bottom:.65rem;color:var(--violet);}
+.engtx{font-size:.85rem;color:var(--text2);line-height:1.7;max-width:460px;margin:0 auto;}
+
+/* INTRO HERO */
+.ihero{text-align:center;padding:2rem 1rem 2.25rem;}
+.ibadge{display:inline-flex;align-items:center;gap:.45rem;background:rgba(107,33,168,.08);border:1px solid var(--bv);color:var(--violet);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.35rem 1rem;border-radius:20px;margin-bottom:1.35rem;}
+.ihero h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.1;margin-bottom:.85rem;color:var(--text);}
+.ihero h2 em{color:var(--vm);font-style:italic;}
+.ihero p{font-size:.95rem;color:var(--text2);max-width:500px;margin:0 auto 2.25rem;line-height:1.75;font-weight:300;}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:.65rem;margin-bottom:2.25rem;}
+.ov-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:.95rem .65rem;cursor:pointer;transition:all .22s;color:var(--text);display:block;text-align:center;box-shadow:var(--shadow);}
+.ov-card:hover{background:var(--bg2);border-color:var(--vm);transform:translateY(-2px);box-shadow:var(--shadow2);}
+.ov-e{font-size:1.5rem;margin-bottom:.35rem;}
+.ov-n{font-size:.58rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--violet);margin-bottom:.18rem;}
+.ov-nm{font-family:'Playfair Display',serif;font-size:.77rem;font-weight:700;line-height:1.3;color:var(--text);}
+.btn-start{display:inline-flex;align-items:center;gap:.55rem;background:linear-gradient(135deg,var(--violet),var(--vl));color:white;padding:.9rem 1.9rem;border-radius:11px;font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;border:none;box-shadow:var(--shadow2);transition:all .2s;}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(107,33,168,.25);}
+
+/* QUOTE */
+.qbox{background:var(--bg2);border-left:3px solid var(--vm);border-radius:0 11px 11px 0;padding:1rem 1.15rem;margin:1rem 0;font-style:italic;font-size:.88rem;line-height:1.7;color:var(--text);}
+.qa{font-size:.72rem;color:var(--text3);margin-top:.45rem;font-style:normal;}
+
+/* MINDSET CARD */
+.mc{border-radius:11px;padding:1rem 1.15rem;margin-bottom:.7rem;border:1px solid var(--border);display:flex;align-items:flex-start;gap:.8rem;background:var(--card);box-shadow:var(--shadow);}
+.mc-i{font-size:1.3rem;flex-shrink:0;margin-top:.08rem;}
+.mc-t{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;margin-bottom:.25rem;color:var(--violet);}
+.mc-tx{font-size:.83rem;line-height:1.65;color:var(--text2);}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:grid;gap:.4rem;}
+.checklist li{display:flex;align-items:flex-start;gap:.7rem;font-size:.86rem;line-height:1.6;padding:.6rem .85rem;border-radius:9px;background:var(--card);border:1px solid var(--border);cursor:pointer;transition:all .2s;color:var(--text);}
+.checklist li:hover{background:var(--bg2);border-color:var(--vm);}
+.checklist li.checked{background:rgba(22,163,74,.06);border-color:rgba(22,163,74,.3);text-decoration:line-through;color:var(--text3);}
+.cl-box{width:19px;height:19px;border-radius:5px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.65rem;transition:all .2s;margin-top:.1rem;}
+.checklist li.checked .cl-box{background:var(--green);border-color:var(--green);color:white;}
+
+/* SEARCH OVERLAY */
+#srch-ov{display:none;position:fixed;inset:0;background:rgba(42,31,74,.45);z-index:200;padding:4rem 1.5rem 2rem;backdrop-filter:blur(4px);}
+.srch-box{background:var(--card);border:1px solid var(--bv);border-radius:14px;max-width:540px;margin:0 auto;max-height:65vh;overflow-y:auto;padding:.9rem;box-shadow:var(--shadow2);}
+.sr-item{padding:.78rem .9rem;border-radius:9px;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--text);}
+.sr-item:hover{background:var(--bg2);}
+.sr-e{font-size:1.1rem;flex-shrink:0;}
+.sr-t{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--violet);}
+.sr-s{font-size:.7rem;color:var(--text3);margin-top:.08rem;}
+.sr-empty{text-align:center;padding:2rem;color:var(--text3);font-size:.85rem;}
+
+/* DOCUMENT LINKS */
+.doc-card{border-radius:11px;padding:.88rem 1rem;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--text);transition:all .2s;box-shadow:var(--shadow);}
+.doc-card:hover{background:var(--bg2);border-color:var(--vm);}
+.doc-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.83rem;color:var(--violet);}
+.doc-sub{font-size:.68rem;color:var(--text3);}
+
+/* VIDEO LINK */
+.vlink{display:flex;align-items:center;gap:.75rem;padding:.75rem .9rem;border-radius:10px;background:var(--card);border:1px solid var(--border);text-decoration:none;color:var(--text);transition:all .2s;box-shadow:var(--shadow);}
+.vlink:hover{background:var(--bg2);border-color:var(--vm);}
+.vlink-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--violet),var(--vl));display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;color:white;}
+.vlink-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.83rem;color:var(--violet);}
+.vlink-sub{font-size:.68rem;color:var(--text3);}
+
+/* STEP GRID */
+.step-grid{display:grid;gap:0;border-radius:13px;overflow:hidden;border:1px solid var(--border);margin-bottom:1.5rem;box-shadow:var(--shadow);}
+.step{display:flex;align-items:flex-start;gap:.85rem;padding:.9rem 1.1rem;border-bottom:1px solid var(--border);background:var(--card);}
+.step:last-child{border-bottom:none;}
+.step-num{min-width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.72rem;flex-shrink:0;color:white;}
+.step-t{font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;margin-bottom:.22rem;color:var(--violet);}
+.step-tx{font-size:.82rem;line-height:1.65;color:var(--text2);}
+
+/* RANG GRID */
+.rang-row{display:flex;align-items:center;gap:1rem;padding:.9rem 1.15rem;border-bottom:1px solid var(--border);background:var(--card);transition:background .15s;}
+.rang-row:last-child{border-bottom:none;}
+.rang-row:hover{background:var(--bg2);}
+.rang-emoji-big{font-size:1.6rem;flex-shrink:0;width:42px;text-align:center;}
+.rang-name-big{font-family:'Playfair Display',serif;font-weight:700;font-size:.92rem;margin-bottom:.15rem;}
+.rang-cond{font-size:.78rem;color:var(--text2);line-height:1.5;}
+.rang-badge{font-size:.62rem;font-weight:700;padding:.22rem .55rem;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+
+/* GLOSSARY */
+.gloss-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.65rem;margin-bottom:1.75rem;}
+.gloss-card{border-radius:11px;padding:1rem 1.1rem;background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);}
+.gloss-term{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--violet);margin-bottom:.3rem;display:flex;align-items:center;gap:.5rem;}
+.gloss-def{font-size:.83rem;line-height:1.65;color:var(--text2);}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:.65rem;margin-bottom:1.75rem;}
+.kpi-card{border-radius:11px;padding:1rem;background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);}
+.kpi-label{font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--violet);margin-bottom:.6rem;}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;}
+.kpi-box{background:var(--bg2);border-radius:7px;padding:.5rem .65rem;text-align:center;}
+.kpi-period{font-size:.62rem;color:var(--text3);margin-bottom:.2rem;}
+.kpi-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:var(--violet);}
+
+/* BOOK LIST */
+.book-item{font-size:.84rem;line-height:1.5;padding:.5rem .8rem;background:var(--card);border-radius:9px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:.6rem;margin-bottom:.35rem;cursor:pointer;transition:all .2s;}
+.book-item:hover{background:var(--bg2);border-color:var(--vm);}
+.book-item.read{background:rgba(22,163,74,.06);border-color:rgba(22,163,74,.25);}
+.book-check{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.65rem;transition:all .2s;margin-top:.1rem;}
+.book-item.read .book-check{background:var(--green);border-color:var(--green);color:white;}
+.book-author{font-size:.7rem;color:var(--text3);white-space:nowrap;margin-top:.1rem;}
+
+/* FAST START TIMELINE */
+.fs-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.15rem;border-radius:11px;border:1px solid var(--border);background:var(--card);margin-bottom:.65rem;box-shadow:var(--shadow);}
+.fs-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:.85rem;flex-shrink:0;color:white;}
+.fs-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.92rem;margin-bottom:.22rem;color:var(--violet);}
+.fs-desc{font-size:.83rem;line-height:1.65;color:var(--text2);}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  aside{display:none;}
+  main{padding:1.15rem;}
+  header{padding:.8rem 1rem;}
+  .h-search{max-width:100%;}
+}
+</style>
+</head>
+<body>
+<div id="pbar"></div>
+<div id="srch-ov" onclick="closeSrch(event)"><div class="srch-box" id="srch-box"><div id="sr"></div></div></div>
+<header>
+  <a class="brand" href="index.html">Destination <em>💎</em></a>
+  <div class="h-sep"></div>
+  <span class="mod-badge">Module 03</span>
+  <span class="h-title">L'Art de l'<em>Invitation</em></span>
+  <div class="h-search"><span>🔍</span><input type="text" placeholder="Rechercher dans la formation…" oninput="doSearch(this.value)" onfocus="if(this.value.trim())openSrch()"></div>
+  <button class="dl-btn" onclick="dlScripts()" title="Télécharger les scripts">📥 Scripts PDF</button>
+  <button class="audio-btn" id="ab" onclick="toggleAudio()" title="Lire ce chapitre">🔊</button>
+  <span class="plabel" id="plbl">0 / ? chapitres</span>
+</header>
+<div class="layout">
+<aside>
+  <div class="s-section">
+    <div class="s-section-title">Modules</div>
+    <a class="s-module-btn" href="index.html"><div class="s-mod-icon">🏠</div><div class="s-mod-name">Accueil</div></a>
+    <a class="s-module-btn" href="module-reves-engagement.html"><div class="s-mod-icon">🌟</div><div class="s-mod-name">Rêves & Engagement</div></a>
+    <a class="s-module-btn" href="module-liste-contacts.html"><div class="s-mod-icon">📋</div><div class="s-mod-name">Liste de Contacts</div></a>
+    <a class="s-module-btn current" href="module-invitation-zinzino.html"><div class="s-mod-icon">✉️</div><div class="s-mod-name">L'Art de l'Invitation</div></a>
+    <div class="s-chapter-list">
+      <div class="s-chapter-item active" id="ci0" onclick="goTo(0)"><span>🏠</span> Introduction <div class="n-chk" id="chk0" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci1" onclick="goTo(1)"><span>🧠</span> La Posture <div class="n-chk" id="chk1" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci2" onclick="goTo(2)"><span>🔥</span> Marché Chaud <div class="n-chk" id="chk2" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci3" onclick="goTo(3)"><span>🌐</span> Marché Froid <div class="n-chk" id="chk3" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci4" onclick="goTo(4)"><span>🤝</span> Appel à 3 <div class="n-chk" id="chk4" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci5" onclick="goTo(5)"><span>🛡️</span> Objections <div class="n-chk" id="chk5" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci6" onclick="goTo(6)"><span>🎯</span> Terrain <div class="n-chk" id="chk6" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci7" onclick="goTo(7)"><span>💬</span> Pitch Zinzino <div class="n-chk" id="chk7" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci8" onclick="goTo(8)"><span>📱</span> Scripts Textos <div class="n-chk" id="chk8" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+    </div>
+    <a class="s-module-btn" href="module-demarrage.html"><div class="s-mod-icon">🚀</div><div class="s-mod-name">Mon Démarrage</div></a>
+    <a class="s-module-btn" href="module-remuneration.html"><div class="s-mod-icon">💰</div><div class="s-mod-name">Plan de Rémunération</div></a>
+    <a class="s-module-btn" href="module-outils.html"><div class="s-mod-icon">🛠️</div><div class="s-mod-name">Mes Outils</div></a>
+  </div>
+</aside>
+
+<main>
+
+<!-- S0 INTRO -->
+<div class="section active" id="s0">
+  <div class="ihero">
+    <div class="ibadge">✉️ Module 03 · Niveau Fondations</div>
+    <h2>L'Art de<br><em>l'Invitation</em></h2>
+    <p>Scripts, posture et psychologie — de la prise de contact à la duplication.</p>
+    <div class="ov-grid">
+      <div class="ov-card" onclick="goTo(1)"><div class="ov-e">🧠</div><div class="ov-n">Chap.1</div><div class="ov-nm">Posture</div></div>
+      <div class="ov-card" onclick="goTo(2)"><div class="ov-e">🔥</div><div class="ov-n">Chap.2</div><div class="ov-nm">Marché Chaud</div></div>
+      <div class="ov-card" onclick="goTo(3)"><div class="ov-e">🌐</div><div class="ov-n">Chap.3</div><div class="ov-nm">Marché Froid</div></div>
+      <div class="ov-card" onclick="goTo(4)"><div class="ov-e">🤝</div><div class="ov-n">Chap.4</div><div class="ov-nm">Appel à 3</div></div>
+      <div class="ov-card" onclick="goTo(5)"><div class="ov-e">🛡️</div><div class="ov-n">Chap.5</div><div class="ov-nm">Objections</div></div>
+      <div class="ov-card" onclick="goTo(6)"><div class="ov-e">🎯</div><div class="ov-n">Chap.6</div><div class="ov-nm">Terrain</div></div>
+      <div class="ov-card" onclick="goTo(7)"><div class="ov-e">💬</div><div class="ov-n">Chap.7</div><div class="ov-nm">Pitch</div></div>
+    </div>
+    <button class="btn-start" onclick="goTo(1)">Commencer la formation →</button>
+  </div>
+  <div class="slbl">Vidéo officielle Zinzino — à regarder en premier</div>
+  <a href="https://www.zinzinoplay.com/fr/watch/468" target="_blank" class="vcard">
+    <div class="vthumb"><div class="vinfo"><div class="vsrc">ZinzinoPlay · Formation officielle</div><div class="vtit">L'Invitation<br><span style="color:var(--vm)">expliquée par un grand leader</span></div><div style="margin-top:.65rem;display:flex;align-items:center;gap:.45rem"><span style="background:rgba(196,181,253,.18);border:1px solid rgba(196,181,253,.3);color:var(--vm);font-size:.67rem;font-weight:700;padding:.18rem .55rem;border-radius:20px">Vidéo officielle</span><span style="font-size:.7rem;opacity:.48;font-family:'Syne',sans-serif">Série · Épisode 3</span></div></div><div class="vplay" style="margin-right:2.25rem;margin-left:auto">▶</div></div>
+    <div class="vfoot"><div style="display:flex;align-items:center;gap:.7rem"><div style="width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--violet),var(--vl));display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0">🎬</div><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.86rem">3 — Invitation · FR</div><div style="font-size:.7rem;opacity:.45;margin-top:.08rem">zinzinoplay.com · s'ouvre dans un nouvel onglet</div></div></div><span style="background:rgba(16,185,129,.13);border:1px solid rgba(16,185,129,.25);color:#6EE7B7;font-size:.67rem;font-weight:700;padding:.22rem .6rem;border-radius:20px;flex-shrink:0">À regarder avant les scripts ↗</span></div>
+  </a>
+  <div class="slbl">Ce que vous allez apprendre</div>
+  <div class="cgrid">
+    <div class="ccard"><div class="cc-icon">🎯</div><div class="cc-title">L'invitation comme système</div><div class="cc-text">L'invitation n'est pas une vente. C'est la première étape d'un processus appelé "l'enracinement".</div></div>
+    <div class="ccard"><div class="cc-icon">💬</div><div class="cc-title">Scripts prêts à l'emploi</div><div class="cc-text">10+ scripts classés par profil, marché et tonalité. À utiliser immédiatement.</div></div>
+    <div class="ccard"><div class="cc-icon">🔬</div><div class="cc-title">L'avantage BalanceTest</div><div class="cc-text">Zinzino ne vend pas de l'huile — il vend une vérité scientifique. Le BalanceTest est votre argument de vente unique.</div></div>
+    <div class="ccard"><div class="cc-icon">⚖️</div><div class="cc-title">Conformité EFSA/DGCCRF<br><small style="font-weight:400;font-size:.85em;opacity:.65">autorités européenne et française de contrôle santé</small></div><div class="cc-text">Tableau des formulations autorisées vs interdites. La rigueur est votre meilleur argument.</div></div>
+  </div>
+  <div class="nav-btns"><div></div><button class="btn btn-n" onclick="goTo(1)">Chapitre 1 : La Posture →</button></div>
+</div>
+
+<!-- S1 POSTURE -->
+<div class="section" id="s1">
+  <div class="ch c-violet">
+    <div class="ch-emoji">🧠</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 1 — Fondements</div><h2>La Posture &amp;<br>Psychologie</h2><p>Avant les mots, la posture. La réussite dépend moins du script que de l'intention qui le sous-tend.</p></div>
+  </div>
+  <div class="slbl">Concepts clés</div>
+  <div class="cgrid">
+    <div class="ccard"><div class="cc-icon">🫁</div><div class="cc-title">Le Respirateur Artificiel</div><div class="cc-text">Un nouveau partenaire est extrêmement vulnérable. L'invitation génère une preuve de concept immédiate pour lui-même.</div></div>
+    <div class="ccard"><div class="cc-icon">⭐</div><div class="cc-title">Les 5 Préférés</div><div class="cc-text">Oubliez la liste de 100 noms. Identifiez les 5 personnes en qui vous avez le plus confiance. Une victoire rapide sécurise émotionnellement.</div></div>
+    <div class="ccard"><div class="cc-icon">😨</div><div class="cc-title">F.E.A.R.</div><div class="cc-text"><strong style="color:var(--vm)">F</strong>alse <strong style="color:var(--vm)">E</strong>vidence <strong style="color:var(--vm)">A</strong>ppearing <strong style="color:var(--vm)">R</strong>eal — vous imaginez des catastrophes qui ne se sont pas encore produites. L'action massive est le seul antidote.</div></div>
+    <div class="ccard"><div class="cc-icon">🚪</div><div class="cc-title">La Porte de Sortie</div><div class="cc-text">"Je ne sais pas si c'est pour toi" réduit la pression ET protège votre ego. Un refus n'est plus un rejet personnel.</div></div>
+  </div>
+  <div class="slbl">Les 4 profils de prospects</div>
+  <div class="pgrid">
+    <div class="pcard p-r"><span class="pdot" style="background:#EF4444"></span><div class="pt" style="color:#FCA5A5">🔴 Le Rouge</div><div class="pm">Dominant · Argent · Résultat</div><div class="pkws"><span class="pkw">Projet d'envergure</span><span class="pkw">Leader</span><span class="pkw">Gains</span></div></div>
+    <div class="pcard p-b"><span class="pdot" style="background:#3B82F6"></span><div class="pt" style="color:#93C5FD">🔵 Le Bleu</div><div class="pm">Influent · Social · Reconnaissance</div><div class="pkws"><span class="pkw">Communauté</span><span class="pkw">Voyage offert</span></div></div>
+    <div class="pcard p-j"><span class="pdot" style="background:var(--vm)"></span><div class="pt" style="color:var(--vm)">🟡 Le Jaune</div><div class="pm">Stable · Aide · Sécurité</div><div class="pkws"><span class="pkw">Aider ses proches</span><span class="pkw">Naturel</span></div></div>
+    <div class="pcard p-v"><span class="pdot" style="background:#10B981"></span><div class="pt" style="color:#6EE7B7">🟢 Le Vert</div><div class="pm">Consciencieux · Faits · Preuves</div><div class="pkws"><span class="pkw">Basé sur les tests</span><span class="pkw">Labo Vitas</span></div></div>
+  </div>
+  <div class="slbl">Les 11 pièges sournois de la prospection</div>
+  <div style="display:grid;gap:.5rem;margin-bottom:1.75rem">
+    <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.82rem 1rem;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.16);border-radius:10px"><span style="font-family:'Syne',sans-serif;font-weight:800;color:#FCA5A5;min-width:22px;font-size:.82rem">1</span><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.18rem">Image et tenue vestimentaire</div><div style="font-size:.77rem;color:var(--text2);line-height:1.55">La 1ère impression se joue en quelques secondes.</div></div></div>
+    <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.82rem 1rem;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.16);border-radius:10px"><span style="font-family:'Syne',sans-serif;font-weight:800;color:#FCA5A5;min-width:22px;font-size:.82rem">2</span><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.18rem">Prospecter en groupe ou en duo</div><div style="font-size:.77rem;color:var(--text2);line-height:1.55">Seul uniquement. Deux personnes face à un prospect créent un déséquilibre.</div></div></div>
+    <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.82rem 1rem;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.16);border-radius:10px"><span style="font-family:'Syne',sans-serif;font-weight:800;color:#FCA5A5;min-width:22px;font-size:.82rem">3</span><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.18rem">Aller trop vite</div><div style="font-size:.77rem;color:var(--text2);line-height:1.55">Laissez des silences. Écoutez. Questionnez ce qui va se passer.</div></div></div>
+    <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.82rem 1rem;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.16);border-radius:10px"><span style="font-family:'Syne',sans-serif;font-weight:800;color:#FCA5A5;min-width:22px;font-size:.82rem">4</span><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.18rem">Pas assez insistant</div><div style="font-size:.77rem;color:var(--text2);line-height:1.55">Le suivi est une marque de respect, pas de la pression.</div></div></div>
+    <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.82rem 1rem;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.16);border-radius:10px"><span style="font-family:'Syne',sans-serif;font-weight:800;color:#FCA5A5;min-width:22px;font-size:.82rem">5</span><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.18rem">Utiliser le jargon du MLM (marketing de réseau)</div><div style="font-size:.77rem;color:var(--text2);line-height:1.55">Dites "proposition" ou "projet" — jamais "upline", "plan de compensation".</div></div></div>
+    <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.82rem 1rem;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.16);border-radius:10px"><span style="font-family:'Syne',sans-serif;font-weight:800;color:#FCA5A5;min-width:22px;font-size:.82rem">6</span><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.18rem">Croire que le prospect va vous recontacter</div><div style="font-size:.77rem;color:var(--text2);line-height:1.55">Prenez son numéro, ne laissez pas le vôtre.</div></div></div>
+    <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.82rem 1rem;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.16);border-radius:10px"><span style="font-family:'Syne',sans-serif;font-weight:800;color:#FCA5A5;min-width:22px;font-size:.82rem">7</span><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.18rem">Le syndrome du boulet</div><div style="font-size:.77rem;color:var(--text2);line-height:1.55">C'est eux qui s'invitent, pas vous. Utilisez le Pitch Express. Ne parlez pas.</div></div></div>
+    <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.82rem 1rem;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.16);border-radius:10px"><span style="font-family:'Syne',sans-serif;font-weight:800;color:#FCA5A5;min-width:22px;font-size:.82rem">8</span><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.18rem">Manquer d'enthousiasme</div><div style="font-size:.77rem;color:var(--text2);line-height:1.55">Votre énergie est contagieuse — dans les deux sens.</div></div></div>
+    <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.82rem 1rem;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.16);border-radius:10px"><span style="font-family:'Syne',sans-serif;font-weight:800;color:#FCA5A5;min-width:22px;font-size:.82rem">9</span><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.18rem">Paraître dans le besoin</div><div style="font-size:.77rem;color:var(--text2);line-height:1.55">Vous n'avez pas besoin d'eux — c'est eux qui ont besoin de ce que vous apportez.</div></div></div>
+    <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.82rem 1rem;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.16);border-radius:10px"><span style="font-family:'Syne',sans-serif;font-weight:800;color:#FCA5A5;min-width:22px;font-size:.82rem">10</span><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.18rem">Rendre la chose trop facile</div><div style="font-size:.77rem;color:var(--text2);line-height:1.55">C'est eux qui s'invitent. Si tout le monde peut le faire sans effort, vous perdez la valeur perçue.</div></div></div>
+    <div style="display:flex;align-items:flex-start;gap:.8rem;padding:.82rem 1rem;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.16);border-radius:10px"><span style="font-family:'Syne',sans-serif;font-weight:800;color:#FCA5A5;min-width:22px;font-size:.82rem">11</span><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.18rem">Faire comme si ce n'était pas prémédité</div><div style="font-size:.77rem;color:var(--text2);line-height:1.55">La naturalité s'apprend et se prépare. Laissez des espaces de silence. Soyez à l'écoute.</div></div></div>
+  </div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(0)">← Introduction</button><button class="btn btn-n" onclick="goTo(2)">Chapitre 2 →</button></div>
+</div>
+
+<!-- S2 MARCHÉ CHAUD -->
+<div class="section" id="s2">
+  <div class="ch c-orange">
+    <div class="ch-emoji">🔥</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 2 — Scripts</div><h2>Marché Chaud :<br>Amis, Famille, Collègues</h2><p>Le socle de lancement. L'erreur : devenir "bizarre" ou trop formel. L'invitation doit rester naturelle.</p></div>
+  </div>
+  <div class="slbl">La règle des 5 C — le cadre de toute invitation</div>
+  <div style="background:rgba(107,33,168,.025);border:1px solid rgba(107,33,168,.07);border-radius:14px;padding:1.35rem;margin-bottom:1.75rem">
+    <div style="display:grid;gap:.65rem">
+      <div style="display:flex;align-items:flex-start;gap:.9rem;background:rgba(107,33,168,.13);border:1px solid rgba(147,51,234,.22);border-radius:11px;padding:.95rem"><div style="min-width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,var(--violet),var(--vl));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:.95rem;flex-shrink:0">C</div><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--vm);margin-bottom:.22rem">Court</div><div style="font-size:.8rem;line-height:1.65;opacity:.85">Deux à trois phrases maximum. L'objectif est un rendez-vous, pas une vente.</div></div></div>
+      <div style="display:flex;align-items:flex-start;gap:.9rem;background:rgba(107,33,168,.13);border:1px solid rgba(147,51,234,.22);border-radius:11px;padding:.95rem"><div style="min-width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,#1E3A5F,var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:.95rem;flex-shrink:0">C</div><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:#93C5FD;margin-bottom:.22rem">Curiosité</div><div style="font-size:.8rem;line-height:1.65;opacity:.85">Donnez juste assez pour qu'elle veuille en savoir plus — jamais assez pour qu'elle croie tout comprendre.</div></div></div>
+      <div style="display:flex;align-items:flex-start;gap:.9rem;background:rgba(107,33,168,.13);border:1px solid rgba(147,51,234,.22);border-radius:11px;padding:.95rem"><div style="min-width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,#065F46,var(--green));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:.95rem;flex-shrink:0">C</div><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:#6EE7B7;margin-bottom:.22rem">Compliment</div><div style="font-size:.8rem;line-height:1.65;opacity:.85">Expliquez pourquoi cette personne et pas une autre. Répond à la question silencieuse : "Pourquoi moi ?"</div></div></div>
+      <div style="display:flex;align-items:flex-start;gap:.9rem;background:rgba(107,33,168,.13);border:1px solid rgba(147,51,234,.22);border-radius:11px;padding:.95rem"><div style="min-width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,#92400E,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:.95rem;flex-shrink:0">C</div><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:#FCD34D;margin-bottom:.22rem">Contourner les questions</div><div style="font-size:.8rem;line-height:1.65;opacity:.85">Si on demande "c'est quoi ?" → "C'est justement ce que la présentation explique mieux que moi." Répondre au téléphone, c'est présenter sans outil.</div></div></div>
+      <div style="display:flex;align-items:flex-start;gap:.9rem;background:rgba(107,33,168,.13);border:1px solid rgba(147,51,234,.22);border-radius:11px;padding:.95rem"><div style="min-width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,#7F1D1D,var(--red));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:.95rem;flex-shrink:0">C</div><div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:#FCA5A5;margin-bottom:.22rem">Confirmer le rendez-vous</div><div style="font-size:.8rem;line-height:1.65;opacity:.85">Fixez une date, une heure, un support précis. "Tu es disponible mardi à 19h pour un zoom de 20 min ?" Un rendez-vous flou n'existe pas.</div></div></div>
+    </div>
+  </div>
+
+  <div class="slbl">Scripts — Approche Directe (Business)</div>
+  <div class="sc" id="sc-A">
+    <div class="sc-head" onclick="toggleSc('sc-A')"><div class="sc-hl"><div class="sc-letter">A</div><div><div class="sc-name">Le Partenaire d'Affaires</div><div class="sc-meta"><span class="tag t-chaud">Marché chaud</span><span class="tag t-direct">Direct</span><span class="tag t-market">Profil Rouge</span></div></div></div><div style="display:flex;align-items:center;gap:.7rem"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd"></div></div><span class="chev">▼</span></div></div>
+    <div class="sc-body"><div class="b-lbl">📱 Script téléphone</div><div class="bubble">« Salut [Prénom], je t'appelle très brièvement car je suis entre deux rendez-vous. Tu sais que j'ai toujours admiré ton sens des affaires. Je viens de m'associer avec une entreprise de biotechnologie scandinave en pleine phase d'expansion — un concept unique de nutrition basée sur des tests qui révolutionne le secteur.<br><br>Je ne sais pas si c'est pour toi, mais vu ton profil, je me sentirais coupable de ne pas t'en informer avant de développer la région avec d'autres. Serais-tu ouvert à jeter un œil à une courte vidéo, sans aucun engagement ? »</div><div class="tbox"><div class="tt">⚡ Pourquoi ça fonctionne</div><ul class="tl"><li>"Je t'appelle très brièvement" — crée l'urgence, coupe les bavardages</li><li>Le compliment ciblé — explique pourquoi LUI spécifiquement</li><li>"Je ne sais pas si c'est pour toi" — la porte de sortie (Takeaway)</li><li>"Serais-tu ouvert à…" — appelle un oui de curiosité, pas d'engagement</li></ul></div></div>
+  </div>
+  <div class="sc" id="sc-B">
+    <div class="sc-head" onclick="toggleSc('sc-B')"><div class="sc-hl"><div class="sc-letter">B</div><div><div class="sc-name">Le Nouveau Projet</div><div class="sc-meta"><span class="tag t-chaud">Marché chaud</span><span class="tag t-market">Amis proches</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body"><div class="b-lbl">💬 Pour les amis très proches</div><div class="bubble">« Salut [Prénom] ! Il faut absolument que je te montre quelque chose. Je viens de lancer un projet en parallèle de mon boulot qui me passionne — dans le domaine de la santé préventive et des tests sanguins. Les résultats sont dingues.<br><br>Je lance mon activité officiellement et j'ai besoin de mes meilleurs amis pour me donner leur avis sincère. Je fais une petite présentation zoom / apéro jeudi soir. C'est super important pour moi que tu sois là. Je peux compter sur toi ? »</div></div>
+  </div>
+
+  <div class="slbl">Scripts — Approche Produit (BalanceTest)</div>
+  <div class="sc" id="sc-C">
+    <div class="sc-head" onclick="toggleSc('sc-C')"><div class="sc-hl"><div class="sc-letter">C</div><div><div class="sc-name">L'Approche Santé / Curiosité</div><div class="sc-meta"><span class="tag t-chaud">Marché chaud</span><span class="tag t-market">Profil Vert/Jaune</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body"><div class="b-lbl">🩸 Levier BalanceTest</div><div class="bubble">« Dis-moi [Prénom], j'ai une question un peu bizarre : est-ce que tu prends des oméga-3 ou des compléments en ce moment ?<br><br>La raison, c'est que j'ai découvert récemment que 97% des gens, même ceux qui mangent sainement, sont en danger inflammatoire sans le savoir. J'ai fait un test sanguin à domicile qui m'a révélé mes propres carences, c'était choquant.<br><br>Si je t'envoyais une info sur comment vérifier ton propre ratio de santé cellulaire, tu y jetterais un œil ? C'est purement scientifique. »</div><div class="tbox"><div class="tt">⚡ Pourquoi ça fonctionne</div><ul class="tl"><li>Joue sur la peur rationnelle (inflammation silencieuse) + curiosité</li><li>Vous devenez un apporteur de solutions diagnostiques, pas un vendeur</li></ul></div></div>
+  </div>
+
+  <div class="slbl">La technique Passé — Présent — Futur</div>
+  <div style="background:rgba(107,33,168,.025);border:1px solid rgba(107,33,168,.07);border-radius:14px;padding:1.35rem;margin-bottom:1.75rem">
+    <p style="font-size:.82rem;opacity:.65;margin-bottom:1.15rem;line-height:1.6">Une conversation, pas un script. Vous posez trois questions dans l'ordre — et c'est la personne elle-même qui crée l'ouverture.</p>
+    <div style="display:grid;gap:0;border-radius:11px;overflow:hidden;border:1px solid rgba(107,33,168,.06)">
+      <div style="padding:1rem 1.15rem;background:rgba(107,33,168,.13);border-bottom:1px solid rgba(107,33,168,.05)"><div style="font-family:'Playfair Display',serif;font-weight:700;color:var(--vm);margin-bottom:.3rem">① PASSÉ — S'intéresser sincèrement au parcours</div><div style="font-size:.8rem;font-style:italic;opacity:.9;line-height:1.65">« Ça fait longtemps que vous faites ce que vous faites ? »<br>« Comment vous êtes-vous lancé là-dedans ? »</div></div>
+      <div style="padding:1rem 1.15rem;background:rgba(37,99,235,.1);border-bottom:1px solid rgba(107,33,168,.05)"><div style="font-family:'Playfair Display',serif;font-weight:700;color:#93C5FD;margin-bottom:.3rem">② PRÉSENT — Prendre le pouls</div><div style="font-size:.8rem;font-style:italic;opacity:.9;line-height:1.65">« Et aujourd'hui, ça se passe bien pour vous ? »<br>« Vous êtes satisfait de là où vous en êtes ? »</div></div>
+      <div style="padding:1rem 1.15rem;background:rgba(5,150,105,.09)"><div style="font-family:'Playfair Display',serif;font-weight:700;color:#6EE7B7;margin-bottom:.3rem">③ FUTUR — La question qui ouvre tout</div><div style="font-size:.8rem;font-style:italic;opacity:.9;line-height:1.65">« Et vous vous voyez faire ça encore longtemps ? C'est quelque chose que vous vous voyez faire toute votre vie ? »</div></div>
+    </div>
+    <div style="margin-top:1.1rem;display:grid;grid-template-columns:1fr 1fr;gap:.65rem">
+      <div style="border-radius:11px;overflow:hidden;border:1px solid rgba(196,181,253,.2)"><div style="background:rgba(196,181,253,.1);padding:.65rem .9rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.75rem;color:var(--vm)">🔀 Si elle dit NON</div><div style="padding:.9rem;font-size:.8rem;line-height:1.7;font-style:italic;opacity:.9">« Je comprends. Si une proposition d'affaires sérieuse venait à se présenter à vous, auriez-vous l'esprit ouvert à l'étudier ? »</div></div>
+      <div style="border-radius:11px;overflow:hidden;border:1px solid rgba(16,185,129,.2)"><div style="background:rgba(16,185,129,.09);padding:.65rem .9rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.75rem;color:#6EE7B7">🔀 Si elle dit OUI</div><div style="padding:.9rem;font-size:.8rem;line-height:1.7;font-style:italic;opacity:.9">« C'est super de voir des gens qui aiment leur métier ! En parallèle, sans rien changer, si de nouveaux challenges passionnants se présentaient, seriez-vous ouvert à les explorer ? »</div></div>
+    </div>
+  </div>
+
+  <div class="slbl">Scripts — Approche Indirecte</div>
+  <div class="sc" id="sc-D">
+    <div class="sc-head" onclick="toggleSc('sc-D')"><div class="sc-hl"><div class="sc-letter">D</div><div><div class="sc-name">L'Avis de l'Expert</div><div class="sc-meta"><span class="tag t-indirect">Indirect</span><span class="tag t-market">Chicken List</span></div></div></div><div style="display:flex;align-items:center;gap:.7rem"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd on"></div></div><span class="chev">▼</span></div></div>
+    <div class="sc-body"><div class="b-lbl">🎯 Pour les contacts avec statut supérieur</div><div class="bubble">« Salut [Prénom], j'ai besoin de ton aide. Je sais que tu as beaucoup d'expérience dans le commerce / la santé. Je viens de me lancer dans une nouvelle entreprise scandinave et j'aimerais avoir ton regard critique.<br><br>Je ne te demande pas de nous rejoindre. Mais accepterais-tu d'assister à une présentation de 20 minutes pour me dire franchement ce que tu penses du modèle économique ? Ton opinion a beaucoup de valeur pour moi. »</div><div class="tbox"><div class="tt">⚡ La mécanique psychologique</div><ul class="tl"><li>Placer le prospect en juge flatte son ego</li><li>Réponse fréquente : "C'est en fait très solide, comment s'inscrire ?"</li></ul></div></div>
+  </div>
+  <div class="sc" id="sc-E">
+    <div class="sc-head" onclick="toggleSc('sc-E')"><div class="sc-hl"><div class="sc-letter">E</div><div><div class="sc-name">"Qui connais-tu ?" — Super Indirect</div><div class="sc-meta"><span class="tag t-froid">Marché froid</span><span class="tag t-indirect">Super indirect</span></div></div></div><div style="display:flex;align-items:center;gap:.7rem"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd on"></div></div><span class="chev">▼</span></div></div>
+    <div class="sc-body"><div class="b-lbl">🔄 Vous dites explicitement que ce n'est PAS pour eux</div><div class="bubble">« Salut [Prénom], je sais que ce n'est probablement pas pour toi, mais je tente ma chance. Je développe une marque de nutrition de précision dans ta région et je cherche des profils entrepreneuriaux qui aimeraient générer un revenu complémentaire sérieux en travaillant à distance.<br><br>Qui connais-tu dans ton entourage qui est ambitieux, axé sur la santé ou qui cherche à diversifier ses revenus ? »</div><div class="tbox"><div class="tt">⚡ L'effet inattendu</div><ul class="tl"><li>Déclenche souvent : "Attends, avant de donner des noms — de quoi s'agit-il ? Ça pourrait m'intéresser moi…"</li></ul></div></div>
+  </div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(1)">← La Posture</button><button class="btn btn-n" onclick="goTo(3)">Chapitre 3 →</button></div>
+</div>
+
+<!-- S3 MARCHÉ FROID -->
+<div class="section" id="s3">
+  <div class="ch c-blue">
+    <div class="ch-emoji">🌐</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 3 — Prospection</div><h2>Marché Froid<br>&amp; Social Selling</h2><p>Infini mais exigeant. Passez du relationnel à la prospection par volume qualifié — sans jamais spammer.</p></div>
+  </div>
+  <div class="slbl">La méthode F.O.R.M. (rencontres fortuites)</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem;margin-bottom:1.75rem">
+    <div class="fcard"><div class="fletter">F</div><div class="fword">Famille</div><div class="fex">"Vous êtes de la région ?"</div></div>
+    <div class="fcard"><div class="fletter">O</div><div class="fword">Occupation</div><div class="fex">"Que faites-vous dans la vie ?"</div></div>
+    <div class="fcard"><div class="fletter">R</div><div class="fword">Récréation</div><div class="fex">"Vous faites du sport ici ?"</div></div>
+    <div class="fcard"><div class="fletter">M</div><div class="fword">Motivation</div><div class="fex">Le point de bascule</div></div>
+  </div>
+  <div class="slbl">Scripts — Marché Froid</div>
+  <div class="sc" id="sc-H">
+    <div class="sc-head" onclick="toggleSc('sc-H')"><div class="sc-hl"><div class="sc-letter">H</div><div><div class="sc-name">Transition F.O.R.M. → Invitation</div><div class="sc-meta"><span class="tag t-froid">Marché froid</span><span class="tag t-direct">Physique</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body"><div class="b-lbl">🗣️ Quand ils demandent "Et vous, que faites-vous ?"</div><div class="bubble">« Je suis développeur d'affaires dans le secteur de la santé préventive. Pour faire simple, j'aide les gens à mesurer leur état de santé réel grâce à des tests sanguins et à rétablir leur équilibre nutritionnel. C'est passionnant car on apporte des preuves concrètes.<br><br>D'ailleurs, vous m'avez l'air d'être quelqu'un de dynamique. Mon entreprise est en pleine expansion. Êtes-vous ouvert à de nouvelles propositions professionnelles en ce moment, ou êtes-vous marié à votre emploi actuel ? »</div></div>
+  </div>
+  <div class="sc" id="sc-I">
+    <div class="sc-head" onclick="toggleSc('sc-I')"><div class="sc-hl"><div class="sc-letter">I</div><div><div class="sc-name">Prospection LinkedIn</div><div class="sc-meta"><span class="tag t-digital">LinkedIn</span><span class="tag t-direct">Professionnel</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body"><div class="b-lbl">💼 Message de connexion LinkedIn</div><div class="bubble">« Bonjour [Prénom],<br><br>J'ai parcouru votre profil avec intérêt. Je développe actuellement le réseau de partenaires pour une société scandinave cotée au Nasdaq (First North) spécialisée dans la nutrition basée sur des tests. Nous connaissons une forte croissance en France.<br><br>Je ne sais pas si une proposition d'affaires en parallèle de vos fonctions actuelles pourrait vous intéresser, mais au vu de votre parcours, un échange de 10 minutes pourrait être mutuellement instructif.<br><br>Au plaisir de connecter,<br>[Votre Nom] »</div><div class="tbox"><div class="tt">⚠️ Conformité LinkedIn</div><ul class="tl"><li>Mentionner votre statut de "Partenaire Indépendant" explicitement</li><li>Ne jamais laisser entendre qu'il s'agit d'une offre d'emploi salariée</li><li>Jamais de copier-coller massif — approche personnalisée uniquement</li></ul></div></div>
+  </div>
+  <div class="sc" id="sc-J">
+    <div class="sc-head" onclick="toggleSc('sc-J')"><div class="sc-hl"><div class="sc-letter">J</div><div><div class="sc-name">Post de Curiosité Instagram / Facebook</div><div class="sc-meta"><span class="tag t-digital">Instagram</span><span class="tag t-digital">Facebook</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body"><div class="b-lbl">📸 Post d'attraction — ne montrez JAMAIS la bouteille en premier</div><div class="bubble">« CHOC DE RÉALITÉ ! 🤯<br><br>Je pensais manger sainement. Je mange du poisson, des légumes, je fais du sport... Et pourtant, mes résultats de test sont arrivés ce matin : je suis en zone rouge inflammatoire !<br><br>C'est fou de voir noir sur blanc ce qui se passe vraiment dans nos cellules. On pense savoir, mais sans tester, on ne fait que deviner.<br><br>Je commence aujourd'hui un protocole de 120 jours basé sur la science. Je referai un test dans 4 mois pour prouver les résultats.<br><br>Qui d'autre a l'impression de bien manger mais se sent quand même fatigué ? Envoyez-moi un message "TEST" si vous voulez savoir comment ça marche !<br><br>#NutritionBaséeSurDesTests #SantéCellulaire »</div><div class="tbox"><div class="tt">⚡ Marketing d'attraction — les gens viennent vers vous</div><ul class="tl"><li>Les gens demandent l'information → l'invitation suivante est 10× plus facile</li><li>Racontez VOTRE histoire, pas les bénéfices du produit</li></ul></div></div>
+  </div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(2)">← Marché Chaud</button><button class="btn btn-n" onclick="goTo(4)">Chapitre 4 →</button></div>
+</div>
+
+<!-- S4 APPEL À 3 -->
+<div class="section" id="s4">
+  <div class="ch c-teal">
+    <div class="ch-emoji">🤝</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 4 — L'Outil Ultime</div><h2>L'Appel à 3 &amp; l'Édification<br><small style="font-size:.55em;opacity:.65;font-weight:400;font-style:italic">(valoriser son upline pour transférer sa crédibilité — sujet clé en MLM)</small></h2><p>L'outil le plus sous-utilisé mais le plus puissant. Un appel à trois bien édifié vaut dix présentations solitaires.</p></div>
+  </div>
+  <div class="slbl">Le Triangle de confiance</div>
+  <div style="background:rgba(107,33,168,.025);border:1px solid rgba(107,33,168,.07);border-radius:14px;padding:1.75rem;text-align:center;margin-bottom:1.75rem">
+    <p style="font-size:.82rem;opacity:.65;margin-bottom:1.35rem">Comprendre le transfert de crédibilité avant d'utiliser les scripts</p>
+    <div style="display:flex;justify-content:center;flex-wrap:wrap">
+      <div class="tri-node" style="background:linear-gradient(135deg,var(--violet),var(--vl))"><span style="font-size:1.4rem">🙋</span>Vous<br><small style="opacity:.65;font-size:.6rem">Confiance</small></div>
+      <div class="tri-node" style="background:linear-gradient(135deg,#1E40AF,var(--blue))"><span style="font-size:1.4rem">👤</span>Prospect<br><small style="opacity:.65;font-size:.6rem">Curiosité</small></div>
+      <div class="tri-node" style="background:linear-gradient(135deg,#065F46,var(--green))"><span style="font-size:1.4rem">⭐</span>Expert<br><small style="opacity:.65;font-size:.6rem">Autorité</small></div>
+    </div>
+  </div>
+  <div class="slbl">Scripts d'édification</div>
+  <div class="sc" id="sc-F">
+    <div class="sc-head" onclick="toggleSc('sc-F')"><div class="sc-hl"><div class="sc-letter">F</div><div><div class="sc-name">Édification AVANT l'appel</div><div class="sc-meta"><span class="tag t-market">À dire au prospect</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body"><div class="b-lbl">📞 Ce que vous dites au prospect AVANT de le mettre en relation</div><div class="bubble">« [Prénom], tu as posé d'excellentes questions. Je veux être sûr que tu aies les réponses les plus précises.<br><br>Je vais essayer de voir si je peux avoir 10 minutes avec mon partenaire senior, [Nom Expert]. C'est quelqu'un qui a un succès phénoménal — il développe des équipes à l'international. Il est très demandé, mais comme je lui ai parlé de toi, il acceptera peut-être de nous accorder un moment.<br><br>S'il te plaît, sois bref et précis, car son temps est précieux. »</div><div class="tbox"><div class="tt">⚡ La création de rareté</div><ul class="tl"><li>"Essayer de l'avoir" + "très demandé" = le prospect arrive en posture d'écoute</li></ul></div></div>
+  </div>
+  <div class="sc" id="sc-G">
+    <div class="sc-head" onclick="toggleSc('sc-G')"><div class="sc-hl"><div class="sc-letter">G</div><div><div class="sc-name">L'Introduction lors de l'appel</div><div class="sc-meta"><span class="tag t-market">Passage de témoin</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body"><div class="b-lbl">🔄 Une fois tout le monde connecté — puis TAISEZ-VOUS</div><div class="bubble">« Bonjour [Expert], merci de prendre ce temps. Je te présente [Prospect], c'est la personne dont je t'ai parlé, expérience en [métier].<br><br>[Prospect], je te présente [Expert], un des leaders les plus respectés, qui m'apprend énormément. Je vous laisse échanger. »</div><div class="hl" style="background:rgba(239,68,68,.07);border-color:var(--red)"><strong style="color:#FCA5A5">🚨 ACTION CRITIQUE :</strong> À partir de ce moment, vous vous <strong style="color:#FCA5A5">TAISEZ</strong>. Prenez des notes. L'expert gère.</div></div>
+  </div>
+  <div class="mbox"><div class="mt">✨ L'Édification retour — rôle de l'expert</div><div class="mtxt"><em>« Enchanté [Prospect]. Vous êtes entre de très bonnes mains avec <strong>[Partenaire]</strong>. C'est l'une des personnes les plus sérieuses de mon équipe. »</em></div></div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(3)">← Marché Froid</button><button class="btn btn-n" onclick="goTo(5)">Chapitre 5 →</button></div>
+</div>
+
+<!-- S5 OBJECTIONS -->
+<div class="section" id="s5">
+  <div class="ch c-red">
+    <div class="ch-emoji">🛡️</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 5 — Closing</div><h2>Objections &amp;<br>Conformité</h2><p>Les objections ne sont pas des refus — ce sont des demandes d'informations supplémentaires. Méthode en 4 étapes : Clarifier → Recadrer → Aligner → Retourner.</p></div>
+  </div>
+  <div class="slbl">Toutes les objections fréquentes</div>
+
+  <div class="obj" id="obj1">
+    <div class="obj-trig" onclick="toggleObj('obj1')"><div class="obj-ico" style="background:rgba(239,68,68,.13)">🔺</div><div class="obj-ttl">"C'est pyramidal ?"</div><span class="chev">▼</span></div>
+    <div class="obj-body"><div class="obj-method">Clarifier → Éduquer</div><div class="b-lbl">✅ Réponse recommandée</div><div class="bubble">« C'est une question légitime. Qu'est-ce que tu entends par pyramidal ? »<br><em>(Laissez répondre)</em><br><br>« Je comprends. Si c'était un système illégal où l'on gagne de l'argent juste en recrutant sans produit réel, je ne t'en parlerais même pas.<br><br>Zinzino est cotée au Nasdaq First North, membre de la Seldia (Association Européenne de Vente Directe). Nous ne sommes payés que sur le volume de produits vendus à des clients réels. C'est le modèle de distribution directe, comme Tupperware ou Vorwerk — mais appliqué à la biotechnologie. »</div></div>
+  </div>
+
+  <div class="obj" id="obj2">
+    <div class="obj-trig" onclick="toggleObj('obj2')"><div class="obj-ico" style="background:rgba(196,181,253,.13)">⏰</div><div class="obj-ttl">"Je n'ai pas le temps"</div><span class="chev">▼</span></div>
+    <div class="obj-body"><div class="obj-method">Clarifier → Recadrer → Aligner → Retourner</div><div class="b-lbl">✅ Réponse recommandée</div><div class="bubble">« Je comprends parfaitement, je suis moi-même très occupé. C'est justement pour ça que ce modèle m'a séduit. Contrairement à un emploi traditionnel où tu échanges ton temps contre de l'argent, ici nous construisons un système à effet de levier.<br><br>Si je pouvais te montrer comment, en investissant 5 à 7 heures par semaine de manière ciblée, tu pourrais construire un revenu récurrent qui finirait par libérer ton temps — est-ce que ça vaudrait la peine de regarder comment on s'organise ? »</div></div>
+  </div>
+
+  <div class="obj" id="obj3">
+    <div class="obj-trig" onclick="toggleObj('obj3')"><div class="obj-ico" style="background:rgba(16,185,129,.13)">💸</div><div class="obj-ttl">"Je n'ai pas l'argent"</div><span class="chev">▼</span></div>
+    <div class="obj-body"><div class="obj-method">Recadrer → Plan d'action concret</div><div class="bubble">« Je t'entends. Mais si rien ne change, est-ce que cette situation va s'améliorer l'année prochaine ?<br><br>Le modèle Zinzino est conçu pour être un business à faible coût de démarrage. De plus, avec le programme "Fast Start", nous avons un plan pour t'aider à récupérer ton investissement initial dans les 30 à 60 premiers jours en trouvant tes premiers clients.<br><br>Si je te montre le plan pour autofinancer ton démarrage, serais-tu prêt à te lancer ? »</div></div>
+  </div>
+
+  <div class="obj" id="obj4">
+    <div class="obj-trig" onclick="toggleObj('obj4')"><div class="obj-ico" style="background:rgba(59,130,246,.13)">🙅</div><div class="obj-ttl">"Je ne suis pas vendeur / vendeuse"</div><span class="chev">▼</span></div>
+    <div class="obj-body"><div class="obj-method">Aligner → Repositionner</div><div class="bubble">« Moi aussi je pensais que ce n'était pas pour moi. Et j'ai découvert que les meilleurs partenaires Zinzino ne vendent pas — ils partagent.<br><br>Ici, on ne vend pas un produit. On propose un test scientifique gratuit qui parle de lui-même. Le BalanceTest montre les résultats objectivement — c'est lui qui "vend". Votre rôle, c'est simplement d'inviter les gens à se tester.<br><br>Pensez-vous que vous pouvez partager quelque chose qui a changé votre vie avec les gens que vous aimez ? »</div></div>
+  </div>
+
+  <div class="obj" id="obj5">
+    <div class="obj-trig" onclick="toggleObj('obj5')"><div class="obj-ico" style="background:rgba(249,115,22,.13)">🔄</div><div class="obj-ttl">"J'ai déjà essayé ce genre de chose"</div><span class="chev">▼</span></div>
+    <div class="obj-body"><div class="obj-method">Clarifier → Différencier</div><div class="bubble">« Je t'entends. C'est quoi exactement que tu as essayé ? »<br><em>(Laissez répondre)</em><br><br>« Je comprends tout à fait. La différence avec Zinzino, c'est qu'on ne vous demande pas de croire sur parole. On commence par un test sanguin scientifique — laboratoire indépendant — qui prouve si votre corps en a réellement besoin. Et on refait le test 4 mois après pour prouver les résultats.<br><br>Ce n'est pas "essayer" un produit au hasard — c'est mesurer, corriger, prouver. C'est fondamentalement différent. »</div></div>
+  </div>
+
+  <div class="obj" id="obj6">
+    <div class="obj-trig" onclick="toggleObj('obj6')"><div class="obj-ico" style="background:rgba(147,51,234,.13)">👫</div><div class="obj-ttl">"Je dois en parler à mon conjoint(e)"</div><span class="chev">▼</span></div>
+    <div class="obj-body"><div class="obj-method">Valider → Inclure</div><div class="bubble">« C'est tout à fait normal, c'est même une très bonne idée. Les meilleures décisions se prennent à deux.<br><br>Ce que je vous propose : est-ce qu'on peut organiser un moment où vous seriez tous les deux disponibles — même 20 minutes en zoom — pour que je puisse vous présenter le concept ensemble ? Comme ça vous avez toutes les informations en même temps, et vous pouvez décider ensemble en pleine connaissance de cause. »</div><div class="tbox"><div class="tt">⚡ À retenir</div><ul class="tl"><li>Ne jamais "attendre" qu'ils en parlent entre eux sans vous</li><li>Proposer une présentation commune — c'est aussi une règle dans la liste de contacts : toujours penser au couple</li></ul></div></div>
+  </div>
+
+  <div class="obj" id="obj7">
+    <div class="obj-trig" onclick="toggleObj('obj7')"><div class="obj-ico" style="background:rgba(16,185,129,.13)">❓</div><div class="obj-ttl">"Ce n'est pas pour moi"</div><span class="chev">▼</span></div>
+    <div class="obj-body"><div class="obj-method">Clarifier → Ne pas forcer</div><div class="bubble">« Je respecte totalement. Mais avant qu'on referme le sujet — qu'est-ce qui te fait dire ça ? Je veux juste m'assurer que tu as les bonnes informations pour décider. »<br><em>(Laissez répondre — souvent une objection cachée émerge)</em><br><br>Si la personne confirme : « Pas de souci, je comprends. Peut-être que le timing n'est pas le bon aujourd'hui. Est-ce que ça te dérange si je te recontacte dans quelques mois, juste pour voir si quelque chose a évolué de ton côté ? »</div><div class="tbox"><div class="tt">⚡ À retenir</div><ul class="tl"><li>"Ce n'est pas pour moi" cache souvent une des 6 autres objections — creusez avant d'accepter le refus</li><li>Toujours garder la porte ouverte pour une relance future</li></ul></div></div>
+  </div>
+
+  <div class="slbl">Conformité — Formulations autorisées vs interdites</div>
+  <table class="ctbl">
+    <thead><tr><th class="th-no">🚫 INTERDIT — Ne jamais dire/écrire</th><th class="th-ok">✅ AUTORISÉ — Conforme EFSA (Autorité européenne de sécurité des aliments) / DGCCRF (contrôle français)</th></tr></thead>
+    <tbody>
+      <tr><td class="td-no">"Le BalanceOil guérit l'arthrose."</td><td class="td-ok">"Les Oméga-3 contribuent au maintien d'une fonction musculaire normale."</td></tr>
+      <tr><td class="td-no">"Ça soigne la dépression et l'Alzheimer."</td><td class="td-ok">"Le DHA contribue au fonctionnement normal du cerveau."</td></tr>
+      <tr><td class="td-no">"Ça réduit l'inflammation chronique."</td><td class="td-ok">"Ça aide à rétablir un équilibre Oméga-6/3 favorable et protège les cellules contre le stress oxydatif."</td></tr>
+      <tr><td class="td-no">"Revenu passif garanti" / "Argent facile"</td><td class="td-ok">"Les résultats dépendent des efforts individuels. Possibilité de construire une carrière."</td></tr>
+    </tbody>
+  </table>
+  <div class="mbox" style="margin-top:1.5rem"><div class="mt">✨ La phrase de transition magique</div><div class="mtxt"><strong>« Si je t'envoie le lien de la vidéo, la regarderas-tu ce soir ? »</strong><br><strong>« Si je t'invite à un webinaire jeudi soir, te connecteras-tu ? »</strong><br><span style="font-size:.78rem;opacity:.6;display:block;margin-top:.5rem">La structure "Si je… feras-tu…" engage la personne à respecter sa part.</span></div></div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(4)">← L'Appel à 3</button><button class="btn btn-n" onclick="goTo(6)">Chapitre 6 →</button></div>
+</div>
+
+<!-- S6 TERRAIN -->
+<div class="section" id="s6">
+  <div class="ch" style="background:linear-gradient(135deg,#713F12,#B45309)">
+    <div class="ch-emoji">🎯</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 6 — Terrain</div><h2>Prospection terrain :<br>4 approches situationnelles</h2><p>Quatre méthodes adaptées à quatre contextes. L'objectif commun : obtenir un numéro, pas un rendez-vous immédiat.</p></div>
+  </div>
+  <div class="hl"><strong>Règle commune :</strong> Récupérez le numéro. Ne prenez pas de rendez-vous sur place. Ne laissez pas votre carte. C'est toujours vous qui recontactez.</div>
+
+  <div class="slbl">Approche 1 — Chasseur de talents Business</div>
+  <p style="font-size:.82rem;opacity:.65;margin-bottom:.9rem;line-height:1.6">Pour aborder un inconnu qui dégage un profil entrepreneurial — en rue, café, événement.</p>
+  <div class="step-grid">
+    <div class="step"><div class="step-num" style="background:linear-gradient(135deg,#BE185D,#EC4899)">01</div><div><div class="step-t" style="color:#F9A8D4">Briser la glace</div><div class="step-tx">« Excusez-moi de vous déranger, est-ce que je peux me permettre de vous poser une question ? »</div></div></div>
+    <div class="step"><div class="step-num" style="background:linear-gradient(135deg,#1D4ED8,var(--blue))">02</div><div><div class="step-t" style="color:#93C5FD">Se présenter + Raison</div><div class="step-tx">« Je suis [prénom], en charge du développement de la société [X]… »</div></div></div>
+    <div class="step"><div class="step-num" style="background:linear-gradient(135deg,#7C3AED,var(--vm))">03</div><div><div class="step-t" style="color:var(--vm)">Compliment détourné</div><div class="step-tx">« …j'ai été interpelé par votre énergie / votre professionnalisme… » → « Vous êtes dans le monde des affaires ? »</div></div></div>
+    <div class="step"><div class="step-num" style="background:linear-gradient(135deg,#065F46,var(--green))">04</div><div><div class="step-t" style="color:#6EE7B7">Questionnement Passé / Présent / Futur</div><div class="step-tx">« Ça fait longtemps que vous faites ce que vous faites ? → Ça va bien ? → Vous vous voyez faire ça toute votre vie ? »</div></div></div>
+    <div class="step"><div class="step-num" style="background:linear-gradient(135deg,#92400E,#D97706)">05</div><div><div class="step-t" style="color:#FCD34D">La question magique</div><div class="step-tx">« Sans changer ce que vous faites… si aujourd'hui il y avait des propositions… est-ce que vous auriez l'esprit ouvert à les étudier ? »</div></div></div>
+  </div>
+
+  <div class="slbl">Approche 2 — Chasseur de talents Produit</div>
+  <p style="font-size:.82rem;opacity:.65;margin-bottom:.9rem;line-height:1.6">Pour aborder quelqu'un déjà sensible à la santé, au bien-être ou aux compléments.</p>
+  <div class="step-grid">
+    <div class="step"><div class="step-num" style="background:linear-gradient(135deg,#BE185D,#EC4899)">01</div><div><div class="step-t" style="color:#F9A8D4">Compliment détourné</div><div class="step-tx">« J'ai été interpelé par… » → « Vous êtes dans le domaine du bien-être / vous consommez des compléments ? »</div></div></div>
+    <div class="step"><div class="step-num" style="background:linear-gradient(135deg,#7C3AED,var(--vm))">02</div><div><div class="step-t" style="color:var(--vm)">La question du secret</div><div class="step-tx">« Et je peux vous demander… c'est quoi votre secret ? »</div></div></div>
+    <div class="step"><div class="step-num" style="background:linear-gradient(135deg,#065F46,var(--green))">03</div><div><div class="step-t" style="color:#6EE7B7">Questionnement lié au produit</div><div class="step-tx">« Ça fait longtemps que vous utilisez ce type de produit ? Vous en êtes content ? »</div></div></div>
+    <div class="step"><div class="step-num" style="background:linear-gradient(135deg,#92400E,#D97706)">04</div><div><div class="step-t" style="color:#FCD34D">Question magique produit</div><div class="step-tx">« Si vous aviez la possibilité de tester une nouvelle approche scientifiquement validée… auriez-vous l'esprit ouvert à la tester gratuitement ? »</div></div></div>
+  </div>
+
+  <div class="slbl">Approche 3 — Shopping Prospection (en commerce)</div>
+  <div style="background:rgba(107,33,168,.025);border:1px solid rgba(107,33,168,.07);border-radius:13px;padding:1.15rem;margin-bottom:1.5rem">
+    <div style="display:grid;gap:.65rem">
+      <div style="padding:.82rem .95rem;background:rgba(147,51,234,.1);border-radius:9px;border:1px solid rgba(147,51,234,.18)"><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;color:var(--vm);margin-bottom:.25rem">① Compliment d'ouverture</div><div style="font-size:.79rem;font-style:italic;line-height:1.65;opacity:.9">« Ça fait plaisir de voir quelqu'un d'aussi professionnel / passionné… » → « C'est à vous la boutique ? »</div></div>
+      <div style="padding:.82rem .95rem;background:rgba(147,51,234,.1);border-radius:9px;border:1px solid rgba(147,51,234,.18)"><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;color:var(--vm);margin-bottom:.25rem">② Questionnement Passé / Présent / Futur</div><div style="font-size:.79rem;font-style:italic;line-height:1.65;opacity:.9">« Ça fait longtemps ? → Ça se passe bien ? → Vous vous voyez faire ça tout le temps ? »</div></div>
+      <div style="padding:.82rem .95rem;background:rgba(196,181,253,.09);border-radius:9px;border:1px solid rgba(196,181,253,.18)"><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;color:var(--vm);margin-bottom:.25rem">③ Si elle dit "Oui j'adore" — technique pousser/reculer</div><div style="font-size:.79rem;font-style:italic;line-height:1.65;opacity:.9">« Pourtant j'avais quelque chose de très ambitieux à vous partager… maintenant je comprends que ce ne soit pas le bon moment. »<br><br>→ « Sans changer ce que vous faites… si des propositions professionnelles pourraient se présenter à vous… auriez-vous l'esprit ouvert ? »</div></div>
+      <div style="padding:.82rem .95rem;background:rgba(16,185,129,.08);border-radius:9px;border:1px solid rgba(16,185,129,.18)"><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;color:#6EE7B7;margin-bottom:.25rem">④ Conclure sans prendre de rendez-vous</div><div style="font-size:.79rem;font-style:italic;line-height:1.65;opacity:.9">« On échange nos coordonnées… je ne vous garantis pas de vous rappeler tout de suite car je suis très occupé… Mais je vous recontacte prochainement. C'est bon pour vous ? »</div></div>
+    </div>
+  </div>
+
+  <div class="slbl">Approche 4 — La Règle du 1 mètre (la plus efficace)</div>
+  <div style="background:rgba(107,33,168,.025);border:1px solid rgba(107,33,168,.07);border-radius:13px;padding:1.15rem;margin-bottom:1.5rem">
+    <div style="display:grid;gap:.65rem">
+      <div style="padding:.82rem .95rem;background:rgba(239,68,68,.07);border-radius:9px;border:1px solid rgba(239,68,68,.16)"><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;color:#FCA5A5;margin-bottom:.35rem">Les 4 leviers d'entrée — A.S.I. (Approche Sans Interruption)</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem"><div style="font-size:.77rem;opacity:.88;padding:.35rem .55rem;background:rgba(107,33,168,.04);border-radius:6px"><strong style="color:#FCA5A5">C</strong>ompliment</div><div style="font-size:.77rem;opacity:.88;padding:.35rem .55rem;background:rgba(107,33,168,.04);border-radius:6px"><strong style="color:#FCA5A5">R</strong>enseignement</div><div style="font-size:.77rem;opacity:.88;padding:.35rem .55rem;background:rgba(107,33,168,.04);border-radius:6px"><strong style="color:#FCA5A5">C</strong>onseil</div><div style="font-size:.77rem;opacity:.88;padding:.35rem .55rem;background:rgba(107,33,168,.04);border-radius:6px"><strong style="color:#FCA5A5">S</strong>ervice</div></div></div>
+      <div style="padding:.82rem .95rem;background:rgba(147,51,234,.09);border-radius:9px;border:1px solid rgba(147,51,234,.18)"><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;color:var(--vm);margin-bottom:.25rem">Questions d'entrée</div><div style="font-size:.79rem;font-style:italic;opacity:.9;line-height:1.65">« Vous êtes de la région ? » → « Et je peux me permettre de vous demander, vous êtes dans quel domaine d'activité ? »</div></div>
+      <div style="padding:.82rem .95rem;background:rgba(196,181,253,.08);border-radius:9px;border:1px solid rgba(196,181,253,.16)"><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;color:var(--vm);margin-bottom:.25rem">La question à 1 million</div><div style="font-size:.79rem;font-style:italic;opacity:.9;line-height:1.65">« Si aujourd'hui il y avait des propositions au niveau professionnel ou business… est-ce que vous auriez tendance à avoir l'esprit ouvert à les étudier ? »</div></div>
+    </div>
+    <div class="hl" style="margin-top:.9rem"><strong>✓ Règle de conclusion :</strong> Récupérez le numéro. Ne prenez pas de rendez-vous sur place. Ne laissez pas votre carte.</div>
+  </div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(5)">← Objections</button><button class="btn btn-n" onclick="goTo(7)">Chapitre 7 →</button></div>
+</div>
+
+<!-- S7 PITCH -->
+<div class="section" id="s7">
+  <div class="ch c-pink">
+    <div class="ch-emoji">💬</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 7 — Le Pitch</div><h2>Le Pitch Zinzino :<br>ce que vous dites quand on vous demande</h2><p>En réseautage, à un dîner, à la machine à café — quelqu'un vous demande ce que vous faites. Voici vos réponses.</p></div>
+  </div>
+  <div class="hl"><strong>La règle d'or :</strong> vous ne présentez pas — vous semez. Dès que la personne dit "c'est quoi exactement ?", vous avez gagné. Répondez : <em>« C'est ce que j'explique en 20 minutes — vous êtes disponible cette semaine ? »</em></div>
+
+  <div class="slbl">6 versions selon la situation</div>
+
+  <div class="sc" id="pitch1">
+    <div class="sc-head" onclick="toggleSc('pitch1')"><div class="sc-hl"><div class="sc-letter" style="background:linear-gradient(135deg,#6B21A8,#9333EA)">1</div><div><div class="sc-name">Réseautage professionnel / soirée networking</div><div class="sc-meta"><span class="tag t-market">Contexte pro</span><span class="tag t-direct">30 secondes</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body"><div class="bubble">« Je travaille dans la nutrition de précision. Concrètement, j'aide les gens à ne plus prendre de compléments alimentaires au hasard — on utilise un test sanguin simple à domicile pour mesurer l'état réel de leurs cellules. Et en 120 jours, on prouve que ça a changé. C'est la différence entre croire qu'on prend soin de sa santé et le savoir. »</div><div class="tbox"><div class="tt">⚡ Ce qui accroche</div><ul class="tl"><li>"Au hasard" crée une insécurité — tout le monde prend des compléments sans vraiment savoir</li><li>"On prouve" + "120 jours" donnent de la crédibilité sans jargon</li></ul></div></div>
+  </div>
+
+  <div class="sc" id="pitch2">
+    <div class="sc-head" onclick="toggleSc('pitch2')"><div class="sc-hl"><div class="sc-letter" style="background:linear-gradient(135deg,#065F46,#10B981)">2</div><div><div class="sc-name">Dîner entre amis / repas de famille</div><div class="sc-meta"><span class="tag t-chaud">Marché chaud</span><span class="tag t-market">Détendu</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body"><div class="bubble">« En ce moment je travaille sur un truc qui me passionne — j'aide les gens à vérifier si ce qu'ils mangent ou ce qu'ils prennent comme vitamines est vraiment assimilé par leurs cellules. Parce que figure-toi que 97% des gens sont en déséquilibre sans le savoir — même ceux qui font attention. J'ai fait le test moi-même, j'étais dans le rouge. Ça m'a choquée. »</div><div class="tbox"><div class="tt">⚡ Pourquoi ça fonctionne en social</div><ul class="tl"><li>"En ce moment" et "ça me passionne" — vous parlez de vous, pas d'eux</li><li>"J'ai fait le test moi-même, j'étais dans le rouge" — la preuve personnelle est plus forte que tout argument</li></ul></div></div>
+  </div>
+
+  <div class="sc" id="pitch3">
+    <div class="sc-head" onclick="toggleSc('pitch3')"><div class="sc-hl"><div class="sc-letter" style="background:linear-gradient(135deg,#92400E,#D97706)">3</div><div><div class="sc-name">Professionnel de santé / infirmier(e) / paramédicaux</div><div class="sc-meta"><span class="tag t-market">Profil Vert</span><span class="tag t-market">Scientifique</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body"><div class="bubble">« Je collabore avec une société scandinave cotée en bourse qui a développé un test sanguin par goutte de sang séché — analysé par un laboratoire indépendant — qui mesure le ratio Oméga-6/Oméga-3 au niveau cellulaire. Ce ratio est reconnu comme un marqueur clé de l'inflammation chronique. On refait le test 4 mois après pour mesurer l'évolution. Objectif et reproductible. »</div><div class="tbox"><div class="tt">⚡ Ce qui crédibilise</div><ul class="tl"><li>"Cotée en bourse" + "laboratoire indépendant" — deux gages de sérieux immédiats</li><li>"Objectif et reproductible" — le langage scientifique exact qu'attend ce profil</li></ul></div></div>
+  </div>
+
+  <div class="sc" id="pitch4">
+    <div class="sc-head" onclick="toggleSc('pitch4')"><div class="sc-hl"><div class="sc-letter" style="background:linear-gradient(135deg,#1E3A5F,#3B82F6)">4</div><div><div class="sc-name">Sportif / coach / salle de sport</div><div class="sc-meta"><span class="tag t-market">Performance</span><span class="tag t-direct">Résultats</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body"><div class="bubble">« Je travaille avec des gens qui font attention à leur corps mais qui se demandent pourquoi leur récupération n'est pas optimale malgré tout ce qu'ils font. Souvent la réponse est cellulaire — si tes cellules sont en déséquilibre, aucun entraînement ni aucun complément ne sera pleinement efficace. On fait un test sanguin à domicile pour mesurer ça précisément. »</div><div class="tbox"><div class="tt">⚡ L'angle qui touche le sportif</div><ul class="tl"><li>"Malgré tout ce qu'ils font" valide leurs efforts tout en soulevant un problème</li><li>"Aucun complément ne sera pleinement efficace" — phrase qui dérange et qui accroche</li></ul></div></div>
+  </div>
+
+  <div class="sc" id="pitch5">
+    <div class="sc-head" onclick="toggleSc('pitch5')"><div class="sc-hl"><div class="sc-letter" style="background:linear-gradient(135deg,#7F1D1D,#EF4444)">5</div><div><div class="sc-name">Entrepreneur / cadre / profil business</div><div class="sc-meta"><span class="tag t-market">Profil Rouge</span><span class="tag t-direct">Business</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body"><div class="bubble">« Je développe un réseau de distribution pour une société scandinave en forte croissance sur le marché français — dans la nutrition de précision. Leur concept est unique : on commence par un test sanguin pour prouver que le produit est nécessaire, et on re-teste 4 mois après pour prouver que ça a marché. Un marché qui prouve ses résultats — c'est assez rare. »</div><div class="tbox"><div class="tt">⚡ Ce qui parle au profil business</div><ul class="tl"><li>"Forte croissance" + "marché français" — il pense immédiatement aux perspectives</li><li>"Assez rare" — la rareté crée la valeur perçue</li></ul></div></div>
+  </div>
+
+  <div class="sc" id="pitch6">
+    <div class="sc-head" onclick="toggleSc('pitch6')"><div class="sc-hl"><div class="sc-letter" style="background:linear-gradient(135deg,#1E1B4B,#6366F1)">6</div><div><div class="sc-name">Version 10 secondes — ascenseur, machine à café</div><div class="sc-meta"><span class="tag t-market">Ultra-court</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body"><div class="bubble">« Je travaille dans la nutrition de précision — on fait un test sanguin à domicile pour prouver si vos cellules sont en bonne santé ou pas. »</div><div class="tbox"><div class="tt">⚡ Le principe</div><ul class="tl"><li>Deux informations seulement : ce que vous faites + en quoi c'est différent</li><li>Ne dites rien de plus. Le silence qui suit est votre meilleur allié</li></ul></div></div>
+  </div>
+
+  <div class="mbox" style="margin-top:1.5rem"><div class="mt">🎯 La transition après le pitch</div><div class="mtxt"><strong>« C'est justement ce que j'explique lors d'un échange de 20 minutes. Vous êtes disponible cette semaine ? »</strong><br><span style="font-size:.78rem;opacity:.6;display:block;margin-top:.5rem">Ne répondez jamais aux questions techniques sur le moment. Chaque détail donné maintenant est un rendez-vous de moins.</span></div></div>
+
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(6)">← Prospection terrain</button><button class="btn btn-n" onclick="goTo(8)">Suivant : Scripts Textos →</button></div>
+</div>
+
+<!-- SECTION 7 — Scripts Textos -->
+<div class="section" id="s8">
+  <div class="ch c-violet">
+    <div class="ch-emoji">📱</div>
+    <div class="ch-text">
+      <div class="ch-tag">Module 03 · L'Art de l'Invitation</div>
+      <h2>Scripts Textos — Text Day</h2>
+      <p>5 modèles de messages pour vos journées de prospection par SMS et messagerie instantanée.</p>
+    </div>
+  </div>
+
+  <div class="hl"><strong>Le principe du Text Day :</strong> L'objectif d'un texto n'est jamais de présenter le business — c'est d'obtenir un rendez-vous. Restez court, chaleureux, créez la curiosité sans dévoiler le secteur ni le nom de l'entreprise.</div>
+
+  <div class="slbl">Script 1 — Contact déjà invité, sans réponse ou refus poli</div>
+  <div class="hl" style="border-left-color:var(--vm);">Ne parlez surtout pas d'opportunité dans ce texto. L'invitation est neutre — votre upline vous rejoindra après le café. Vous êtes le lien de confiance, pas le présentateur.</div>
+
+  <div class="sc" id="tx0">
+    <div class="sc-head" onclick="toggleSc('tx0')"><div class="sc-hl"><div class="sc-letter" style="background:linear-gradient(135deg,#4C1D95,#7C3AED)">1</div><div><div class="sc-name">Marché chaud — contact à relancer</div><div class="sc-meta"><span class="tag t-chaud">Marché chaud</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body">
+      <div style="display:grid;gap:.5rem;margin-bottom:.75rem;">
+        <div style="background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(147,51,234,.06));border:1px solid var(--bv);border-radius:0 12px 12px 12px;padding:.65rem 1rem;font-size:.85rem;font-style:italic;color:var(--text);max-width:80%;">Salut, comment vas-tu ? 😊</div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px 0 12px 12px;padding:.65rem 1rem;font-size:.85rem;color:var(--text2);max-width:80%;margin-left:auto;">Bien et toi ?</div>
+        <div style="background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(147,51,234,.06));border:1px solid var(--bv);border-radius:0 12px 12px 12px;padding:.65rem 1rem;font-size:.85rem;font-style:italic;color:var(--text);max-width:80%;">Super bien ! Tu es dispo dans la semaine pour boire un café ?</div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px 0 12px 12px;padding:.65rem 1rem;font-size:.85rem;color:var(--text2);max-width:80%;margin-left:auto;">Oui, mercredi à 14h ça te va ?</div>
+        <div style="background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(147,51,234,.06));border:1px solid var(--bv);border-radius:0 12px 12px 12px;padding:.65rem 1rem;font-size:.85rem;font-style:italic;color:var(--text);max-width:80%;">Parfait, passe chez moi à 14h. Bise !</div>
+      </div>
+      <div class="tbox"><div class="tt">💡 Stratégie</div><ul class="tl"><li>L'invitation est neutre — votre upline arrive après le café et présente le business</li><li>Vous êtes le lien de confiance, votre upline est la crédibilité</li><li>Éditifiez bien votre upline avant son arrivée</li></ul></div>
+    </div>
+  </div>
+
+  <div class="slbl">Script 2 — Contact avec statut ou charisme élevé</div>
+  <div class="sc" id="tx1">
+    <div class="sc-head" onclick="toggleSc('tx1')"><div class="sc-hl"><div class="sc-letter" style="background:linear-gradient(135deg,#1E3A5F,#2563EB)">2</div><div><div class="sc-name">Profil impressionnant — demander son avis</div><div class="sc-meta"><span class="tag t-chaud">Marché chaud</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body">
+      <div style="display:grid;gap:.5rem;margin-bottom:.75rem;">
+        <div style="background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(147,51,234,.06));border:1px solid var(--bv);border-radius:0 12px 12px 12px;padding:.65rem 1rem;font-size:.85rem;font-style:italic;color:var(--text);max-width:85%;">Bonjour, comment vas-tu ? Cela fait longtemps qu'on ne s'est pas vus. As-tu une disponibilité cette semaine pour boire un café ? J'aimerais te parler de mon orientation professionnelle — comme tu as beaucoup de succès, ton point de vue m'importerait vraiment.</div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px 0 12px 12px;padding:.65rem 1rem;font-size:.85rem;color:var(--text2);max-width:80%;margin-left:auto;">Oui, vendredi après 19h. C'est dans quel domaine ?</div>
+        <div style="background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(147,51,234,.06));border:1px solid var(--bv);border-radius:0 12px 12px 12px;padding:.65rem 1rem;font-size:.85rem;font-style:italic;color:var(--text);max-width:85%;">Je te donnerai tous les détails vendredi avec un support visuel. Merci beaucoup, c'est vraiment important pour moi !</div>
+      </div>
+      <div class="tbox"><div class="tt">💡 Stratégie</div><ul class="tl"><li>Demandez son avis, jamais une faveur — cette personne veut être consultée, pas recrutée</li><li>Si ce profil vous impressionne trop, utilisez votre upline pour la présentation</li></ul></div>
+    </div>
+  </div>
+
+  <div class="slbl">Script 3 — Contact qui veut gagner plus d'argent</div>
+  <div class="sc" id="tx2">
+    <div class="sc-head" onclick="toggleSc('tx2')"><div class="sc-hl"><div class="sc-letter" style="background:linear-gradient(135deg,#14532D,#16A34A)">3</div><div><div class="sc-name">Créer le mystère et la curiosité</div><div class="sc-meta"><span class="tag t-chaud">Marché chaud</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body">
+      <div style="display:grid;gap:.5rem;margin-bottom:.75rem;">
+        <div style="background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(147,51,234,.06));border:1px solid var(--bv);border-radius:0 12px 12px 12px;padding:.65rem 1rem;font-size:.85rem;font-style:italic;color:var(--text);max-width:80%;">Salut ! Il vient de m'arriver quelque chose d'incroyable ! 😊</div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px 0 12px 12px;padding:.65rem 1rem;font-size:.85rem;color:var(--text2);max-width:80%;margin-left:auto;">Génial ! Raconte !</div>
+        <div style="background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(147,51,234,.06));border:1px solid var(--bv);border-radius:0 12px 12px 12px;padding:.65rem 1rem;font-size:.85rem;font-style:italic;color:var(--text);max-width:85%;">Le mieux c'est qu'on se voit pour un café — si je t'en parle maintenant tu ne vas pas dormir 😄 Tu es dispo quand cette semaine ?</div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px 0 12px 12px;padding:.65rem 1rem;font-size:.85rem;color:var(--text2);max-width:80%;margin-left:auto;">Demain à 17h ? Dis-moi avant s'il te plaît !</div>
+        <div style="background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(147,51,234,.06));border:1px solid var(--bv);border-radius:0 12px 12px 12px;padding:.65rem 1rem;font-size:.85rem;font-style:italic;color:var(--text);max-width:85%;">Non, promis je t'explique tout demain. Crois-moi, c'est une opportunité qui peut changer ta vie financière !</div>
+      </div>
+      <div class="tbox"><div class="tt">💡 Stratégie</div><ul class="tl"><li>Jamais le secteur ni le nom de l'entreprise — le mystère crée la valeur</li><li>"Boire un café" est une expression — jamais d'alcool lors d'une présentation</li></ul></div>
+    </div>
+  </div>
+
+  <div class="slbl">Scripts 4 & 5 — Marché froid</div>
+  <div class="sc" id="tx3">
+    <div class="sc-head" onclick="toggleSc('tx3')"><div class="sc-hl"><div class="sc-letter" style="background:linear-gradient(135deg,#1E1B4B,#4338CA)">4</div><div><div class="sc-name">Suite à une rencontre en marché froid</div><div class="sc-meta"><span class="tag t-froid">Marché froid</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body">
+      <div style="display:grid;gap:.5rem;margin-bottom:.75rem;">
+        <div style="background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(147,51,234,.06));border:1px solid var(--bv);border-radius:0 12px 12px 12px;padding:.65rem 1rem;font-size:.85rem;font-style:italic;color:var(--text);max-width:90%;">Bonjour Madame, je me permets de vous contacter suite à notre rencontre ce matin. Vous avez un très bon profil pour mon entreprise. Auriez-vous 1h à m'accorder cette semaine pour une présentation ?</div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px 0 12px 12px;padding:.65rem 1rem;font-size:.85rem;color:var(--text2);max-width:80%;margin-left:auto;">Oui, je me rappelle ! Disponible mardi à 16h. Pouvez-vous m'en dire plus ?</div>
+        <div style="background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(147,51,234,.06));border:1px solid var(--bv);border-radius:0 12px 12px 12px;padding:.65rem 1rem;font-size:.85rem;font-style:italic;color:var(--text);max-width:90%;">C'est dans le secteur du e-commerce. Je vous expliquerai tout lors de notre rendez-vous — il me faut un support visuel pour être professionnel. À mardi 16h !</div>
+      </div>
+      <div class="tbox"><div class="tt">💡 Réponse type quand on vous demande le secteur</div><ul class="tl"><li>Toujours : "C'est dans le e-commerce"</li><li>Jamais plus de détails par message — ce ne serait pas professionnel</li></ul></div>
+    </div>
+  </div>
+
+  <div class="sc" id="tx4">
+    <div class="sc-head" onclick="toggleSc('tx4')"><div class="sc-hl"><div class="sc-letter" style="background:linear-gradient(135deg,#78350F,#D97706)">5</div><div><div class="sc-name">Via une recommandation (introduction tierce)</div><div class="sc-meta"><span class="tag t-froid">Marché froid</span></div></div></div><span class="chev">▼</span></div>
+    <div class="sc-body">
+      <div style="display:grid;gap:.5rem;margin-bottom:.75rem;">
+        <div style="background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(147,51,234,.06));border:1px solid var(--bv);border-radius:0 12px 12px 12px;padding:.65rem 1rem;font-size:.85rem;font-style:italic;color:var(--text);max-width:90%;">Bonjour, notre amie commune Marie nous a présentés hier. Comme promis, je vous contacte pour fixer un rendez-vous et vous présenter mon activité avec votre épouse. Jeudi 14h vous conviendrait-il ?</div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px 0 12px 12px;padding:.65rem 1rem;font-size:.85rem;color:var(--text2);max-width:80%;margin-left:auto;">Parfait pour nous ! Pouvez-vous nous en dire plus ?</div>
+        <div style="background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(147,51,234,.06));border:1px solid var(--bv);border-radius:0 12px 12px 12px;padding:.65rem 1rem;font-size:.85rem;font-style:italic;color:var(--text);max-width:90%;">Bien sûr, c'est dans le e-commerce. Je vous expliquerai tout lors de notre rendez-vous avec un support visuel — plus professionnel. À jeudi 14h !</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mbox" style="margin-top:1.5rem"><div class="mt">🎯 Principe universel des textos</div><div class="mtxt">Les scripts sont <strong>adaptables à l'infini</strong> selon la situation, la personne et votre feeling. Ces 5 exemples sont des modèles de base. Quand un contact vous pose des questions, répondez comme un professionnel, prenez votre temps — vous n'êtes pas en live. Vos contacts sont votre mine d'or.</div></div>
+
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(7)">← Le Pitch Zinzino</button><button class="btn btn-done" onclick="goTo(0)">✓ Terminé — début du module</button></div>
+</div>
+</div>
+<script>
+
+const _SD=[];
+function initSearch(d){d.forEach(x=>_SD.push(x));}
+function doSearch(v){if(!v.trim()){closeSrch();return;}openSrch();const q=v.toLowerCase();const r=_SD.filter(d=>d.t.toLowerCase().includes(q)||d.s.toLowerCase().includes(q)||(d.kw||[]).some(k=>k.includes(q)));document.getElementById('sr').innerHTML=r.length?r.map(x=>`<a class="sr-item" href="${x.href}"><span class="sr-e">${x.e}</span><div><div class="sr-t">${x.t}</div><div class="sr-s">${x.s}</div></div></a>`).join(''):`<div class="sr-empty">Aucun résultat pour « ${v} »</div>`;}
+function openSrch(){document.getElementById('srch-ov').style.display='block';}
+function closeSrch(e){if(!e||!document.getElementById('srch-box').contains(e.target))document.getElementById('srch-ov').style.display='none';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSrch();});
+function goTo(i){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  const sec=document.getElementById('s'+i);if(sec)sec.classList.add('active');
+  document.querySelectorAll('.s-chapter-item').forEach(n=>n.classList.remove('active'));
+  const ni=document.getElementById('ci'+i);if(ni)ni.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  updatePbar();
+}
+function toggleChk(el){
+  el.classList.toggle('done');
+  el.textContent=el.classList.contains('done')?'✓':'';
+  localStorage.setItem('dd_chk_inv_'+el.id, el.classList.contains('done')?'1':'0');
+  updatePbar();
+}
+function updatePbar(){const done=document.querySelectorAll('.n-chk.done').length,total=document.querySelectorAll('.n-chk').length;if(!total)return;document.getElementById('pbar').style.width=(done/total*100)+'%';const pl=document.getElementById('plbl');if(pl)pl.textContent=done+' / '+total+' chapitres';}
+function loadChks(){document.querySelectorAll('.n-chk').forEach(el=>{if(localStorage.getItem('dd_chk_inv_'+el.id)==='1'){el.classList.add('done');el.textContent='✓';}});}
+loadChks();
+function toggleSc(id){document.getElementById(id).classList.toggle('open');}
+function toggleObj(id){document.getElementById(id).classList.toggle('open');}
+
+
+function dlScripts(){
+  let txt = 'DESTINATION 💎 — Scripts d\'Invitation\n';
+  txt += 'Exporté le '+new Date().toLocaleDateString('fr-FR')+'\n';
+  txt += '═'.repeat(55)+'\n\n';
+
+  txt += 'LA RÈGLE DES 5 C\n'+'─'.repeat(40)+'\n';
+  txt += 'C = Court (2-3 phrases max)\n';
+  txt += 'C = Curiosité (assez pour vouloir en savoir plus)\n';
+  txt += 'C = Compliment (pourquoi cette personne)\n';
+  txt += 'C = Contourner les questions\n';
+  txt += 'C = Confirmer le rendez-vous\n\n';
+
+  txt += 'SCRIPT A — Le Partenaire d\'Affaires\n'+'─'.repeat(40)+'\n';
+  txt += '« Salut [Prénom], je t\'appelle très brièvement. Tu sais que j\'ai toujours admiré ton sens des affaires. Je viens de m\'associer avec une entreprise de biotechnologie scandinave. Je ne sais pas si c\'est pour toi, mais vu ton profil, je me sentirais coupable de ne pas t\'en informer. Serais-tu ouvert à jeter un œil à une courte vidéo ? »\n\n';
+
+  txt += 'SCRIPT B — Le Nouveau Projet\n'+'─'.repeat(40)+'\n';
+  txt += '« Salut [Prénom] ! Il faut absolument que je te montre quelque chose. Je viens de lancer un projet en parallèle dans le domaine de la santé préventive. Je lance officiellement et j\'ai besoin de mes meilleurs amis pour me donner leur avis sincère. Je peux compter sur toi ? »\n\n';
+
+  txt += 'SCRIPT C — L\'Approche Santé / BalanceTest\n'+'─'.repeat(40)+'\n';
+  txt += '« Est-ce que tu prends des oméga-3 en ce moment ? 97% des gens sont en déséquilibre nutritionnel sans le savoir. J\'ai fait un test sanguin à domicile qui m\'a révélé mes propres carences. Si je t\'envoyais une info sur comment vérifier ton ratio, tu y jetterais un œil ? »\n\n';
+
+  txt += 'TECHNIQUE PASSÉ / PRÉSENT / FUTUR\n'+'─'.repeat(40)+'\n';
+  txt += 'PASSÉ : « Ça fait longtemps que vous faites ce que vous faites ? »\n';
+  txt += 'PRÉSENT : « Et aujourd\'hui, ça se passe bien ? »\n';
+  txt += 'FUTUR : « Vous vous voyez faire ça toute votre vie ? »\n\n';
+
+  txt += 'SCRIPT D — L\'Avis de l\'Expert\n'+'─'.repeat(40)+'\n';
+  txt += '« Salut [Prénom], j\'ai besoin de ton aide. Je viens de me lancer dans une nouvelle entreprise scandinave et j\'aimerais avoir ton regard critique. Je ne te demande pas de nous rejoindre. Accepterais-tu d\'assister à une présentation de 20 minutes ? »\n\n';
+
+  txt += 'SCRIPT E — Qui connais-tu ? (Super Indirect)\n'+'─'.repeat(40)+'\n';
+  txt += '« Je sais que ce n\'est probablement pas pour toi, mais je cherche des profils entrepreneuriaux. Qui connais-tu dans ton entourage qui est ambitieux et cherche à diversifier ses revenus ? »\n\n';
+
+  txt += 'SCRIPT H — Transition F.O.R.M.\n'+'─'.repeat(40)+'\n';
+  txt += '« Je suis développeur d\'affaires dans la santé préventive — j\'aide les gens à mesurer leur état de santé réel grâce à des tests sanguins. D\'ailleurs, vous m\'avez l\'air d\'être quelqu\'un de dynamique. Êtes-vous ouvert à de nouvelles propositions professionnelles ? »\n\n';
+
+  txt += 'SCRIPT LinkedIn\n'+'─'.repeat(40)+'\n';
+  txt += '« Bonjour [Prénom], j\'ai parcouru votre profil avec intérêt. Je développe le réseau de partenaires pour une société scandinave cotée au Nasdaq spécialisée dans la nutrition basée sur des tests. Un échange de 10 minutes pourrait être mutuellement instructif. »\n\n';
+
+  txt += 'PHRASE DE TRANSITION MAGIQUE\n'+'─'.repeat(40)+'\n';
+  txt += '« Si je t\'envoie le lien de la vidéo, la regarderas-tu ce soir ? »\n';
+  txt += '« Si je t\'invite à un webinaire jeudi soir, te connecteras-tu ? »\n\n';
+
+  txt += 'PITCHS ZINZINO — 6 versions\n'+'─'.repeat(40)+'\n';
+  txt += '1. RÉSEAUTAGE : « Je travaille dans la nutrition de précision. On utilise un test sanguin simple à domicile pour mesurer exactement vos carences cellulaires, puis une nutrition sur mesure pour les corriger en 120 jours. »\n\n';
+  txt += '2. DÎNER/AMIS : « J\'ai découvert que 97% des gens sont en déséquilibre nutritionnel sans le savoir. J\'ai fait le test moi-même, j\'étais dans le rouge. Ça m\'a choquée. »\n\n';
+  txt += '3. PROFESSIONNEL DE SANTÉ : « Test sanguin par goutte de sang séché, analysé par le laboratoire indépendant Vitas, mesure le ratio Oméga-6/Oméga-3 au niveau cellulaire. Objectif et reproductible. »\n\n';
+  txt += '4. SPORTIF : « J\'aide des gens qui font attention à leur corps mais dont la récupération n\'est pas optimale. Si tes cellules sont en déséquilibre, aucun entraînement ne sera pleinement efficace. »\n\n';
+  txt += '5. ENTREPRENEUR : « Je développe un réseau dans la nutrition de précision. Concept unique : on commence par un test sanguin pour prouver que le produit est nécessaire, et on re-teste 4 mois après pour prouver les résultats. »\n\n';
+  txt += '6. ASCENSEUR (10 sec) : « Je travaille dans la nutrition de précision — un test sanguin à domicile pour prouver si vos cellules sont en bonne santé ou pas. »\n';
+
+  const blob = new Blob([txt],{type:'text/plain;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Scripts_Invitation_DestinationDiamant.txt';
+  a.click();
+}
+initSearch([
+  {t:'La Posture & Psychologie',s:'F.E.A.R. · 4 profils · 11 pièges',e:'🧠',href:'#',kw:['posture','peur','profils']},
+  {t:'Marché Chaud — Scripts',s:'5C · PPF · Scripts A-E',e:'🔥',href:'#',kw:['scripts','marché chaud','invitation']},
+  {t:'Marché Froid & Social Selling',s:'F.O.R.M. · LinkedIn · Instagram',e:'🌐',href:'#',kw:['marché froid','linkedin','instagram']},
+  {t:"L'Appel à 3",s:'Édification · Triangle de confiance',e:'🤝',href:'#',kw:['appel','édification','upline']},
+  {t:'Objections & Conformité',s:'7 objections · EFSA · Compliance',e:'🛡️',href:'#',kw:['objections','pyramidal','temps','argent']},
+  {t:'Prospection terrain',s:'4 approches · Règle du 1 mètre',e:'🎯',href:'#',kw:['terrain','1 mètre','shopping']},
+  {t:'Le Pitch Zinzino',s:'6 versions selon le contexte',e:'💬',href:'#',kw:['pitch','réseautage','sportif','business']}}
+]);
+
+
+let _synth=window.speechSynthesis,_utt=null,_reading=false;
+function _getText(){const s=document.querySelector('.section.active');if(!s)return'';const tags='h2,p,.bubble,.mc-tx,.cc-text,.hl,.tl li,.obj-ttl,.slbl,.qbox,.mtxt,.step-tx,.fs-desc,.gloss-def,.ch-text p';let t='';s.querySelectorAll(tags).forEach(e=>{const v=e.textContent.trim();if(v&&v.length>3)t+=v+'. ';});return t||s.textContent.replace(/\s+/g,' ').trim();}
+function toggleAudio(){const b=document.getElementById('ab');if(_reading){_synth.cancel();_reading=false;b.innerHTML='🔊';b.className='audio-btn';return;}const t=_getText();if(!t)return;_utt=new SpeechSynthesisUtterance(t);_utt.lang='fr-FR';_utt.rate=0.95;const v=_synth.getVoices().find(v=>v.lang.startsWith('fr'));if(v)_utt.voice=v;_utt.onstart=()=>{_reading=true;b.innerHTML='⏹';b.className='audio-btn reading';};_utt.onend=_utt.onerror=()=>{_reading=false;b.innerHTML='🔊';b.className='audio-btn';};_synth.speak(_utt);}
+const _g=goTo;goTo=function(i){if(_reading){_synth.cancel();_reading=false;const b=document.getElementById('ab');if(b){b.innerHTML='🔊';b.className='audio-btn';}}_g(i);};
+
+</script>
+</body>
+</html>

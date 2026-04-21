@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mes Outils — Destination 💎</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+:root{
+  --bg:#F3F0FA; --bg2:#EAE5F5; --bg3:#DDD6F0;
+  --sidebar:#EDE8F8; --card:#FDFBFF;
+  --text:#2A1F4A; --text2:#5A4D7A; --text3:#9080B0;
+  --violet:#6B21A8; --vl:#9333EA; --vm:#7C3AED;
+  --green:#16A34A; --red:#DC2626; --blue:#2563EB;
+  --border:#D5CDE8; --bv:rgba(107,33,168,.2);
+  --shadow:0 2px 12px rgba(107,33,168,.08);
+  --shadow2:0 4px 20px rgba(107,33,168,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;line-height:1.6;}
+
+/* PROGRESS BAR */
+#pbar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--vm),var(--vl));width:0%;z-index:1000;transition:width .4s;}
+
+/* HEADER */
+header{background:var(--card);border-bottom:2px solid var(--bv);padding:.85rem 1.75rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;box-shadow:var(--shadow);}
+.brand{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:900;color:var(--text);text-decoration:none;white-space:nowrap;}
+.brand em{color:var(--vm);font-style:italic;}
+.h-sep{width:1px;height:18px;background:var(--border);flex-shrink:0;}
+.back{font-size:.82rem;color:var(--vm);text-decoration:none;font-weight:600;white-space:nowrap;transition:opacity .2s;}
+.back:hover{opacity:.7;}
+.mod-badge{background:var(--vm);color:white;font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem;border-radius:20px;white-space:nowrap;}
+.h-title{font-family:'Playfair Display',serif;font-size:clamp(.9rem,2vw,1.1rem);font-weight:700;color:var(--text);}
+.h-title em{color:var(--vm);font-style:italic;}
+.h-search{flex:1;display:flex;align-items:center;gap:.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:.5rem .9rem;max-width:320px;transition:border-color .2s;}
+.h-search:focus-within{border-color:var(--vm);}
+.h-search input{background:none;border:none;outline:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;width:100%;}
+.h-search input::placeholder{color:var(--text3);}
+.h-search span{color:var(--text3);font-size:.85rem;flex-shrink:0;}
+.plabel{font-size:.75rem;color:var(--vm);font-weight:600;white-space:nowrap;}
+.audio-btn{width:38px;height:38px;border-radius:9px;background:var(--bg2);border:1.5px solid var(--border);color:var(--vm);font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.audio-btn:hover{background:var(--bv);border-color:var(--vm);}
+.audio-btn.reading{background:var(--vm);border-color:var(--vm);color:white;}
+.dl-btn{display:flex;align-items:center;gap:.4rem;padding:.42rem .85rem;border-radius:8px;background:var(--bg2);border:1.5px solid var(--border);color:var(--vm);font-family:'Syne',sans-serif;font-weight:700;font-size:.72rem;cursor:pointer;transition:all .2s;white-space:nowrap;text-decoration:none;}
+.dl-btn:hover{background:var(--bv);border-color:var(--vm);}
+
+/* LAYOUT */
+.layout{display:flex;min-height:calc(100vh - 62px);}
+
+/* SIDEBAR */
+aside{width:265px;min-width:265px;background:var(--sidebar);border-right:1px solid var(--border);padding:1.25rem 0;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;}
+.s-section{padding:.2rem 0 .5rem;}
+.s-section-title{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);padding:.4rem 1.2rem .35rem;}
+.s-module-btn{display:flex;align-items:center;gap:.65rem;padding:.6rem 1.2rem;cursor:pointer;transition:all .15s;border-left:3px solid transparent;text-decoration:none;color:var(--text2);}
+.s-module-btn:hover{background:var(--bg3);color:var(--text);}
+.s-module-btn.current{background:var(--bg3);border-left-color:var(--vm);color:var(--text);}
+.s-module-btn.current .s-mod-name{font-weight:700;color:var(--violet);}
+.s-mod-icon{width:28px;height:28px;border-radius:7px;background:var(--bv);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.s-mod-name{font-size:.82rem;font-weight:500;line-height:1.3;}
+.s-div{height:1px;background:var(--border);margin:.6rem 1.2rem;}
+/* Chapter nav (inside current module) */
+.s-chapter-list{padding:.1rem 0 .5rem;}
+.s-chapter-item{display:flex;align-items:center;gap:.55rem;padding:.42rem 1.2rem .42rem 2.5rem;cursor:pointer;font-size:.8rem;color:var(--text2);transition:all .15s;border-left:3px solid transparent;}
+.s-chapter-item:hover{background:var(--bg2);color:var(--violet);}
+.s-chapter-item.active{color:var(--violet);font-weight:600;background:var(--bg2);border-left-color:var(--vl);}
+.s-chapter-item::before{content:'›';color:var(--text3);font-size:.75rem;}
+.n-chk{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.55rem;flex-shrink:0;cursor:pointer;transition:all .2s;margin-left:auto;}
+.n-chk:hover{border-color:var(--vm);}
+.n-chk.done{background:var(--green);border-color:var(--green);color:white;}
+
+/* MAIN */
+main{flex:1;padding:2rem 2.25rem;max-width:920px;}
+.section{display:none;animation:fi .3s ease;}
+.section.active{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* CHAPTER HEADERS */
+.ch{display:flex;align-items:flex-start;gap:1.1rem;margin-bottom:2rem;padding:1.5rem 1.75rem;border-radius:14px;color:white;}
+.ch-emoji{font-size:2.4rem;flex-shrink:0;}
+.ch-tag{font-size:.63rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.82;margin-bottom:.35rem;}
+.ch-text h2{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,1.9rem);font-weight:900;line-height:1.15;margin-bottom:.4rem;}
+.ch-text p{font-size:.9rem;opacity:.88;line-height:1.65;max-width:520px;}
+.c-violet{background:linear-gradient(135deg,#4C1D95,#6B21A8);}
+.c-orange{background:linear-gradient(135deg,#92400E,#B45309);}
+.c-blue{background:linear-gradient(135deg,#1E3A5F,#1D4ED8);}
+.c-teal{background:linear-gradient(135deg,#134E4A,#0D9488);}
+.c-red{background:linear-gradient(135deg,#7F1D1D,#DC2626);}
+.c-indigo{background:linear-gradient(135deg,#1E1B4B,#4338CA);}
+.c-pink{background:linear-gradient(135deg,#831843,#DB2777);}
+.c-gold{background:linear-gradient(135deg,#78350F,#D97706);}
+
+/* SECTION LABEL */
+.slbl{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--violet);margin:1.75rem 0 .75rem;display:flex;align-items:center;gap:.55rem;font-style:italic;}
+.slbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* HIGHLIGHT */
+.hl{background:var(--bg2);border-left:3px solid var(--vm);border-radius:0 9px 9px 0;padding:.9rem 1.15rem;margin:1rem 0;font-size:.88rem;line-height:1.7;color:var(--text);}
+.hl strong{color:var(--violet);}
+
+/* CONCEPT GRID */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.9rem;margin-bottom:1.75rem;}
+.ccard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.15rem;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;}
+.ccard:hover{transform:translateY(-2px);box-shadow:var(--shadow2);}
+.cc-icon{font-size:1.4rem;margin-bottom:.5rem;}
+.cc-title{font-family:'Playfair Display',serif;font-size:.85rem;font-weight:700;margin-bottom:.35rem;color:var(--violet);}
+.cc-text{font-size:.83rem;line-height:1.65;color:var(--text2);}
+
+/* SCRIPT CARDS */
+.sc{background:var(--card);border:1px solid var(--border);border-radius:13px;margin-bottom:1rem;overflow:hidden;box-shadow:var(--shadow);}
+.sc-head{padding:.95rem 1.15rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:var(--bg2);gap:.9rem;user-select:none;}
+.sc-head:hover{background:var(--bg3);}
+.sc-hl{display:flex;align-items:center;gap:.7rem;}
+.sc-letter{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--violet),var(--vl));color:white;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.82rem;flex-shrink:0;}
+.sc-name{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--text);}
+.sc-meta{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;}
+.tag{font-size:.62rem;font-weight:600;letter-spacing:.04em;padding:.18rem .55rem;border-radius:20px;text-transform:uppercase;}
+.t-chaud{background:rgba(107,33,168,.12);color:var(--violet);}
+.t-froid{background:rgba(37,99,235,.12);color:var(--blue);}
+.t-direct{background:rgba(22,163,74,.12);color:#15803D;}
+.t-indirect{background:rgba(220,38,38,.12);color:var(--red);}
+.t-market{background:rgba(107,33,168,.12);color:var(--violet);}
+.t-digital{background:rgba(99,102,241,.12);color:#4338CA;}
+.chev{font-size:.65rem;color:var(--text3);transition:transform .3s;}
+.sc.open .chev{transform:rotate(180deg);}
+.sc-body{display:none;padding:1.15rem;border-top:1px solid var(--border);}
+.sc.open .sc-body{display:block;}
+
+/* BUBBLE */
+.b-lbl{font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.09em;margin-bottom:.5rem;}
+.bubble{background:linear-gradient(135deg,rgba(107,33,168,.08),rgba(147,51,234,.05));border:1px solid var(--bv);border-radius:0 14px 14px 14px;padding:1rem 1.2rem;font-size:.87rem;line-height:1.8;margin-bottom:1rem;font-style:italic;color:var(--text);position:relative;}
+.bubble::before{content:'"';position:absolute;top:-10px;left:12px;font-size:1.6rem;color:var(--vl);font-style:normal;font-family:'Playfair Display',serif;}
+
+/* TACTIC BOX */
+.tbox{background:rgba(22,163,74,.07);border:1px solid rgba(22,163,74,.2);border-radius:10px;padding:.95rem 1.15rem;}
+.tt{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#15803D;margin-bottom:.65rem;}
+.tl{list-style:none;}
+.tl li{font-size:.83rem;line-height:1.65;padding:.22rem 0 .22rem 1.1rem;position:relative;color:var(--text2);}
+.tl li::before{content:'→';position:absolute;left:0;color:#16A34A;}
+
+/* OBJECTION CARDS */
+.obj{border-radius:11px;margin-bottom:.85rem;overflow:hidden;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow);}
+.obj-trig{display:flex;align-items:center;gap:.7rem;padding:.95rem 1.15rem;cursor:pointer;background:var(--bg2);transition:background .15s;}
+.obj-trig:hover{background:var(--bg3);}
+.obj-ico{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.obj-ttl{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--text);flex:1;}
+.obj-body{display:none;padding:1.15rem;border-top:1px solid var(--border);}
+.obj.open .obj-body{display:block;}
+.obj-method{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--violet);margin-bottom:.6rem;padding:.22rem .65rem;background:rgba(107,33,168,.08);border-radius:6px;display:inline-block;}
+
+/* MAGIC BOX */
+.mbox{background:linear-gradient(135deg,rgba(107,33,168,.08),rgba(147,51,234,.04));border:1px solid var(--bv);border-radius:13px;padding:1.4rem;margin-top:1.4rem;text-align:center;}
+.mt{font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--violet);margin-bottom:.65rem;}
+.mtxt{font-size:.9rem;font-weight:500;line-height:1.8;color:var(--text);}
+.mtxt strong{color:var(--violet);font-family:'Playfair Display',serif;}
+
+/* COMPLIANCE TABLE */
+.ctbl{width:100%;border-collapse:collapse;margin-top:.85rem;font-size:.83rem;}
+.ctbl th{padding:.65rem .9rem;font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;}
+.th-no{background:rgba(220,38,38,.1);color:#991B1B;text-align:left;}
+.th-ok{background:rgba(22,163,74,.1);color:#15803D;text-align:left;}
+.ctbl td{padding:.65rem .9rem;border-bottom:1px solid var(--border);line-height:1.55;vertical-align:top;}
+.td-no{background:rgba(220,38,38,.04);color:#991B1B;}
+.td-ok{background:rgba(22,163,74,.04);color:#15803D;}
+
+/* NAV BUTTONS */
+.nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:1.35rem;border-top:1px solid var(--border);gap:.9rem;}
+.btn{display:flex;align-items:center;gap:.45rem;padding:.72rem 1.45rem;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:.84rem;cursor:pointer;border:none;transition:all .2s;}
+.btn-p{background:var(--bg2);color:var(--text2);border:1px solid var(--border);}
+.btn-p:hover{background:var(--bg3);color:var(--text);}
+.btn-n{background:linear-gradient(135deg,var(--violet),var(--vl));color:white;box-shadow:var(--shadow2);}
+.btn-n:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(107,33,168,.25);}
+.btn-done{background:linear-gradient(135deg,#15803D,#16A34A);color:white;}
+
+/* PROFILE CARDS */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:.7rem;margin-bottom:1.75rem;}
+.pcard{border-radius:11px;padding:1rem;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow);}
+.p-r{border-color:rgba(220,38,38,.3);background:rgba(220,38,38,.04);}
+.p-b{border-color:rgba(37,99,235,.3);background:rgba(37,99,235,.04);}
+.p-j{border-color:rgba(107,33,168,.3);background:rgba(107,33,168,.04);}
+.p-v{border-color:rgba(22,163,74,.3);background:rgba(22,163,74,.04);}
+.pt{font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;margin-bottom:.2rem;}
+.pm{font-size:.72rem;color:var(--text2);margin-bottom:.4rem;}
+.pkws{display:flex;flex-wrap:wrap;gap:.25rem;}
+.pkw{font-size:.6rem;padding:.12rem .45rem;border-radius:20px;background:var(--bg2);color:var(--text2);}
+
+/* PIPELINE */
+.pipe{display:flex;flex-direction:column;gap:0;border-radius:13px;overflow:hidden;border:1px solid var(--border);margin-bottom:1.75rem;box-shadow:var(--shadow);}
+.ps{display:flex;align-items:center;gap:.9rem;padding:.82rem 1.15rem;border-bottom:1px solid var(--border);background:var(--card);}
+.ps:last-child{border-bottom:none;}
+.pd{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;font-family:'Syne',sans-serif;}
+.pl{font-size:.84rem;font-weight:500;flex:1;color:var(--text);}
+.pdesc{font-size:.72rem;color:var(--text3);}
+
+/* VIDEO CARD */
+.vcard{display:block;text-decoration:none;border-radius:14px;overflow:hidden;border:1px solid var(--bv);background:var(--card);transition:all .22s;margin-bottom:1.75rem;box-shadow:var(--shadow);}
+.vcard:hover{border-color:var(--vm);transform:translateY(-2px);box-shadow:var(--shadow2);}
+.vthumb{position:relative;background:linear-gradient(135deg,#4C1D95,#6B21A8);aspect-ratio:16/6;display:flex;align-items:center;overflow:hidden;}
+.vthumb::before{content:'';position:absolute;inset:0;opacity:.08;background:repeating-linear-gradient(45deg,white,white 1px,transparent 1px,transparent 18px);}
+.vinfo{position:absolute;left:1.75rem;top:50%;transform:translateY(-50%);}
+.vsrc{font-family:'Syne',sans-serif;font-size:.63rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:.35rem;}
+.vtit{font-family:'Playfair Display',serif;font-size:clamp(.95rem,2.2vw,1.4rem);font-weight:700;color:white;line-height:1.2;max-width:290px;}
+.vplay{position:absolute;right:2.25rem;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,0,0,.2);font-size:1.1rem;color:var(--violet);}
+.vfoot{padding:.9rem 1.15rem;display:flex;align-items:center;justify-content:space-between;gap:.9rem;flex-wrap:wrap;}
+
+/* NOTE ZONE */
+.nzone{background:var(--bg2);border:1px solid var(--border);border-radius:13px;padding:1.15rem;margin:1.25rem 0;}
+.nzh{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem;gap:.9rem;flex-wrap:wrap;}
+.nzt{font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;color:var(--violet);}
+.nprompt{font-size:.82rem;color:var(--text2);margin-bottom:.7rem;line-height:1.6;font-style:italic;}
+.nta{width:100%;min-height:90px;background:var(--card);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;line-height:1.7;padding:.8rem 1rem;resize:vertical;outline:none;transition:border-color .2s;}
+.nta:focus{border-color:var(--vm);}
+.nta::placeholder{color:var(--text3);font-style:italic;}
+.nacts{display:flex;align-items:center;justify-content:flex-end;gap:.45rem;margin-top:.6rem;}
+.nsave{font-size:.75rem;font-weight:600;padding:.4rem .85rem;border-radius:7px;border:none;cursor:pointer;transition:all .2s;background:var(--violet);color:white;font-family:'DM Sans',sans-serif;}
+.nsave:hover{background:var(--vm);}
+.nconf{font-size:.72rem;color:var(--green);display:none;}
+
+/* VISION DOMAIN */
+.vdgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:.65rem;margin-bottom:1.4rem;}
+.vd{border-radius:11px;padding:.95rem;border:1px solid var(--border);background:var(--card);}
+.vdt{font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;margin-bottom:.45rem;color:var(--violet);display:flex;align-items:center;gap:.35rem;}
+.vi{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.82rem;padding:.45rem .7rem;outline:none;transition:border-color .2s;margin-bottom:.3rem;}
+.vi:focus{border-color:var(--vm);}
+.vi::placeholder{color:var(--text3);font-style:italic;}
+
+/* ENGAGEMENT */
+.engcard{background:linear-gradient(135deg,rgba(107,33,168,.1),rgba(13,148,136,.07));border:1px solid var(--bv);border-radius:15px;padding:1.65rem;margin:1.4rem 0;text-align:center;}
+.engi{font-size:2.4rem;margin-bottom:.85rem;}
+.engt{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;margin-bottom:.65rem;color:var(--violet);}
+.engtx{font-size:.85rem;color:var(--text2);line-height:1.7;max-width:460px;margin:0 auto;}
+
+/* INTRO HERO */
+.ihero{text-align:center;padding:2rem 1rem 2.25rem;}
+.ibadge{display:inline-flex;align-items:center;gap:.45rem;background:rgba(107,33,168,.08);border:1px solid var(--bv);color:var(--violet);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.35rem 1rem;border-radius:20px;margin-bottom:1.35rem;}
+.ihero h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.1;margin-bottom:.85rem;color:var(--text);}
+.ihero h2 em{color:var(--vm);font-style:italic;}
+.ihero p{font-size:.95rem;color:var(--text2);max-width:500px;margin:0 auto 2.25rem;line-height:1.75;font-weight:300;}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:.65rem;margin-bottom:2.25rem;}
+.ov-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:.95rem .65rem;cursor:pointer;transition:all .22s;color:var(--text);display:block;text-align:center;box-shadow:var(--shadow);}
+.ov-card:hover{background:var(--bg2);border-color:var(--vm);transform:translateY(-2px);box-shadow:var(--shadow2);}
+.ov-e{font-size:1.5rem;margin-bottom:.35rem;}
+.ov-n{font-size:.58rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--violet);margin-bottom:.18rem;}
+.ov-nm{font-family:'Playfair Display',serif;font-size:.77rem;font-weight:700;line-height:1.3;color:var(--text);}
+.btn-start{display:inline-flex;align-items:center;gap:.55rem;background:linear-gradient(135deg,var(--violet),var(--vl));color:white;padding:.9rem 1.9rem;border-radius:11px;font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;border:none;box-shadow:var(--shadow2);transition:all .2s;}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(107,33,168,.25);}
+
+/* QUOTE */
+.qbox{background:var(--bg2);border-left:3px solid var(--vm);border-radius:0 11px 11px 0;padding:1rem 1.15rem;margin:1rem 0;font-style:italic;font-size:.88rem;line-height:1.7;color:var(--text);}
+.qa{font-size:.72rem;color:var(--text3);margin-top:.45rem;font-style:normal;}
+
+/* MINDSET CARD */
+.mc{border-radius:11px;padding:1rem 1.15rem;margin-bottom:.7rem;border:1px solid var(--border);display:flex;align-items:flex-start;gap:.8rem;background:var(--card);box-shadow:var(--shadow);}
+.mc-i{font-size:1.3rem;flex-shrink:0;margin-top:.08rem;}
+.mc-t{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;margin-bottom:.25rem;color:var(--violet);}
+.mc-tx{font-size:.83rem;line-height:1.65;color:var(--text2);}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:grid;gap:.4rem;}
+.checklist li{display:flex;align-items:flex-start;gap:.7rem;font-size:.86rem;line-height:1.6;padding:.6rem .85rem;border-radius:9px;background:var(--card);border:1px solid var(--border);cursor:pointer;transition:all .2s;color:var(--text);}
+.checklist li:hover{background:var(--bg2);border-color:var(--vm);}
+.checklist li.checked{background:rgba(22,163,74,.06);border-color:rgba(22,163,74,.3);text-decoration:line-through;color:var(--text3);}
+.cl-box{width:19px;height:19px;border-radius:5px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.65rem;transition:all .2s;margin-top:.1rem;}
+.checklist li.checked .cl-box{background:var(--green);border-color:var(--green);color:white;}
+
+/* SEARCH OVERLAY */
+#srch-ov{display:none;position:fixed;inset:0;background:rgba(42,31,74,.45);z-index:200;padding:4rem 1.5rem 2rem;backdrop-filter:blur(4px);}
+.srch-box{background:var(--card);border:1px solid var(--bv);border-radius:14px;max-width:540px;margin:0 auto;max-height:65vh;overflow-y:auto;padding:.9rem;box-shadow:var(--shadow2);}
+.sr-item{padding:.78rem .9rem;border-radius:9px;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--text);}
+.sr-item:hover{background:var(--bg2);}
+.sr-e{font-size:1.1rem;flex-shrink:0;}
+.sr-t{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--violet);}
+.sr-s{font-size:.7rem;color:var(--text3);margin-top:.08rem;}
+.sr-empty{text-align:center;padding:2rem;color:var(--text3);font-size:.85rem;}
+
+/* DOCUMENT LINKS */
+.doc-card{border-radius:11px;padding:.88rem 1rem;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--text);transition:all .2s;box-shadow:var(--shadow);}
+.doc-card:hover{background:var(--bg2);border-color:var(--vm);}
+.doc-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.83rem;color:var(--violet);}
+.doc-sub{font-size:.68rem;color:var(--text3);}
+
+/* VIDEO LINK */
+.vlink{display:flex;align-items:center;gap:.75rem;padding:.75rem .9rem;border-radius:10px;background:var(--card);border:1px solid var(--border);text-decoration:none;color:var(--text);transition:all .2s;box-shadow:var(--shadow);}
+.vlink:hover{background:var(--bg2);border-color:var(--vm);}
+.vlink-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--violet),var(--vl));display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;color:white;}
+.vlink-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.83rem;color:var(--violet);}
+.vlink-sub{font-size:.68rem;color:var(--text3);}
+
+/* STEP GRID */
+.step-grid{display:grid;gap:0;border-radius:13px;overflow:hidden;border:1px solid var(--border);margin-bottom:1.5rem;box-shadow:var(--shadow);}
+.step{display:flex;align-items:flex-start;gap:.85rem;padding:.9rem 1.1rem;border-bottom:1px solid var(--border);background:var(--card);}
+.step:last-child{border-bottom:none;}
+.step-num{min-width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.72rem;flex-shrink:0;color:white;}
+.step-t{font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;margin-bottom:.22rem;color:var(--violet);}
+.step-tx{font-size:.82rem;line-height:1.65;color:var(--text2);}
+
+/* RANG GRID */
+.rang-row{display:flex;align-items:center;gap:1rem;padding:.9rem 1.15rem;border-bottom:1px solid var(--border);background:var(--card);transition:background .15s;}
+.rang-row:last-child{border-bottom:none;}
+.rang-row:hover{background:var(--bg2);}
+.rang-emoji-big{font-size:1.6rem;flex-shrink:0;width:42px;text-align:center;}
+.rang-name-big{font-family:'Playfair Display',serif;font-weight:700;font-size:.92rem;margin-bottom:.15rem;}
+.rang-cond{font-size:.78rem;color:var(--text2);line-height:1.5;}
+.rang-badge{font-size:.62rem;font-weight:700;padding:.22rem .55rem;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+
+/* GLOSSARY */
+.gloss-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.65rem;margin-bottom:1.75rem;}
+.gloss-card{border-radius:11px;padding:1rem 1.1rem;background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);}
+.gloss-term{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--violet);margin-bottom:.3rem;display:flex;align-items:center;gap:.5rem;}
+.gloss-def{font-size:.83rem;line-height:1.65;color:var(--text2);}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:.65rem;margin-bottom:1.75rem;}
+.kpi-card{border-radius:11px;padding:1rem;background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);}
+.kpi-label{font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--violet);margin-bottom:.6rem;}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;}
+.kpi-box{background:var(--bg2);border-radius:7px;padding:.5rem .65rem;text-align:center;}
+.kpi-period{font-size:.62rem;color:var(--text3);margin-bottom:.2rem;}
+/* COMMANDE DYNAMIQUE STEPS */
+.step-dyn{display:flex;align-items:flex-start;gap:.85rem;padding:.95rem 1.1rem;border-bottom:1px solid var(--border);background:var(--card);transition:background .15s;}
+.step-dyn:last-child{border-bottom:none;}
+.step-dyn:hover{background:var(--bg2);}
+.step-dyn-num{min-width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.82rem;flex-shrink:0;color:white;}
+.step-dyn-t{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;margin-bottom:.22rem;color:var(--violet);}
+.step-dyn-tx{font-size:.8rem;line-height:1.65;color:var(--text2);}
+.kpi-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:var(--violet);}
+
+/* BOOK LIST */
+.book-item{font-size:.84rem;line-height:1.5;padding:.5rem .8rem;background:var(--card);border-radius:9px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:.6rem;margin-bottom:.35rem;cursor:pointer;transition:all .2s;}
+.book-item:hover{background:var(--bg2);border-color:var(--vm);}
+.book-item.read{background:rgba(22,163,74,.06);border-color:rgba(22,163,74,.25);}
+.book-check{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.65rem;transition:all .2s;margin-top:.1rem;}
+.book-item.read .book-check{background:var(--green);border-color:var(--green);color:white;}
+.book-author{font-size:.7rem;color:var(--text3);white-space:nowrap;margin-top:.1rem;}
+
+/* FAST START TIMELINE */
+.fs-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.15rem;border-radius:11px;border:1px solid var(--border);background:var(--card);margin-bottom:.65rem;box-shadow:var(--shadow);}
+/* STEP DYN — Commande Dynamique */
+.step-dyn{display:flex;align-items:flex-start;gap:.85rem;padding:.95rem 1.1rem;border-bottom:1px solid var(--border);background:var(--card);transition:background .15s;}
+.step-dyn:last-child{border-bottom:none;}
+.step-dyn:hover{background:var(--bg2);}
+.step-dyn-num{min-width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.82rem;flex-shrink:0;color:white;}
+.step-dyn-t{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;margin-bottom:.2rem;color:var(--violet);}
+.step-dyn-tx{font-size:.8rem;line-height:1.6;color:var(--text2);}
+.fs-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:.85rem;flex-shrink:0;color:white;}
+.fs-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.92rem;margin-bottom:.22rem;color:var(--violet);}
+.fs-desc{font-size:.83rem;line-height:1.65;color:var(--text2);}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  aside{display:none;}
+  main{padding:1.15rem;}
+  header{padding:.8rem 1rem;}
+  .h-search{max-width:100%;}
+}
+</style>
+</head>
+<body>
+<div id="pbar"></div>
+<div id="srch-ov" onclick="closeSrch(event)"><div class="srch-box" id="srch-box"><div id="sr"></div></div></div>
+<header>
+  <a class="brand" href="index.html">Destination <em>💎</em></a>
+  <div class="h-sep"></div>
+  <span class="mod-badge">Module 06</span>
+  <span class="h-title">Mes <em>Outils</em></span>
+  <div class="h-search"><span>🔍</span><input type="text" placeholder="Rechercher dans la formation…" oninput="doSearch(this.value)" onfocus="if(this.value.trim())openSrch()"></div>
+  
+  <button class="audio-btn" id="ab" onclick="toggleAudio()" title="Lire ce chapitre">🔊</button>
+  <span class="plabel" id="plbl">0 / ? chapitres</span>
+</header>
+<div class="layout">
+<aside>
+  <div class="s-section">
+    <div class="s-section-title">Modules</div>
+    <a class="s-module-btn" href="index.html"><div class="s-mod-icon">🏠</div><div class="s-mod-name">Accueil</div></a>
+    <a class="s-module-btn" href="module-reves-engagement.html"><div class="s-mod-icon">🌟</div><div class="s-mod-name">Rêves & Engagement</div></a>
+    <a class="s-module-btn" href="module-liste-contacts.html"><div class="s-mod-icon">📋</div><div class="s-mod-name">Liste de Contacts</div></a>
+    <a class="s-module-btn" href="module-invitation-zinzino.html"><div class="s-mod-icon">✉️</div><div class="s-mod-name">L'Art de l'Invitation</div></a>
+    <a class="s-module-btn" href="module-demarrage.html"><div class="s-mod-icon">🚀</div><div class="s-mod-name">Mon Démarrage</div></a>
+    <a class="s-module-btn" href="module-remuneration.html"><div class="s-mod-icon">💰</div><div class="s-mod-name">Plan de Rémunération</div></a>
+    <a class="s-module-btn current" href="module-outils.html"><div class="s-mod-icon">🛠️</div><div class="s-mod-name">Mes Outils</div></a>
+    <div class="s-chapter-list">
+      <div class="s-chapter-item active" id="ci0" onclick="goTo(0)"><span>🏠</span> Introduction <div class="n-chk" id="chk0" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci1" onclick="goTo(1)"><span>🛒</span> Commande Dynamique <div class="n-chk" id="chk1" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci2" onclick="goTo(2)"><span>💰</span> Rémunération <div class="n-chk" id="chk2" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci3" onclick="goTo(3)"><span>🎬</span> Vidéos & Ressources <div class="n-chk" id="chk3" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci4" onclick="goTo(4)"><span>📚</span> Bibliothèque <div class="n-chk" id="chk4" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci5" onclick="goTo(5)"><span>📊</span> Tableau de Bord <div class="n-chk" id="chk5" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+    </div>
+  </div>
+</aside>
+
+<main>
+
+<!-- S0 INTRO -->
+<div class="section active" id="s0">
+  <div class="ihero">
+    <div class="ibadge">🛠️ Module 05 · Outils</div>
+    <h2>Mes <em>Outils</em></h2>
+    <p>Commandes dynamiques, plan de rémunération, vidéos officielles, ressources PDF et bibliothèque — tout ce dont vous avez besoin au quotidien.</p>
+    <div class="ov-grid">
+      <div class="ov-card" onclick="goTo(1)"><div class="ov-e">🛒</div><div class="ov-n">Chap.1</div><div class="ov-nm">Commande Dynamique</div></div>
+      <div class="ov-card" onclick="goTo(2)"><div class="ov-e">💰</div><div class="ov-n">Chap.2</div><div class="ov-nm">Rémunération</div></div>
+      <div class="ov-card" onclick="goTo(3)"><div class="ov-e">🎬</div><div class="ov-n">Chap.3</div><div class="ov-nm">Vidéos & Ressources</div></div>
+      <div class="ov-card" onclick="goTo(4)"><div class="ov-e">📚</div><div class="ov-n">Chap.4</div><div class="ov-nm">Bibliothèque</div></div>
+      <div class="ov-card" onclick="goTo(5)"><div class="ov-e">📊</div><div class="ov-n">Chap.5</div><div class="ov-nm">Tableau de Bord</div></div>
+    </div>
+    <button class="btn-start" onclick="goTo(1)">Accéder aux outils →</button>
+  </div>
+  <div class="slbl">Documents PDF accessibles directement</div>
+  <div class="doc-grid">
+    <a href="https://docs.google.com/document/d/1J6P2vcIDJtfIvq7I3Iy7pk8THfTdx75bAqN3oWJuHLw/edit" target="_blank" class="doc-card"><div class="doc-icon">📋</div><div><div class="doc-title">Check-list Partenaire</div><div class="doc-sub">Google Doc · PDF</div></div><span style="opacity:.3;margin-left:auto">↗</span></a>
+    <a href="https://docs.google.com/document/d/117zWsgkIPp8to5ra9cNhW9KvnccB4CjW_SGXvjqgoYQ/edit" target="_blank" class="doc-card"><div class="doc-icon">🎯</div><div><div class="doc-title">Pourquoi · Objectifs · Planification</div><div class="doc-sub">Google Doc · PDF</div></div><span style="opacity:.3;margin-left:auto">↗</span></a>
+    <a href="https://docs.google.com/document/d/1W_TBjBzwoaFqciGm2KDJDJQlu_DvRkpH492-wobWejY/edit" target="_blank" class="doc-card"><div class="doc-icon">⚖️</div><div><div class="doc-title">Statut VDI</div><div class="doc-sub">Google Doc · PDF</div></div><span style="opacity:.3;margin-left:auto">↗</span></a>
+    <a href="https://docs.google.com/document/d/1C69E0-7NIkbGgGsYbUb0rI0AFWw4ku1SBdmPRQWhEi4/edit" target="_blank" class="doc-card"><div class="doc-icon">📇</div><div><div class="doc-title">Liste de contacts & Invitations</div><div class="doc-sub">Google Doc · PDF</div></div><span style="opacity:.3;margin-left:auto">↗</span></a>
+    <a href="https://docs.google.com/document/d/1Sr8gXMYOivEcgqR5tG6FSocUYLa5M-QyhGHKj245Hk4/edit" target="_blank" class="doc-card"><div class="doc-icon">❓</div><div><div class="doc-title">Les 9 Questions Magiques</div><div class="doc-sub">Google Doc · PDF</div></div><span style="opacity:.3;margin-left:auto">↗</span></a>
+    <a href="https://docs.google.com/document/d/1hVHoaMOfbPHefV4CLisStMNzj4JPtfihYbm7PXcXgXg/edit" target="_blank" class="doc-card"><div class="doc-icon">🗣️</div><div><div class="doc-title">Traiter les Objections</div><div class="doc-sub">Google Doc · PDF</div></div><span style="opacity:.3;margin-left:auto">↗</span></a>
+    <a href="https://docs.google.com/document/d/1Fr3UI0FfoptKeoDZioGcPcB05IILmtYAP55nQTxUQwQ/edit" target="_blank" class="doc-card"><div class="doc-icon">🛒</div><div><div class="doc-title">Commande Dynamique</div><div class="doc-sub">Google Doc · PDF</div></div><span style="opacity:.3;margin-left:auto">↗</span></a>
+    <a href="https://docs.google.com/document/d/19Ry6Yjpjm7g-Q4RWzqGWXkzEcq2hy1D-Ak3R5plDMzQ/edit" target="_blank" class="doc-card"><div class="doc-icon">📚</div><div><div class="doc-title">Ma Bibliothèque</div><div class="doc-sub">Google Doc · PDF</div></div><span style="opacity:.3;margin-left:auto">↗</span></a>
+    <a href="https://drive.google.com/file/d/15ktI0T9cVlFRrUNBSS1Ne5wf8xt2pQAu/view" target="_blank" class="doc-card"><div class="doc-icon">📘</div><div><div class="doc-title">Livre de démarrage Zinzino</div><div class="doc-sub">Google Drive · PDF</div></div><span style="opacity:.3;margin-left:auto">↗</span></a>
+    <a href="https://docs.google.com/spreadsheets/d/1XzYxpfin4uanKwNdW0XeBAkvdZzBlpK4GBC56pIB9xQ/edit" target="_blank" class="doc-card" style="border-color:rgba(16,185,129,.2);background:rgba(16,185,129,.04)"><div class="doc-icon">📊</div><div><div class="doc-title" style="color:#6EE7B7">CRM — Tableau de suivi contacts</div><div class="doc-sub">Google Sheets · Fichier → Créer une copie</div></div><span style="opacity:.3;margin-left:auto">↗</span></a>
+  </div>
+  <div class="nav-btns"><div></div><button class="btn btn-n" onclick="goTo(1)">Chapitre 1 →</button></div>
+</div>
+
+<!-- S1 COMMANDE DYNAMIQUE -->
+<div class="section" id="s1">
+  <div class="ch c-teal">
+    <div class="ch-emoji">🛒</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 1 — Vente</div><h2>La Commande<br><em>Dynamique</em></h2><p>Créez un lien de commande personnalisé contenant les produits sélectionnés, avec ou sans abonnement, prêt à partager avec vos clients en un clic.</p></div>
+  </div>
+  <div class="hl"><strong>L'avantage :</strong> Au lieu d'envoyer votre client sur votre boutique générale, vous lui envoyez un lien avec exactement les produits adaptés à son profil — déjà sélectionnés, avec ou sans abonnement. Zéro friction pour le client.</div>
+  <div class="slbl">Les 7 étapes pour créer une commande dynamique</div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:13px;overflow:hidden;margin-bottom:1.75rem">
+    <div class="step-dyn"><div class="step-dyn-num" style="background:linear-gradient(135deg,#134E4A,#0D9488);color:var(--text)">1</div><div><div class="step-dyn-t">Aller dans votre Back-Office Partenaire</div><div class="step-dyn-tx">Connectez-vous à votre compte partenaire sur zinzino.com</div></div></div>
+    <div class="step-dyn"><div class="step-dyn-num" style="background:linear-gradient(135deg,#1E3A5F,var(--blue));color:var(--text)">2</div><div><div class="step-dyn-t">Cliquer sur "Créer une commande" ou "Dynamic Order"</div><div class="step-dyn-tx">Dans le menu principal de votre Back-Office</div></div></div>
+    <div class="step-dyn"><div class="step-dyn-num" style="background:linear-gradient(135deg,#4C1D95,var(--vl));color:var(--text)">3</div><div><div class="step-dyn-t">Sélectionner les produits adaptés à votre client</div><div class="step-dyn-tx">BalanceOil, Zinobiotic, Protect, ou autre selon son profil et ses besoins</div></div></div>
+    <div class="step-dyn"><div class="step-dyn-num" style="background:linear-gradient(135deg,#065F46,var(--green));color:var(--text)">4</div><div><div class="step-dyn-t">Choisir avec ou sans abonnement</div><div class="step-dyn-tx">L'abonnement est fortement recommandé — il permet au client de bénéficier du Z4F et génère vos PCP récurrents</div></div></div>
+    <div class="step-dyn"><div class="step-dyn-num" style="background:linear-gradient(135deg,#92400E,#D97706);color:var(--text)">5</div><div><div class="step-dyn-t">Inclure le BalanceTest si pertinent</div><div class="step-dyn-tx">Pour les nouveaux clients — le test est le point de départ de toute l'expérience Zinzino</div></div></div>
+    <div class="step-dyn"><div class="step-dyn-num" style="background:linear-gradient(135deg,#831843,#DB2777);color:var(--text)">6</div><div><div class="step-dyn-t">Générer le lien personnalisé</div><div class="step-dyn-tx">Le lien contient votre identifiant partenaire — chaque commande passée via ce lien est automatiquement associée à votre compte</div></div></div>
+    <div class="step-dyn" style="background:rgba(16,185,129,.04)"><div class="step-dyn-num" style="background:linear-gradient(135deg,#065F46,var(--green));color:var(--text)">7</div><div><div class="step-dyn-t" style="color:#6EE7B7">Partager le lien avec votre client</div><div class="step-dyn-tx">Par SMS, WhatsApp, email ou messagerie — le client paie directement, vous suivez la commande dans votre BO</div></div></div>
+  </div>
+  <a href="https://docs.google.com/document/d/1Fr3UI0FfoptKeoDZioGcPcB05IILmtYAP55nQTxUQwQ/edit" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.25);color:#6EE7B7;padding:.65rem 1.1rem;border-radius:9px;font-size:.79rem;font-weight:600;text-decoration:none">🛒 Télécharger le guide Commande Dynamique ↗</a>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(0)">← Introduction</button><button class="btn btn-n" onclick="goTo(2)">Chapitre 2 →</button></div>
+</div>
+
+<!-- S2 PLAN DE RÉMUNÉRATION -->
+<div class="section" id="s2">
+  <div class="ch c-orange">
+    <div class="ch-emoji">💰</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 2 — Revenus</div><h2>Plan de<br><em>Rémunération</em></h2><p>Comprendre comment fonctionnent les crédits, les rangs et les commissions — pour savoir où vous en êtes et où vous allez.</p></div>
+  </div>
+  <div class="hl"><strong>Où trouver les détails :</strong> Back Office → Bibliothèque de fichiers (File Library) → Outils partenaire (Partner tools) → Compensation Plan</div>
+  <div class="slbl">Les 4 principes clés</div>
+  <div class="cgrid">
+    <div class="ccard"><div class="cc-icon">🔵</div><div class="cc-title">Crédits individuels (PCP)</div><div class="cc-text">Générés par vos propres ventes et votre abonnement Z4F. Chaque produit vendu en abonnement génère des crédits récurrents chaque mois.</div></div>
+    <div class="ccard"><div class="cc-icon">🟣</div><div class="cc-title">Crédits équipe</div><div class="cc-text">Générés par les ventes de tout votre réseau (partenaires que vous avez recrutés et leurs équipes). C'est l'effet de levier du marketing de réseau.</div></div>
+    <div class="ccard"><div class="cc-icon">⭐</div><div class="cc-title">Rang progressif</div><div class="cc-text">Votre rang détermine votre pourcentage de commission. Plus votre rang est élevé, plus vos revenus sont importants sur le volume de votre équipe.</div></div>
+    <div class="ccard"><div class="cc-icon">🏆</div><div class="cc-title">Bonus Fast Start</div><div class="cc-text">Bonus supplémentaires accordés lors de votre démarrage si vous atteignez les paliers rapidement. Consultez les conditions actuelles dans le Back Office.</div></div>
+  </div>
+  <div class="slbl">Les rangs de progression</div>
+  <div class="rang-grid">
+    <div class="rang-card" style="border-color:rgba(196,181,253,.25);background:rgba(196,181,253,.05)"><div class="rang-emoji">🤝</div><div class="rang-name" style="color:var(--vm)">Partenaire</div><div class="rang-pcp">Point de départ</div><div class="rang-credits" style="color:var(--vm)">Premiers PCP</div></div>
+    <div class="rang-card" style="border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.06)"><div class="rang-emoji">🌟</div><div class="rang-name" style="color:#93C5FD">Bronze</div><div class="rang-pcp">Palier intermédiaire</div><div class="rang-credits" style="color:#93C5FD">Volume croissant</div></div>
+    <div class="rang-card" style="border-color:rgba(234,179,8,.3);background:rgba(234,179,8,.06)"><div class="rang-emoji">🥇</div><div class="rang-name" style="color:#FCD34D">Leader</div><div class="rang-pcp">25 PCP min.</div><div class="rang-credits" style="color:#FCD34D">125 crédits/mois</div></div>
+    <div class="rang-card" style="border-color:rgba(226,232,240,.3);background:rgba(226,232,240,.05)"><div class="rang-emoji">⚡</div><div class="rang-name" style="color:#E2E8F0">Silver</div><div class="rang-pcp">Palier avancé</div><div class="rang-credits" style="color:#E2E8F0">Équipe structurée</div></div>
+    <div class="rang-card" style="border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.07)"><div class="rang-emoji">👑</div><div class="rang-name" style="color:#FBBF24">Gold</div><div class="rang-pcp">Rang senior</div><div class="rang-credits" style="color:#FBBF24">Grande équipe</div></div>
+    <div class="rang-card" style="border-color:rgba(147,51,234,.5);background:rgba(147,51,234,.1)"><div class="rang-emoji">💎</div><div class="rang-name" style="color:var(--vm)">Diamant</div><div class="rang-pcp">Rang élite</div><div class="rang-credits" style="color:var(--vm)">Liberté financière</div></div>
+  </div>
+  <div class="hl"><strong>Important :</strong> Les pourcentages exacts et conditions de chaque rang sont mis à jour régulièrement par Zinzino. Consultez toujours votre Back Office pour les chiffres actualisés.</div>
+  <a href="https://www.zinzinoplay.com/fr/watch/472" target="_blank" class="vlink" style="margin-top:1rem"><div class="vlink-icon" style="background:linear-gradient(135deg,var(--violet),var(--vl))">▶</div><div><div class="vlink-title">Présentation du Plan de Rémunération</div><div class="vlink-sub">ZinzinoPlay · Vidéo officielle</div></div><span style="margin-left:auto;opacity:.35;font-size:.85rem">↗</span></a>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(1)">← Commande Dynamique</button><button class="btn btn-n" onclick="goTo(3)">Chapitre 3 →</button></div>
+</div>
+
+<!-- S3 VIDÉOS & RESSOURCES -->
+<div class="section" id="s3">
+  <div class="ch c-blue">
+    <div class="ch-emoji">🎬</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 3 — Ressources</div><h2>Vidéos<br>&amp; Ressources officielles</h2><p>Toutes vos vidéos de formation, playlists YouTube et brochures officielles Zinzino — centralisées ici.</p></div>
+  </div>
+  <div class="slbl">ZinzinoPlay — Vidéos officielles leaders</div>
+  <div class="video-row">
+    <a href="https://www.zinzinoplay.com/fr" target="_blank" class="vlink"><div class="vlink-icon" style="background:linear-gradient(135deg,var(--violet),var(--vl))">🎬</div><div><div class="vlink-title">ZinzinoPlay — Plateforme complète</div><div class="vlink-sub">zinzinoplay.com/fr · Toutes les vidéos officielles</div></div><span style="margin-left:auto;opacity:.35;font-size:.85rem">↗</span></a>
+    <a href="https://www.zinzinoplay.com/fr/watch/467" target="_blank" class="vlink"><div class="vlink-icon" style="background:linear-gradient(135deg,#134E4A,#0D9488)">▶</div><div><div class="vlink-title">Vidéo 467 — Build Your List (La Liste)</div><div class="vlink-sub">ZinzinoPlay · FR</div></div><span style="margin-left:auto;opacity:.35;font-size:.85rem">↗</span></a>
+    <a href="https://www.zinzinoplay.com/fr/watch/468" target="_blank" class="vlink"><div class="vlink-icon" style="background:linear-gradient(135deg,#134E4A,#0D9488)">▶</div><div><div class="vlink-title">Vidéo 468 — L'Invitation</div><div class="vlink-sub">ZinzinoPlay · FR</div></div><span style="margin-left:auto;opacity:.35;font-size:.85rem">↗</span></a>
+    <a href="https://www.zinzinoplay.com/fr/watch/472" target="_blank" class="vlink"><div class="vlink-icon" style="background:linear-gradient(135deg,#134E4A,#0D9488)">▶</div><div><div class="vlink-title">Vidéo 472 — Get Started (Démarrage)</div><div class="vlink-sub">ZinzinoPlay · FR</div></div><span style="margin-left:auto;opacity:.35;font-size:.85rem">↗</span></a>
+    <a href="https://www.zinzinoplay.com/fr/watch/506" target="_blank" class="vlink"><div class="vlink-icon" style="background:linear-gradient(135deg,#134E4A,#0D9488)">▶</div><div><div class="vlink-title">Vidéo 506 — L'Événement</div><div class="vlink-sub">ZinzinoPlay · FR</div></div><span style="margin-left:auto;opacity:.35;font-size:.85rem">↗</span></a>
+    <a href="https://www.zinzinoplay.com/fr/watch/507" target="_blank" class="vlink"><div class="vlink-icon" style="background:linear-gradient(135deg,#134E4A,#0D9488)">▶</div><div><div class="vlink-title">Vidéo 507 — Formation Démarrage</div><div class="vlink-sub">ZinzinoPlay · FR</div></div><span style="margin-left:auto;opacity:.35;font-size:.85rem">↗</span></a>
+    <a href="https://www.zinzinoplay.com/fr/watch/265" target="_blank" class="vlink"><div class="vlink-icon" style="background:linear-gradient(135deg,#134E4A,#0D9488)">▶</div><div><div class="vlink-title">Vidéo 265 — BalanceTest</div><div class="vlink-sub">ZinzinoPlay · FR</div></div><span style="margin-left:auto;opacity:.35;font-size:.85rem">↗</span></a>
+  </div>
+  <div class="slbl">YouTube — Playlists pour vos prospects &amp; votre formation</div>
+  <div class="video-row">
+    <a href="https://www.youtube.com/playlist?list=PLQmEXLPAkxHY6GpxHv6dj0wk9drOF3KJZ" target="_blank" class="playlist-card" style="text-decoration:none;color:var(--text);display:block"><div class="playlist-head"><div class="playlist-icon" style="background:rgba(239,68,68,.2)">▶️</div><div class="playlist-title">Vidéos Clients — À partager avec vos prospects</div><span class="playlist-arrow">↗</span></div></div>
+    <a href="https://www.youtube.com/playlist?list=PLQmEXLPAkxHYSdaelKY5lJXcevMJJPrhq" target="_blank" class="playlist-card" style="text-decoration:none;color:var(--text);display:block"><div class="playlist-head"><div class="playlist-icon" style="background:rgba(239,68,68,.2)">▶️</div><div class="playlist-title">Vidéos Business — Pour vos prospects partenaires</div><span class="playlist-arrow">↗</span></div></div>
+    <a href="https://www.youtube.com/playlist?list=PLQmEXLPAkxHak0KeIz7HcAOYBgHBLkWbF" target="_blank" class="playlist-card" style="text-decoration:none;color:var(--text);display:block"><div class="playlist-head"><div class="playlist-icon" style="background:rgba(239,68,68,.2)">▶️</div><div class="playlist-title">Formation Produits — Pour les partenaires</div><span class="playlist-arrow">↗</span></div></div>
+    <a href="https://www.youtube.com/playlist?list=PLQmEXLPAkxHb7Ks0EkVZuQdCU3iz0eUL3" target="_blank" class="playlist-card" style="text-decoration:none;color:var(--text);display:block"><div class="playlist-head"><div class="playlist-icon" style="background:rgba(239,68,68,.2)">▶️</div><div class="playlist-title">Développer votre affaire — Formation business</div><span class="playlist-arrow">↗</span></div></div>
+    <a href="https://youtu.be/iqPCvXliyWI" target="_blank" class="playlist-card" style="text-decoration:none;color:var(--text);display:block"><div class="playlist-head"><div class="playlist-icon" style="background:rgba(239,68,68,.2)">▶️</div><div class="playlist-title">Booster son business — C. Masson</div><span class="playlist-arrow">↗</span></div></div>
+    <a href="https://youtu.be/7Bti91uCGY4" target="_blank" class="playlist-card" style="text-decoration:none;color:var(--text);display:block"><div class="playlist-head"><div class="playlist-icon" style="background:rgba(239,68,68,.2)">▶️</div><div class="playlist-title">Protocole santé — L. Muraro</div><span class="playlist-arrow">↗</span></div></div>
+    <a href="https://youtu.be/XGm29zg6jn8" target="_blank" class="playlist-card" style="text-decoration:none;color:var(--text);display:block"><div class="playlist-head"><div class="playlist-icon" style="background:rgba(239,68,68,.2)">▶️</div><div class="playlist-title">Présentation business Zinzino — Pour vos prospects</div><span class="playlist-arrow">↗</span></div></div>
+    <a href="https://youtu.be/B13cfITSzig" target="_blank" class="playlist-card" style="text-decoration:none;color:var(--text);display:block"><div class="playlist-head"><div class="playlist-icon" style="background:rgba(239,68,68,.2)">▶️</div><div class="playlist-title">Tutoriel Back Office Partenaire</div><span class="playlist-arrow">↗</span></div></div>
+  </div>
+  <div class="slbl">Brochures officielles Zinzino</div>
+  <div class="doc-grid">
+    <a href="https://issuu.com/marketing-zinzino/docs/zinzino-expressstart-148x210-fr-fr-0002" target="_blank" class="doc-card"><div class="doc-icon">🌟</div><div><div class="doc-title">Express Start</div><div class="doc-sub">Issuu · Brochure officielle</div></div><span style="opacity:.3;margin-left:auto">↗</span></a>
+    <a href="https://issuu.com/marketing-zinzino/docs/zinzino-lookbook-fr" target="_blank" class="doc-card"><div class="doc-icon">📷</div><div><div class="doc-title">LookBook Zinzino</div><div class="doc-sub">Issuu · Catalogue produits</div></div><span style="opacity:.3;margin-left:auto">↗</span></a>
+    <a href="https://zinzinowebstorage.blob.core.windows.net/filelibrary/Health-Protocol-Brochure-fr-FR.pdf" target="_blank" class="doc-card"><div class="doc-icon">🏥</div><div><div class="doc-title">Brochure Health Protocol</div><div class="doc-sub">PDF officiel Zinzino · FR</div></div><span style="opacity:.3;margin-left:auto">↗</span></a>
+  </div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(2)">← Plan de Rémunération</button><button class="btn btn-n" onclick="goTo(4)">Chapitre 4 →</button></div>
+</div>
+
+<!-- S4 BIBLIOTHÈQUE -->
+<div class="section" id="s4">
+  <div class="ch c-violet">
+    <div class="ch-emoji">📚</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 4 — Développement</div><h2>Ma<br><em>Bibliothèque</em></h2><p>Les lectures qui changent une carrière en marketing de réseau. Commencez par GO PRO d'Eric Worre — c'est la référence absolue du secteur.</p></div>
+  </div>
+  <div class="slbl">📗 Santé &amp; Nutrition</div>
+  <div class="book-section">
+    <div class="book-list">
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Spiruline — l'algue Bleue</span><span class="book-author">Dr Jean-Louis Vidalo</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>La Santé Cellulaire</span><span class="book-author">Dr J.-L. Vidalo &amp; René Olivier</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>La révolution du Mieux Être</span><span class="book-author">P. Zane Pilzer</span></div>
+    </div>
+  </div>
+  <div class="slbl">📕 Marketing de Réseau</div>
+  <div class="book-section">
+    <div class="book-list">
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>GO PRO <span style="color:var(--vm);font-size:.7rem">⭐ Priorité absolue</span></span><span class="book-author">Eric Worre</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>L'entreprise du 21e siècle</span><span class="book-author">Robert T. Kiyosaki</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Effectuez la transition</span><span class="book-author">Darren Hardy</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>45 secondes qui changeront votre vie</span><span class="book-author">Don Failla</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>L'effet cumulé</span><span class="book-author">Darren Hardy</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Faites fonctionner le premier cercle</span><span class="book-author">Randy Gage</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Devenez une superstar de la vente directe</span><span class="book-author">Mary Christensen</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Marketing de réseau 101</span><span class="book-author">Dr Joe Rubino &amp; John Terhune</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Votre première année en marketing de réseau</span><span class="book-author">Mark Yarnell</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Les secrets du parrainage</span><span class="book-author">Tom Schreiter</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Sur la route du succès professionnel</span><span class="book-author">Fanny Bauer Motti</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Les 5 niveaux de leadership</span><span class="book-author">John C. Maxwell</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>La vente directe par réseau</span><span class="book-author">Philippe Dailey</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Le plus grand réseauteur du monde</span><span class="book-author">John Milton Fogg</span></div>
+    </div>
+  </div>
+  <div class="slbl">📙 Développement Personnel</div>
+  <div class="book-section">
+    <div class="book-list">
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Réfléchissez et devenez riche</span><span class="book-author">Napoleon Hill</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Les 7 habitudes de ceux qui réalisent tout</span><span class="book-author">Stephen R. Covey</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Le plus grand vendeur du monde</span><span class="book-author">Og Mandino</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>La semaine de 4 heures</span><span class="book-author">Pearson</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>S'organiser pour réussir</span><span class="book-author">David Allen</span></div>
+      <div class="book-item" onclick="toggleBook(this)"><div class="book-check"></div><span>Actualisez votre potentiel avec le MLM</span><span class="book-author">John Kalench</span></div>
+    </div>
+  </div>
+  <a href="https://docs.google.com/document/d/19Ry6Yjpjm7g-Q4RWzqGWXkzEcq2hy1D-Ak3R5plDMzQ/edit" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(107,33,168,.1);border:1px solid rgba(107,33,168,.25);color:var(--vm);padding:.65rem 1.1rem;border-radius:9px;font-size:.79rem;font-weight:600;text-decoration:none;margin-top:.5rem">📚 Télécharger Ma Bibliothèque complète (PDF) ↗</a>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(3)">← Vidéos & Ressources</button><button class="btn btn-n" onclick="goTo(5)">Chapitre 5 →</button></div>
+</div>
+
+<!-- S5 TABLEAU DE BORD -->
+<div class="section" id="s5">
+  <div class="ch c-red">
+    <div class="ch-emoji">📊</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 5 — Pilotage</div><h2>Mon Tableau<br>de <em>Bord</em></h2><p>Suivez vos indicateurs clés chaque semaine et chaque mois. Ce qu'on mesure, on l'améliore. Ce qu'on déclare, on le fait.</p></div>
+  </div>
+  <div class="hl"><strong>Pourquoi un tableau de bord :</strong> Sans chiffres, on travaille à l'instinct. Avec des chiffres, on pilote. Remplir ce tableau chaque semaine prend 5 minutes et change la trajectoire de votre activité.</div>
+  <div class="slbl">Mes indicateurs clés — à remplir chaque semaine</div>
+  <div class="kpi-grid" id="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">Contacts approchés</div><div class="kpi-row"><div class="kpi-box"><div class="kpi-period">Cette semaine</div><input type="number" min="0" style="width:100%;background:none;border:none;outline:none;color:var(--vm);font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-align:center;" data-kpi="contacts_sem" oninput="saveKpi(this)" placeholder="0"></div><div class="kpi-box"><div class="kpi-period">Ce mois</div><input type="number" min="0" style="width:100%;background:none;border:none;outline:none;color:var(--vm);font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-align:center;" data-kpi="contacts_mois" oninput="saveKpi(this)" placeholder="0"></div></div></div>
+    <div class="kpi-card"><div class="kpi-label">Présentations faites</div><div class="kpi-row"><div class="kpi-box"><div class="kpi-period">Cette semaine</div><input type="number" min="0" style="width:100%;background:none;border:none;outline:none;color:#93C5FD;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-align:center;" data-kpi="pres_sem" oninput="saveKpi(this)" placeholder="0"></div><div class="kpi-box"><div class="kpi-period">Ce mois</div><input type="number" min="0" style="width:100%;background:none;border:none;outline:none;color:#93C5FD;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-align:center;" data-kpi="pres_mois" oninput="saveKpi(this)" placeholder="0"></div></div></div>
+    <div class="kpi-card"><div class="kpi-label">Nouveaux clients</div><div class="kpi-row"><div class="kpi-box"><div class="kpi-period">Cette semaine</div><input type="number" min="0" style="width:100%;background:none;border:none;outline:none;color:#6EE7B7;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-align:center;" data-kpi="clients_sem" oninput="saveKpi(this)" placeholder="0"></div><div class="kpi-box"><div class="kpi-period">Ce mois</div><input type="number" min="0" style="width:100%;background:none;border:none;outline:none;color:#6EE7B7;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-align:center;" data-kpi="clients_mois" oninput="saveKpi(this)" placeholder="0"></div></div></div>
+    <div class="kpi-card"><div class="kpi-label">Nouveaux partenaires</div><div class="kpi-row"><div class="kpi-box"><div class="kpi-period">Cette semaine</div><input type="number" min="0" style="width:100%;background:none;border:none;outline:none;color:#FDba74;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-align:center;" data-kpi="part_sem" oninput="saveKpi(this)" placeholder="0"></div><div class="kpi-box"><div class="kpi-period">Ce mois</div><input type="number" min="0" style="width:100%;background:none;border:none;outline:none;color:#FDba74;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-align:center;" data-kpi="part_mois" oninput="saveKpi(this)" placeholder="0"></div></div></div>
+    <div class="kpi-card"><div class="kpi-label">Crédits individuels (PCP)</div><div class="kpi-row"><div class="kpi-box"><div class="kpi-period">Cette semaine</div><input type="number" min="0" style="width:100%;background:none;border:none;outline:none;color:var(--vm);font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-align:center;" data-kpi="pcp_sem" oninput="saveKpi(this)" placeholder="0"></div><div class="kpi-box"><div class="kpi-period">Ce mois</div><input type="number" min="0" style="width:100%;background:none;border:none;outline:none;color:var(--vm);font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-align:center;" data-kpi="pcp_mois" oninput="saveKpi(this)" placeholder="0"></div></div></div>
+    <div class="kpi-card"><div class="kpi-label">Crédits équipe</div><div class="kpi-row"><div class="kpi-box"><div class="kpi-period">Cette semaine</div><input type="number" min="0" style="width:100%;background:none;border:none;outline:none;color:#A5B4FC;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-align:center;" data-kpi="ceq_sem" oninput="saveKpi(this)" placeholder="0"></div><div class="kpi-box"><div class="kpi-period">Ce mois</div><input type="number" min="0" style="width:100%;background:none;border:none;outline:none;color:#A5B4FC;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-align:center;" data-kpi="ceq_mois" oninput="saveKpi(this)" placeholder="0"></div></div></div>
+  </div>
+  <div class="slbl">Bilan de la semaine</div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:13px;padding:1.15rem;margin-bottom:1.75rem">
+    <p style="font-size:.78rem;opacity:.6;margin-bottom:.7rem;font-style:italic">Ce qui s'est bien passé · Ce qui est à améliorer · Mon objectif de la semaine prochaine</p>
+    <textarea style="width:100%;min-height:90px;background:var(--card);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.82rem;line-height:1.7;padding:.8rem .95rem;resize:vertical;outline:none;" id="kpi-bilan" placeholder="Mon bilan de la semaine…" oninput="saveBilan()"></textarea>
+    <div style="display:flex;justify-content:flex-end;gap:.5rem;margin-top:.6rem;align-items:center">
+      <span id="bilan-conf" style="font-size:.7rem;color:#6EE7B7;display:none">✓ Sauvegardé</span>
+      <button onclick="resetKpi()" style="font-size:.72rem;font-weight:600;padding:.38rem .8rem;border-radius:7px;border:none;cursor:pointer;background:rgba(239,68,68,.1);color:#FCA5A5;font-family:'DM Sans',sans-serif;">Réinitialiser</button>
+      <button onclick="saveAllKpi()" style="font-size:.72rem;font-weight:600;padding:.38rem .8rem;border-radius:7px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--violet),var(--vl));color:var(--text);font-family:'DM Sans',sans-serif;">💾 Sauvegarder</button>
+    </div>
+  </div>
+  <div class="mbox"><div class="mt">🎯 Objectifs hebdomadaires recommandés</div><div class="mtxt">Minimum <strong>4 clients</strong> par mois · Minimum <strong>1-2 partenaires</strong> par mois<br><span style="font-size:.78rem;opacity:.6;display:block;margin-top:.5rem">La progression vaut mieux que la perfection. Constance = Résultats.</span></div></div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(4)">← Ma Bibliothèque</button><button class="btn btn-done" onclick="goTo(0)">✓ Terminé</button></div>
+</div>
+
+</main>
+</div>
+<script>
+
+const _SD=[];
+function initSearch(d){d.forEach(x=>_SD.push(x));}
+function doSearch(v){if(!v.trim()){closeSrch();return;}openSrch();const q=v.toLowerCase();const r=_SD.filter(d=>d.t.toLowerCase().includes(q)||d.s.toLowerCase().includes(q)||(d.kw||[]).some(k=>k.includes(q)));document.getElementById('sr').innerHTML=r.length?r.map(x=>`<a class="sr-item" href="${x.href}"><span class="sr-e">${x.e}</span><div><div class="sr-t">${x.t}</div><div class="sr-s">${x.s}</div></div></a>`).join(''):`<div class="sr-empty">Aucun résultat pour « ${v} »</div>`;}
+function openSrch(){document.getElementById('srch-ov').style.display='block';}
+function closeSrch(e){if(!e||!document.getElementById('srch-box').contains(e.target))document.getElementById('srch-ov').style.display='none';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSrch();});
+function goTo(i){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById('s'+i).classList.add('active');document.querySelectorAll('.s-chapter-item').forEach(n=>n.classList.remove('active'));const ni=document.getElementById('ci'+i);if(ni)ni.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});updatePbar();}
+function toggleChk(el){
+  el.classList.toggle('done');
+  el.textContent=el.classList.contains('done')?'✓':'';
+  localStorage.setItem('dd_chk_out_'+el.id, el.classList.contains('done')?'1':'0');
+  updatePbar();
+}
+function loadChks(){document.querySelectorAll('.n-chk').forEach(el=>{if(localStorage.getItem('dd_chk_out_'+el.id)==='1'){el.classList.add('done');el.textContent='✓';}});}
+loadChks();
+function updatePbar(){const done=document.querySelectorAll('.n-chk.done').length,total=document.querySelectorAll('.n-chk').length;if(!total)return;document.getElementById('pbar').style.width=(done/total*100)+'%';const pl=document.getElementById('plbl');if(pl)pl.textContent=done+' / '+total+' chapitres';}
+function toggleSc(id){document.getElementById(id).classList.toggle('open');}
+function toggleObj(id){document.getElementById(id).classList.toggle('open');}
+
+
+function saveKpi(el){localStorage.setItem('dd_kpi_'+el.dataset.kpi,el.value);}
+function saveBilan(){localStorage.setItem('dd_kpi_bilan',document.getElementById('kpi-bilan').value);}
+function saveAllKpi(){document.querySelectorAll('[data-kpi]').forEach(el=>localStorage.setItem('dd_kpi_'+el.dataset.kpi,el.value));saveBilan();const c=document.getElementById('bilan-conf');c.style.display='inline';setTimeout(()=>c.style.display='none',2000);}
+function resetKpi(){if(!confirm('Réinitialiser ?'))return;document.querySelectorAll('[data-kpi]').forEach(el=>{el.value='';localStorage.removeItem('dd_kpi_'+el.dataset.kpi);});const b=document.getElementById('kpi-bilan');b.value='';localStorage.removeItem('dd_kpi_bilan');}
+function loadKpi(){document.querySelectorAll('[data-kpi]').forEach(el=>{const v=localStorage.getItem('dd_kpi_'+el.dataset.kpi);if(v)el.value=v;});const b=localStorage.getItem('dd_kpi_bilan');if(b)document.getElementById('kpi-bilan').value=b;}
+function toggleBook(el){el.classList.toggle('read');const b=el.querySelector('.book-check');b.textContent=el.classList.contains('read')?'✓':'';saveBooks();}
+function saveBooks(){const s={};document.querySelectorAll('.book-item').forEach((b,i)=>{s['book_'+i]=b.classList.contains('read');});localStorage.setItem('dd_books',JSON.stringify(s));}
+function loadBooks(){const raw=localStorage.getItem('dd_books');if(!raw)return;const s=JSON.parse(raw);document.querySelectorAll('.book-item').forEach((b,i)=>{if(s['book_'+i]){b.classList.add('read');const c=b.querySelector('.book-check');if(c)c.textContent='✓';}});}
+loadKpi();loadBooks();
+initSearch([
+  {t:'Commande Dynamique',s:'7 étapes · Lien personnalisé',e:'🛒',href:'#',kw:['commande','dynamique','lien']},
+  {t:'Plan de Rémunération',s:'Crédits · Rangs · PCP',e:'💰',href:'#',kw:['rémunération','rangs','pcp']},
+  {t:'Vidéos & Ressources',s:'ZinzinoPlay · YouTube · Brochures',e:'🎬',href:'#',kw:['vidéos','youtube','zinzinoplay']},
+  {t:'Ma Bibliothèque',s:'GO PRO · Kiyosaki · Napoleon Hill',e:'📚',href:'#',kw:['bibliothèque','lectures','go pro']},
+  {t:'Tableau de Bord',s:'KPIs hebdo · Clients · Partenaires',e:'📊',href:'#',kw:['tableau de bord','kpi','bilan']}
+]);
+
+
+let _synth=window.speechSynthesis,_utt=null,_reading=false;
+function _getText(){const s=document.querySelector('.section.active');if(!s)return'';const tags='h2,p,.bubble,.mc-tx,.cc-text,.hl,.tl li,.obj-ttl,.slbl,.qbox,.mtxt,.step-tx,.fs-desc,.gloss-def,.ch-text p';let t='';s.querySelectorAll(tags).forEach(e=>{const v=e.textContent.trim();if(v&&v.length>3)t+=v+'. ';});return t||s.textContent.replace(/\s+/g,' ').trim();}
+function toggleAudio(){const b=document.getElementById('ab');if(_reading){_synth.cancel();_reading=false;b.innerHTML='🔊';b.className='audio-btn';return;}const t=_getText();if(!t)return;_utt=new SpeechSynthesisUtterance(t);_utt.lang='fr-FR';_utt.rate=0.95;const v=_synth.getVoices().find(v=>v.lang.startsWith('fr'));if(v)_utt.voice=v;_utt.onstart=()=>{_reading=true;b.innerHTML='⏹';b.className='audio-btn reading';};_utt.onend=_utt.onerror=()=>{_reading=false;b.innerHTML='🔊';b.className='audio-btn';};_synth.speak(_utt);}
+const _g=goTo;goTo=function(i){if(_reading){_synth.cancel();_reading=false;const b=document.getElementById('ab');if(b){b.innerHTML='🔊';b.className='audio-btn';}}_g(i);};
+
+</script>
+</body>
+</html>

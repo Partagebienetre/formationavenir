@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Liste de Contacts — Destination 💎</title>
+<title>Rêves & Engagement — Destination 💎</title>
 <style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
 :root{
   --bg:#F3F0FA; --bg2:#EAE5F5; --bg3:#DDD6F0;
@@ -344,10 +344,10 @@ main{flex:1;padding:2rem 2.25rem;max-width:920px;}
 <header>
   <a class="brand" href="index.html">Destination <em>💎</em></a>
   <div class="h-sep"></div>
-  <span class="mod-badge">Module 02</span>
-  <span class="h-title">Liste de <em>Contacts</em></span>
+  <span class="mod-badge">Module 01</span>
+  <span class="h-title">Rêves &amp; <em>Engagement</em></span>
   <div class="h-search"><span>🔍</span><input type="text" placeholder="Rechercher dans la formation…" oninput="doSearch(this.value)" onfocus="if(this.value.trim())openSrch()"></div>
-  
+  <button class="dl-btn" onclick="dlNotes()" title="Télécharger mes notes">📥 Télécharger mes notes</button>
   <button class="audio-btn" id="ab" onclick="toggleAudio()" title="Lire ce chapitre">🔊</button>
   <span class="plabel" id="plbl">0 / ? chapitres</span>
 </header>
@@ -356,16 +356,15 @@ main{flex:1;padding:2rem 2.25rem;max-width:920px;}
   <div class="s-section">
     <div class="s-section-title">Modules</div>
     <a class="s-module-btn" href="index.html"><div class="s-mod-icon">🏠</div><div class="s-mod-name">Accueil</div></a>
-    <a class="s-module-btn" href="module-reves-engagement.html"><div class="s-mod-icon">🌟</div><div class="s-mod-name">Rêves & Engagement</div></a>
-    <a class="s-module-btn current" href="module-liste-contacts.html"><div class="s-mod-icon">📋</div><div class="s-mod-name">Liste de Contacts</div></a>
+    <a class="s-module-btn current" href="module-reves-engagement.html"><div class="s-mod-icon">🌟</div><div class="s-mod-name">Rêves & Engagement</div></a>
     <div class="s-chapter-list">
       <div class="s-chapter-item active" id="ci0" onclick="goTo(0)"><span>🏠</span> Introduction <div class="n-chk" id="chk0" onclick="event.stopPropagation();toggleChk(this)"></div></div>
-      <div class="s-chapter-item" id="ci1" onclick="goTo(1)"><span>🧠</span> État d'esprit <div class="n-chk" id="chk1" onclick="event.stopPropagation();toggleChk(this)"></div></div>
-      <div class="s-chapter-item" id="ci2" onclick="goTo(2)"><span>📋</span> Construire la liste <div class="n-chk" id="chk2" onclick="event.stopPropagation();toggleChk(this)"></div></div>
-      <div class="s-chapter-item" id="ci3" onclick="goTo(3)"><span>🗂️</span> Fiche CRM <div class="n-chk" id="chk3" onclick="event.stopPropagation();toggleChk(this)"></div></div>
-      <div class="s-chapter-item" id="ci4" onclick="goTo(4)"><span>🚀</span> Pipeline de suivi <div class="n-chk" id="chk4" onclick="event.stopPropagation();toggleChk(this)"></div></div>
-      <div class="s-chapter-item" id="ci5" onclick="goTo(5)"><span>⚡</span> Discipline <div class="n-chk" id="chk5" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci1" onclick="goTo(1)"><span>🌟</span> Mes rêves <div class="n-chk" id="chk1" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci2" onclick="goTo(2)"><span>💡</span> Mon Pourquoi <div class="n-chk" id="chk2" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci3" onclick="goTo(3)"><span>🎯</span> Mes objectifs <div class="n-chk" id="chk3" onclick="event.stopPropagation();toggleChk(this)"></div></div>
+      <div class="s-chapter-item" id="ci4" onclick="goTo(4)"><span>✍️</span> Mon engagement <div class="n-chk" id="chk4" onclick="event.stopPropagation();toggleChk(this)"></div></div>
     </div>
+    <a class="s-module-btn" href="module-liste-contacts.html"><div class="s-mod-icon">📋</div><div class="s-mod-name">Liste de Contacts</div></a>
     <a class="s-module-btn" href="module-invitation-zinzino.html"><div class="s-mod-icon">✉️</div><div class="s-mod-name">L'Art de l'Invitation</div></a>
     <a class="s-module-btn" href="module-demarrage.html"><div class="s-mod-icon">🚀</div><div class="s-mod-name">Mon Démarrage</div></a>
     <a class="s-module-btn" href="module-remuneration.html"><div class="s-mod-icon">💰</div><div class="s-mod-name">Plan de Rémunération</div></a>
@@ -375,124 +374,158 @@ main{flex:1;padding:2rem 2.25rem;max-width:920px;}
 
 <main>
 
+<!-- S0 -->
 <div class="section active" id="s0">
-  <div class="ihero"><div class="ibadge">📋 Module 02 · Fondations</div><h2>Liste de <em>Contacts</em></h2>
-  <p>Construire, organiser et faire vivre votre fonds de commerce — votre actif numéro un.</p>
-  <div class="ov-grid">
-    <div class="ov-card" onclick="goTo(1)"><div class="ov-e">🧠</div><div class="ov-n">Chap.1</div><div class="ov-nm">État d'esprit</div></div>
-    <div class="ov-card" onclick="goTo(2)"><div class="ov-e">📋</div><div class="ov-n">Chap.2</div><div class="ov-nm">Construire</div></div>
-    <div class="ov-card" onclick="goTo(3)"><div class="ov-e">🗂️</div><div class="ov-n">Chap.3</div><div class="ov-nm">Fiche CRM</div></div>
-    <div class="ov-card" onclick="goTo(4)"><div class="ov-e">🚀</div><div class="ov-n">Chap.4</div><div class="ov-nm">Pipeline</div></div>
-    <div class="ov-card" onclick="goTo(5)"><div class="ov-e">⚡</div><div class="ov-n">Chap.5</div><div class="ov-nm">Discipline</div></div>
+  <div class="ihero">
+    <div class="ibadge">🌟 Module 01 · Fondations personnelles</div>
+    <h2>Rêves &amp;<br><em>Engagement</em></h2>
+    <p>Avant les scripts, avant les techniques — il y a votre raison d'être ici. Ce module vous aide à la mettre en mots.</p>
+    <div class="ov-grid">
+      <div class="ov-card" onclick="goTo(1)"><div class="ov-e">🌟</div><div class="ov-n">Chap.1</div><div class="ov-nm">Mes rêves</div></div>
+      <div class="ov-card" onclick="goTo(2)"><div class="ov-e">💡</div><div class="ov-n">Chap.2</div><div class="ov-nm">Mon Pourquoi</div></div>
+      <div class="ov-card" onclick="goTo(3)"><div class="ov-e">🎯</div><div class="ov-n">Chap.3</div><div class="ov-nm">Mes objectifs</div></div>
+      <div class="ov-card" onclick="goTo(4)"><div class="ov-e">✍️</div><div class="ov-n">Chap.4</div><div class="ov-nm">Mon engagement</div></div>
+    </div>
+    <button class="btn-start" onclick="goTo(1)">Commencer →</button>
   </div>
-  <button class="btn-start" onclick="goTo(1)">Commencer →</button></div>
-  <div class="slbl">Ce que vous allez apprendre</div>
+  <div class="slbl">Pourquoi commencer par là</div>
   <div class="cgrid">
-    <div class="ccard"><div class="cc-icon">🧹</div><div class="cc-title">Vider l'esprit</div><div class="cc-text">Noter tout le monde libère de la place mentale — un prénom en appelle un autre.</div></div>
-    <div class="ccard"><div class="cc-icon">💼</div><div class="cc-title">Votre fonds de commerce</div><div class="cc-text">Cette liste est votre actif principal. Elle s'enrichit, se qualifie, se travaille dans la durée.</div></div>
-    <div class="ccard"><div class="cc-icon">🔄</div><div class="cc-title">Un outil vivant</div><div class="cc-text">Elle grandit via les recommandations et les nouvelles rencontres. Ne la laissez jamais dormir.</div></div>
-    <div class="ccard"><div class="cc-icon">📊</div><div class="cc-title">CRM structuré</div><div class="cc-text">Chaque contact a un statut, une étape, un historique. On ne perd plus personne de vue.</div></div>
+    <div class="ccard"><div class="cc-icon">🧭</div><div class="cc-title">La boussole intérieure</div><div class="cc-text">Quand les doutes arrivent — et ils viendront — c'est votre vision qui vous ramène. Ce que vous avez écrit ici.</div></div>
+    <div class="ccard"><div class="cc-icon">🔥</div><div class="cc-title">Le carburant de l'action</div><div class="cc-text">On n'agit pas durablement par discipline. On agit par désir. Plus votre rêve est précis, plus il génère d'énergie.</div></div>
+    <div class="ccard"><div class="cc-icon">📝</div><div class="cc-title">Ce qui est écrit existe</div><div class="cc-text">Un rêve dans la tête reste un rêve. Un rêve écrit devient un projet. Ce module transforme vos aspirations en engagements.</div></div>
+    <div class="ccard"><div class="cc-icon">💾</div><div class="cc-title">Vos notes sont sauvegardées</div><div class="cc-text">Tout ce que vous écrivez est sauvegardé sur cet appareil. Téléchargez vos notes en un clic via le bouton dans le menu.</div></div>
   </div>
   <div class="nav-btns"><div></div><button class="btn btn-n" onclick="goTo(1)">Chapitre 1 →</button></div>
 </div>
 
+<!-- S1 RÊVES -->
 <div class="section" id="s1">
-  <div class="ch c-violet"><div class="ch-emoji">🧠</div><div class="ch-text"><div class="ch-tag">Chapitre 1 — Fondements</div><h2>L'état d'esprit juste</h2><p>Avant de noter le premier prénom, comprendre pourquoi cette liste est votre outil le plus précieux.</p></div></div>
-  <div class="qbox">« Vous n'êtes pas dans le commerce des produits. Vous êtes dans le <strong>commerce de la prospection.</strong> »<div class="qa">— Michael J. Durkin</div></div>
-  <div class="slbl">Les 5 raisons de faire votre liste maintenant</div>
-  <div class="mc"><div class="mc-i">🧹</div><div><div class="mc-t">1. Vider l'esprit</div><div class="mc-tx">Tant qu'un prénom reste dans votre tête, il occupe de l'espace mental. Une fois noté, il est sécurisé.</div></div></div>
-  <div class="mc"><div class="mc-i">🔗</div><div><div class="mc-t">2. L'effet déclencheur</div><div class="mc-tx">Un prénom en appelle un autre. En notant Marie, vous pensez à son mari, puis à sa collègue.</div></div></div>
-  <div class="mc"><div class="mc-i">💎</div><div><div class="mc-t">3. Votre fonds de commerce</div><div class="mc-tx">Cette liste est votre actif numéro un. Contrairement à un stock de produits, elle ne se déprécie pas.</div></div></div>
-  <div class="mc"><div class="mc-i">🚫</div><div><div class="mc-t">4. Ne jamais juger à la place de l'autre</div><div class="mc-tx">Votre rôle est de noter, pas de décider. Ceux que vous pensiez les moins susceptibles deviennent parfois vos meilleurs partenaires.</div></div></div>
-  <div class="mc"><div class="mc-i">👫</div><div><div class="mc-t">5. Toujours penser au couple</div><div class="mc-tx">Dès qu'un contact a un(e) conjoint(e), notez-le aussi. Une décision engageante se prend rarement seul.</div></div></div>
-  <div class="hl"><strong>La règle d'or :</strong> une liste de 200 noms vaut mieux que 10 noms "parfaits". La qualité émerge de la quantité. Notez tout, triez ensuite.</div>
+  <div class="ch c-teal">
+    <div class="ch-emoji">🌟</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 1 — Vision</div><h2>Mes rêves &amp; ma vision</h2><p>Pas de rêves trop grands, pas de rêves trop petits. Ce qui compte, c'est que ce soit le vôtre.</p></div>
+  </div>
+  <div class="hl"><strong>Consigne :</strong> Répondez sans vous censurer. Ces notes ne sont visibles que par vous. Laissez venir ce qui vient vraiment.</div>
+  <div class="slbl">Ma vision de vie idéale</div>
+  <div class="nzone">
+    <div class="nzh"><div class="nzt">🌅 Dans 3 ans, ma vie idéale ressemble à…</div></div>
+    <p class="nprompt">Où vivez-vous ? Avec qui ? Comment occupez-vous vos journées ? Comment vous sentez-vous ?</p>
+    <textarea class="nta" id="n-vision" placeholder="Écrivez librement, sans filtre…" rows="6"></textarea>
+    <div class="nacts"><span class="nconf" id="c-vision">✓</span><button class="nsave" onclick="sv('n-vision','c-vision')">💾 Sauvegarder</button></div>
+  </div>
+  <div class="slbl">Mes domaines de vie</div>
+  <div class="vdgrid">
+    <div class="vd"><div class="vdt">💰 Finances</div><input class="vi" data-k="v-fin1" placeholder="Revenu mensuel visé…"><input class="vi" data-k="v-fin2" placeholder="Ce que l'argent va permettre…"></div>
+    <div class="vd"><div class="vdt">👨‍👩‍👧 Famille</div><input class="vi" data-k="v-fam1" placeholder="Ce que je veux offrir…"><input class="vi" data-k="v-fam2" placeholder="Temps, présence, sécurité…"></div>
+    <div class="vd"><div class="vdt">🏥 Santé</div><input class="vi" data-k="v-san1" placeholder="Comment je veux me sentir…"><input class="vi" data-k="v-san2" placeholder="Ce que je veux faire physiquement…"></div>
+    <div class="vd"><div class="vdt">🌍 Liberté</div><input class="vi" data-k="v-lib1" placeholder="Où je veux aller…"><input class="vi" data-k="v-lib2" placeholder="Ce que liberté signifie…"></div>
+    <div class="vd"><div class="vdt">🌱 Impact</div><input class="vi" data-k="v-imp1" placeholder="Ce que je veux apporter…"><input class="vi" data-k="v-imp2" placeholder="Le changement à créer…"></div>
+    <div class="vd"><div class="vdt">✨ Épanouissement</div><input class="vi" data-k="v-ep1" placeholder="Ce que je veux apprendre…"><input class="vi" data-k="v-ep2" placeholder="Qui je veux devenir…"></div>
+  </div>
+  <div style="display:flex;justify-content:flex-end;gap:.45rem;margin-bottom:1.75rem"><span class="nconf" id="c-dom" style="align-self:center">✓ Sauvegardé</span><button class="nsave" onclick="svDom()">💾 Sauvegarder ma vision</button></div>
   <div class="nav-btns"><button class="btn btn-p" onclick="goTo(0)">← Introduction</button><button class="btn btn-n" onclick="goTo(2)">Chapitre 2 →</button></div>
 </div>
 
+<!-- S2 POURQUOI -->
 <div class="section" id="s2">
-  <div class="ch c-orange"><div class="ch-emoji">📋</div><div class="ch-text"><div class="ch-tag">Chapitre 2 — Action</div><h2>Comment construire votre liste</h2><p>8 catégories pour ne jamais être à court d'idées, plus des astuces mémoire.</p></div></div>
-  <div class="hl"><strong>Méthode :</strong> Parcourez chaque catégorie une par une. Ne filtrez pas — notez tout le monde.</div>
-  <div class="slbl">Les 8 catégories</div>
-  <div class="cgrid">
-    <div class="ccard"><div class="cc-icon">👨‍👩‍👧‍👦</div><div class="cc-title">Famille</div><div class="cc-text">Parents, grands-parents, frères, sœurs, enfants adultes, tantes, oncles, cousins, belle-famille.</div></div>
-    <div class="ccard"><div class="cc-icon">💼</div><div class="cc-title">Travail</div><div class="cc-text">Collègues actuels et anciens, supérieurs, fournisseurs, clients, contacts de formations pro.</div></div>
-    <div class="ccard"><div class="cc-icon">🏘️</div><div class="cc-title">Voisinage & amis</div><div class="cc-text">Voisins actuels et anciens, amis personnels, parents d'amis d'école des enfants.</div></div>
-    <div class="ccard"><div class="cc-icon">🏪</div><div class="cc-title">Commerces & artisans</div><div class="cc-text">Boulanger, boucher, garagiste, restaurateur, caissières, fleuriste, libraire.</div></div>
-    <div class="ccard"><div class="cc-icon">🏥</div><div class="cc-title">Santé & bien-être</div><div class="cc-text">Médecin, infirmière, pharmacien, kiné, coach sportif, coiffeuse, vétérinaire.</div></div>
-    <div class="ccard"><div class="cc-icon">🛠️</div><div class="cc-title">Services & artisanat</div><div class="cc-text">Plombier, électricien, peintre, photographe, traiteur, jardinier, gardien.</div></div>
-    <div class="ccard"><div class="cc-icon">🏛️</div><div class="cc-title">Institutions</div><div class="cc-text">Banquier, assureur, notaire, facteur, professeurs, pompiers, gendarmes.</div></div>
-    <div class="ccard"><div class="cc-icon">📱</div><div class="cc-title">Réseaux sociaux</div><div class="cc-text">Amis Facebook, relations LinkedIn, abonnés Instagram — chaque connexion digitale compte.</div></div>
+  <div class="ch c-violet">
+    <div class="ch-emoji">💡</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 2 — Motivation profonde</div><h2>Mon Pourquoi</h2><p>Les techniques passent. Le Pourquoi reste. C'est ce qui vous fait décrocher le téléphone quand vous n'en avez pas envie.</p></div>
   </div>
-  <div class="slbl">Astuces mémoire</div>
-  <div class="cgrid">
-    <div class="ccard"><div class="cc-icon">📱</div><div class="cc-title">Votre téléphone</div><div class="cc-text">Parcourez votre répertoire de A à Z. Chaque contact est un prénom potentiel.</div></div>
-    <div class="ccard"><div class="cc-icon">🚗</div><div class="cc-title">La technique des voitures</div><div class="cc-text">Pensez à une marque : Peugeot → votre voisin. Chaque marque déclenche un prénom.</div></div>
-    <div class="ccard"><div class="cc-icon">🗺️</div><div class="cc-title">La technique des villes</div><div class="cc-text">Une ville où vous avez vécu ou étudié → plusieurs prénoms qui remontent.</div></div>
-    <div class="ccard"><div class="cc-icon">📸</div><div class="cc-title">Vos photos</div><div class="cc-text">Faites défiler vos albums. Chaque visage = un prénom. Fêtes et voyages sont des mines d'or.</div></div>
+  <div class="hl"><strong>Ce que Simon Sinek appelle le "Why" :</strong> les gens n'achètent pas ce que vous faites, ils achètent pourquoi vous le faites. Votre Pourquoi attire aussi les bonnes personnes.</div>
+  <div class="slbl">Exercice — les 5 Pourquoi</div>
+  <div class="nzone">
+    <div class="nzh"><div class="nzt">① Pourquoi j'ai rejoint Zinzino ?</div></div>
+    <textarea class="nta" id="n-why1" placeholder="Ma première réponse…" rows="3"></textarea>
+    <div class="nacts"><span class="nconf" id="c-why1">✓</span><button class="nsave" onclick="sv('n-why1','c-why1')">💾</button></div>
   </div>
-  <div class="mbox"><div class="mt">💡 Le chiffre à viser</div><div class="mtxt">Objectif minimum : <strong>100 noms</strong> pour commencer.<br><span style="font-size:.82rem;color:var(--text2);display:block;margin-top:.4rem">Sur 100 contacts, certains deviendront clients, d'autres partenaires. On ne sait pas lesquels à l'avance — c'est pour ça qu'on note tout.</span></div></div>
-  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(1)">← État d'esprit</button><button class="btn btn-n" onclick="goTo(3)">Chapitre 3 →</button></div>
+  <div class="nzone">
+    <div class="nzh"><div class="nzt">② Et pourquoi c'est important pour moi ?</div></div>
+    <textarea class="nta" id="n-why2" placeholder="En allant plus loin…" rows="3"></textarea>
+    <div class="nacts"><span class="nconf" id="c-why2">✓</span><button class="nsave" onclick="sv('n-why2','c-why2')">💾</button></div>
+  </div>
+  <div class="nzone">
+    <div class="nzh"><div class="nzt">③ Si je n'y arrive pas, qu'est-ce que je perds ?</div></div>
+    <textarea class="nta" id="n-why3" placeholder="Ce que je ne veux plus accepter…" rows="3"></textarea>
+    <div class="nacts"><span class="nconf" id="c-why3">✓</span><button class="nsave" onclick="sv('n-why3','c-why3')">💾</button></div>
+  </div>
+  <div class="nzone" style="border-color:var(--bv);background:rgba(107,33,168,.04)">
+    <div class="nzh"><div class="nzt" style="color:var(--violet)">✨ Mon Pourquoi en une phrase</div></div>
+    <p class="nprompt">Résumez tout en une seule phrase. Ce sera votre ancre. Relisez-la chaque matin.</p>
+    <textarea class="nta" id="n-why-final" placeholder="Je fais ça parce que…" rows="2" style="min-height:55px;font-size:.95rem;font-weight:500"></textarea>
+    <div class="nacts"><span class="nconf" id="c-whyf">✓ Sauvegardé</span><button class="nsave" onclick="sv('n-why-final','c-whyf')">💾 Sauvegarder</button></div>
+  </div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(1)">← Mes rêves</button><button class="btn btn-n" onclick="goTo(3)">Chapitre 3 →</button></div>
 </div>
 
+<!-- S3 OBJECTIFS -->
 <div class="section" id="s3">
-  <div class="ch c-blue"><div class="ch-emoji">🗂️</div><div class="ch-text"><div class="ch-tag">Chapitre 3 — Organisation</div><h2>La fiche contact : votre CRM</h2><p>Un CRM (outil de suivi des relations) bien rempli, c'est une invitation mieux ciblée.</p></div></div>
-  <div class="slbl">Les statuts pipeline</div>
-  <div class="pipe">
-    <div class="ps"><div class="pd" style="background:#CA8A04;color:white">1</div><div class="pl">🟡 Contact <strong>pensé</strong></div><div class="pdesc">noté, pas encore contacté</div></div>
-    <div class="ps"><div class="pd" style="background:#16A34A;color:white">2</div><div class="pl">🟢 Coordonnées <strong>retrouvées</strong></div><div class="pdesc">prêt à être invité</div></div>
-    <div class="ps"><div class="pd" style="background:#2563EB;color:white">3</div><div class="pl">🔵 <strong>Invitation activité</strong></div><div class="pdesc">invité à un événement</div></div>
-    <div class="ps"><div class="pd" style="background:#7C3AED;color:white">4</div><div class="pl">🟣 <strong>Invitation concept santé</strong></div><div class="pdesc">invité à découvrir le BalanceTest</div></div>
-    <div class="ps"><div class="pd" style="background:#D97706;color:white">5</div><div class="pl">🟠 <strong>Présentation effectuée</strong></div><div class="pdesc">a vu le concept complet</div></div>
-    <div class="ps"><div class="pd" style="background:#92400E;color:white">6</div><div class="pl">🟤 <strong>Suivi en cours</strong></div><div class="pdesc">relance planifiée</div></div>
-    <div class="ps" style="background:rgba(22,163,74,.06)"><div class="pd" style="background:#16A34A;color:white">✓</div><div class="pl" style="color:#15803D;font-weight:700">✅ Client ou Partenaire</div><div class="pdesc" style="color:#15803D">objectif atteint</div></div>
+  <div class="ch c-orange">
+    <div class="ch-emoji">🎯</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 3 — Action</div><h2>Mes objectifs</h2><p>Un rêve avec une date devient un objectif. Un objectif avec des étapes devient un plan.</p></div>
   </div>
-  <a href="https://docs.google.com/spreadsheets/d/1XzYxpfin4uanKwNdW0XeBAkvdZzBlpK4GBC56pIB9xQ/edit" target="_blank" style="display:flex;align-items:center;gap:.9rem;background:var(--card);border:1px solid rgba(22,163,74,.3);border-radius:13px;padding:1.1rem 1.35rem;text-decoration:none;color:var(--text);margin-bottom:1.5rem;box-shadow:var(--shadow)">
-    <span style="font-size:1.8rem">📊</span>
-    <div><div style="font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:#15803D">Ouvrir votre CRM Google Sheets</div><div style="font-size:.75rem;color:var(--text3)">Fichier → Créer une copie pour votre version modifiable</div></div>
-    <span style="margin-left:auto;color:var(--text3)">↗</span>
-  </a>
-  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(2)">← Construire</button><button class="btn btn-n" onclick="goTo(4)">Chapitre 4 →</button></div>
+  <div class="hl"><strong>La règle :</strong> chaque objectif doit être mesurable. Pas "gagner plus" mais "atteindre 500€ de commissions d'ici le [date]".</div>
+  <div class="slbl">Dans les 90 prochains jours</div>
+  <div class="nzone">
+    <div class="nzh"><div class="nzt">🏃 Mes 3 objectifs pour les 90 prochains jours</div></div>
+    <p class="nprompt">Quoi, combien, pour quand.</p>
+    <textarea class="nta" id="n-90j" placeholder="1. …&#10;2. …&#10;3. …" rows="5"></textarea>
+    <div class="nacts"><span class="nconf" id="c-90j">✓</span><button class="nsave" onclick="sv('n-90j','c-90j')">💾 Sauvegarder</button></div>
+  </div>
+  <div class="slbl">Dans 1 an</div>
+  <div class="nzone">
+    <div class="nzh"><div class="nzt">📅 Où est-ce que je veux être dans 12 mois ?</div></div>
+    <textarea class="nta" id="n-1an" placeholder="Dans 1 an, j'ai…" rows="4"></textarea>
+    <div class="nacts"><span class="nconf" id="c-1an">✓</span><button class="nsave" onclick="sv('n-1an','c-1an')">💾 Sauvegarder</button></div>
+  </div>
+  <div class="slbl">Dans 3 ans</div>
+  <div class="nzone">
+    <div class="nzh"><div class="nzt">🌅 Ma vision à 3 ans — concrète</div></div>
+    <textarea class="nta" id="n-3ans" placeholder="Dans 3 ans, ma vie ressemble à…" rows="4"></textarea>
+    <div class="nacts"><span class="nconf" id="c-3ans">✓</span><button class="nsave" onclick="sv('n-3ans','c-3ans')">💾 Sauvegarder</button></div>
+  </div>
+  <div class="slbl">Cette semaine</div>
+  <div class="nzone">
+    <div class="nzh"><div class="nzt">⚡ Cette semaine, je m'engage à faire…</div></div>
+    <textarea class="nta" id="n-sem" placeholder="1. …&#10;2. …&#10;3. …" rows="4"></textarea>
+    <div class="nacts"><span class="nconf" id="c-sem">✓</span><button class="nsave" onclick="sv('n-sem','c-sem')">💾 Sauvegarder</button></div>
+  </div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(2)">← Mon Pourquoi</button><button class="btn btn-n" onclick="goTo(4)">Chapitre 4 →</button></div>
 </div>
 
+<!-- S4 ENGAGEMENT -->
 <div class="section" id="s4">
-  <div class="ch c-teal"><div class="ch-emoji">🚀</div><div class="ch-text"><div class="ch-tag">Chapitre 4 — Suivi</div><h2>Le pipeline de suivi</h2><p>Un pipeline transforme la prospection en système prévisible.</p></div></div>
-  <div class="slbl">Les règles d'un bon suivi</div>
-  <div class="cgrid">
-    <div class="ccard"><div class="cc-icon">📅</div><div class="cc-title">Planifier la relance</div><div class="cc-text">Dès qu'un contact dit "pas maintenant", notez une date de relance dans 30, 60 ou 90 jours.</div></div>
-    <div class="ccard"><div class="cc-icon">📝</div><div class="cc-title">Tout noter après chaque échange</div><div class="cc-text">Ce qui a été dit, les objections, les ressources envoyées. Évitez de recommencer de zéro.</div></div>
-    <div class="ccard"><div class="cc-icon">⏱️</div><div class="cc-title">30 minutes par jour</div><div class="cc-text">La régularité vaut mieux que le volume. 30 min chaque jour vaut mieux que 5h de temps en temps.</div></div>
-    <div class="ccard"><div class="cc-icon">👁️</div><div class="cc-title">Rendre des comptes</div><div class="cc-text">Partagez vos chiffres avec votre upline (parrain/marraine). Ce qu'on mesure, on l'améliore.</div></div>
+  <div class="ch c-blue">
+    <div class="ch-emoji">✍️</div>
+    <div class="ch-text"><div class="ch-tag">Chapitre 4 — Engagement</div><h2>Ma lettre d'engagement</h2><p>Ce que vous allez écrire ici, c'est un contrat avec vous-même.</p></div>
   </div>
-  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(3)">← Fiche CRM</button><button class="btn btn-n" onclick="goTo(5)">Chapitre 5 →</button></div>
-</div>
-
-<div class="section" id="s5">
-  <div class="ch c-red"><div class="ch-emoji">⚡</div><div class="ch-text"><div class="ch-tag">Chapitre 5 — Vigilance</div><h2>Erreurs classiques &amp; discipline</h2><p>Ce qui tue une liste, ce n'est pas le manque de contacts — c'est le manque de méthode.</p></div></div>
-  <div class="slbl">À faire vs à éviter</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.75rem">
-    <div style="border-radius:11px;overflow:hidden;border:1px solid rgba(22,163,74,.25)">
-      <div style="background:rgba(22,163,74,.1);padding:.65rem .9rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.75rem;color:#15803D">✅ À faire</div>
-      <div style="padding:.85rem .9rem;display:grid;gap:.3rem;background:var(--card)">
-        <div style="font-size:.82rem;color:var(--text2)">✓ Noter tout le monde sans filtrer</div>
-        <div style="font-size:.82rem;color:var(--text2)">✓ Compléter la fiche après chaque contact</div>
-        <div style="font-size:.82rem;color:var(--text2)">✓ Planifier chaque relance avec une date</div>
-        <div style="font-size:.82rem;color:var(--text2)">✓ 30 minutes de prospection chaque jour</div>
-        <div style="font-size:.82rem;color:var(--text2)">✓ Présenter au couple quand il y en a un</div>
-      </div>
-    </div>
-    <div style="border-radius:11px;overflow:hidden;border:1px solid rgba(220,38,38,.25)">
-      <div style="background:rgba(220,38,38,.1);padding:.65rem .9rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.75rem;color:#991B1B">🚫 À éviter</div>
-      <div style="padding:.85rem .9rem;display:grid;gap:.3rem;background:var(--card)">
-        <div style="font-size:.82rem;color:var(--text2)">✗ Décider à la place de l'autre</div>
-        <div style="font-size:.82rem;color:var(--text2)">✗ Prospecter par à-coups</div>
-        <div style="font-size:.82rem;color:var(--text2)">✗ Présenter le concept au téléphone</div>
-        <div style="font-size:.82rem;color:var(--text2)">✗ Laisser des contacts sans relance planifiée</div>
-        <div style="font-size:.82rem;color:var(--text2)">✗ S'arrêter à 20 noms</div>
-      </div>
-    </div>
+  <div class="slbl">Ce que je ne veux plus</div>
+  <div class="nzone">
+    <div class="nzh"><div class="nzt">🚫 À partir de maintenant, je refuse de…</div></div>
+    <textarea class="nta" id="n-non" placeholder="Je ne veux plus accepter…&#10;Je refuse de continuer à…" rows="5"></textarea>
+    <div class="nacts"><span class="nconf" id="c-non">✓</span><button class="nsave" onclick="sv('n-non','c-non')">💾 Sauvegarder</button></div>
   </div>
-  <div class="mbox"><div class="mt">🎯 Votre routine quotidienne</div><div class="mtxt"><strong>Matin</strong> — Identifier 3 contacts à traiter<br><strong>Journée</strong> — Passer vos appels (30 min minimum)<br><strong>Soir</strong> — Mettre à jour le CRM, planifier les relances</div></div>
-  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(4)">← Pipeline</button><button class="btn btn-done" onclick="goTo(0)">✓ Terminé</button></div>
+  <div class="slbl">Ce que je choisis</div>
+  <div class="nzone">
+    <div class="nzh"><div class="nzt">✨ À partir de maintenant, je choisis de…</div></div>
+    <textarea class="nta" id="n-oui" placeholder="Je choisis d'être…&#10;Je m'engage à…" rows="5"></textarea>
+    <div class="nacts"><span class="nconf" id="c-oui">✓</span><button class="nsave" onclick="sv('n-oui','c-oui')">💾 Sauvegarder</button></div>
+  </div>
+  <div class="slbl">Ma lettre complète</div>
+  <div class="nzone" style="border-color:var(--bv)">
+    <div class="nzh"><div class="nzt">📜 Ma lettre d'engagement personnelle</div></div>
+    <p class="nprompt">Écrivez librement à la première personne. Incluez votre Pourquoi, vos rêves, vos engagements. Datez-la.</p>
+    <textarea class="nta" id="n-lettre" placeholder="Le [date],&#10;&#10;Moi, [prénom], je décide aujourd'hui de…" rows="10"></textarea>
+    <div class="nacts"><span class="nconf" id="c-lettre">✓ Sauvegardé</span><button class="nsave" onclick="sv('n-lettre','c-lettre')">💾 Sauvegarder ma lettre</button></div>
+  </div>
+  <div class="engcard">
+    <div class="engi">🤝</div>
+    <div class="engt">Bravo d'être allé jusqu'ici</div>
+    <div class="engtx">Peu de partenaires prennent le temps de faire ce travail. Ceux qui le font sont ceux qui restent, qui construisent et qui inspirent.</div>
+  </div>
+  <div style="text-align:center;margin-top:1rem">
+    <button class="dl-btn" onclick="dlNotes()" style="display:inline-flex;margin:0 auto">📥 Télécharger toutes mes notes</button>
+  </div>
+  <div class="nav-btns"><button class="btn btn-p" onclick="goTo(3)">← Mes objectifs</button><button class="btn btn-done" onclick="goTo(0)">✓ Terminé</button></div>
 </div>
 
 </main>
@@ -510,25 +543,81 @@ function goTo(i){
   const sec=document.getElementById('s'+i);if(sec)sec.classList.add('active');
   document.querySelectorAll('.s-chapter-item').forEach(n=>n.classList.remove('active'));
   const ni=document.getElementById('ci'+i);if(ni)ni.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});updatePbar();
+  window.scrollTo({top:0,behavior:'smooth'});
+  updatePbar();
 }
 function toggleChk(el){
   el.classList.toggle('done');
   el.textContent=el.classList.contains('done')?'✓':'';
-  localStorage.setItem('dd_chk_lc_'+el.id, el.classList.contains('done')?'1':'0');
+  localStorage.setItem('dd_chk_re_'+el.id, el.classList.contains('done')?'1':'0');
   updatePbar();
 }
 function updatePbar(){const done=document.querySelectorAll('.n-chk.done').length,total=document.querySelectorAll('.n-chk').length;if(!total)return;document.getElementById('pbar').style.width=(done/total*100)+'%';const pl=document.getElementById('plbl');if(pl)pl.textContent=done+' / '+total+' chapitres';}
+function loadChks(){document.querySelectorAll('.n-chk').forEach(el=>{if(localStorage.getItem('dd_chk_re_'+el.id)==='1'){el.classList.add('done');el.textContent='✓';}});}
+loadChks();
 function toggleSc(id){document.getElementById(id).classList.toggle('open');}
 function toggleObj(id){document.getElementById(id).classList.toggle('open');}
 
 
+const IDS=['n-vision','n-why1','n-why2','n-why3','n-why-final','n-90j','n-1an','n-3ans','n-sem','n-non','n-oui','n-lettre'];
+function sv(id,cid){localStorage.setItem('dd_'+id,document.getElementById(id).value);show(cid);}
+function show(cid){const c=document.getElementById(cid);if(c){c.style.display='inline';setTimeout(()=>c.style.display='none',2000);}}
+function svDom(){document.querySelectorAll('.vi[data-k]').forEach(i=>localStorage.setItem('dd_'+i.dataset.k,i.value));show('c-dom');}
+function saveAll(){IDS.forEach(id=>{const el=document.getElementById(id);if(el)localStorage.setItem('dd_'+id,el.value);});svDom();}
+function loadAll(){IDS.forEach(id=>{const v=localStorage.getItem('dd_'+id);const el=document.getElementById(id);if(v&&el)el.value=v;});document.querySelectorAll('.vi[data-k]').forEach(i=>{const v=localStorage.getItem('dd_'+i.dataset.k);if(v)i.value=v;});}
+window.addEventListener('beforeunload',saveAll);
+loadAll();
+
+function dlNotes(){
+  const today=new Date().toLocaleDateString('fr-FR');
+  let txt='DESTINATION 💎 — Mes Rêves & Engagement\n';
+  txt+='Exporté le '+today+'\n';
+  txt+='═'.repeat(50)+'\n\n';
+  const sections=[
+    ['🌅 MA VISION DE VIE IDÉALE','n-vision'],
+    ['① Pourquoi j'ai rejoint Zinzino','n-why1'],
+    ['② Ce qui est important pour moi','n-why2'],
+    ['③ Ce que je perdrais','n-why3'],
+    ['✨ Mon Pourquoi en une phrase','n-why-final'],
+    ['🏃 Objectifs 90 jours','n-90j'],
+    ['📅 Dans 1 an','n-1an'],
+    ['🌅 Dans 3 ans','n-3ans'],
+    ['⚡ Cette semaine','n-sem'],
+    ['🚫 Ce que je refuse','n-non'],
+    ['✨ Ce que je choisis','n-oui'],
+    ['📜 Ma lettre d'engagement','n-lettre'],
+  ];
+  sections.forEach(([title,id])=>{
+    const val=localStorage.getItem('dd_'+id)||'';
+    txt+=title+'\n';
+    txt+='─'.repeat(40)+'\n';
+    txt+=(val||'(non rempli)')+'\n\n';
+  });
+  const domKeys=[
+    ['💰 Finances - revenu','v-fin1'],['💰 Finances - objectif','v-fin2'],
+    ['👨‍👩‍👧 Famille - offrir','v-fam1'],['👨‍👩‍👧 Famille - présence','v-fam2'],
+    ['🏥 Santé - ressentis','v-san1'],['🏥 Santé - physique','v-san2'],
+    ['🌍 Liberté - voyages','v-lib1'],['🌍 Liberté - sens','v-lib2'],
+    ['🌱 Impact','v-imp1'],['🌱 Changement','v-imp2'],
+    ['✨ Apprendre','v-ep1'],['✨ Devenir','v-ep2'],
+  ];
+  txt+='MES DOMAINES DE VIE\n'+'─'.repeat(40)+'\n';
+  domKeys.forEach(([label,key])=>{
+    const v=localStorage.getItem('dd_'+key)||'';
+    if(v)txt+=label+': '+v+'\n';
+  });
+  const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='MesReves_Engagement_'+today.replace(/\//g,'-')+'.txt';
+  a.click();
+}
+
 initSearch([
-  {t:"L'état d'esprit",s:'Mindset · Pourquoi la liste',e:'🧠',href:'#',kw:['mindset','liste']},
-  {t:'Construire votre liste',s:'8 catégories · Astuces mémoire',e:'📋',href:'#',kw:['catégories','famille','travail']},
-  {t:'Fiche contact CRM',s:'Pipeline · Google Sheets',e:'🗂️',href:'#',kw:['crm','fiche','pipeline','suivi']},
-  {t:'Le pipeline de suivi',s:'7 étapes · De contact à partenaire',e:'🚀',href:'#',kw:['pipeline','étapes','relance']},
-  {t:'Erreurs & discipline',s:'À faire · À éviter · Routine',e:'⚡',href:'#',kw:['erreurs','discipline','routine']}
+  {t:'Mes rêves & ma vision',s:'Vision de vie idéale · Domaines',e:'🌟',href:'#',kw:['rêve','vision','vie','idéale']},
+  {t:'Mon Pourquoi',s:'Motivation profonde · 5 Pourquoi',e:'💡',href:'#',kw:['pourquoi','motivation','why']},
+  {t:'Mes objectifs',s:'90 jours · 1 an · 3 ans',e:'🎯',href:'#',kw:['objectifs','90 jours','revenus']},
+  {t:"Ma lettre d'engagement",s:'Contrat avec soi-même',e:'✍️',href:'#',kw:['engagement','lettre','contrat']}
 ]);
 
 
@@ -537,8 +626,6 @@ function _getText(){const s=document.querySelector('.section.active');if(!s)retu
 function toggleAudio(){const b=document.getElementById('ab');if(_reading){_synth.cancel();_reading=false;b.innerHTML='🔊';b.className='audio-btn';return;}const t=_getText();if(!t)return;_utt=new SpeechSynthesisUtterance(t);_utt.lang='fr-FR';_utt.rate=0.95;const v=_synth.getVoices().find(v=>v.lang.startsWith('fr'));if(v)_utt.voice=v;_utt.onstart=()=>{_reading=true;b.innerHTML='⏹';b.className='audio-btn reading';};_utt.onend=_utt.onerror=()=>{_reading=false;b.innerHTML='🔊';b.className='audio-btn';};_synth.speak(_utt);}
 const _g=goTo;goTo=function(i){if(_reading){_synth.cancel();_reading=false;const b=document.getElementById('ab');if(b){b.innerHTML='🔊';b.className='audio-btn';}}_g(i);};
 
-function loadChks(){document.querySelectorAll('.n-chk').forEach(el=>{if(localStorage.getItem('dd_chk_lc_'+el.id)==='1'){el.classList.add('done');el.textContent='✓';}});}
-loadChks();
 </script>
 </body>
 </html>
